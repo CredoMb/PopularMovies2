@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Size for the main image's dimension -->
+    <dimen name="imageDimension">132dp</dimen>
+
+    <!-- Padding for the left and right side of the groupView holding the text -->
+    <dimen name="sidePadding">16dp</dimen>
+
+    <!-- Padding for the Top and Bottom of certain groupViews -->
+    <dimen name="topBottomPadding">8dp</dimen>
+
+    <!-- Size for the title's text -->
+    <dimen name="titleTextSize">20sp</dimen>
+
+    <!-- Size for the body's text -->
+    <dimen name="bodyTextSize">14sp</dimen>
+
+    <!-- Size for the rating count text -->
+    <dimen name="ratingCount">12sp</dimen>
+
+    <!-- Margin between the description text and the rating bar -->
+    <dimen name="topMargin">24dp</dimen>
+
+    <!-- Margin between the rating bar and the number of review -->
+    <dimen name="rightMargin">8dp</dimen>
+
+    <!-- Space between the list items -->
+    <dimen name="dividerHeight">24dp</dimen>
+
+</resources>

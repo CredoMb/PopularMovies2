@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/list_item_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/offWhite_background"
+    android:orientation="horizontal"
+    android:padding="@dimen/topBottomPadding">
+
+    <!-- Principal image of the layout -->
+    <ImageView
+        android:id="@+id/location_image_view"
+        android:layout_width="@dimen/imageDimension"
+        android:layout_height="@dimen/imageDimension"
+        android:layout_gravity="bottom" />
+
+    <!-- GroupView for "non-image" content of the layout -->
+    <RelativeLayout
+        android:id="@+id/Description_group_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@android:color/white"
+        android:paddingLeft="@dimen/sidePadding"
+        android:paddingTop="@dimen/topBottomPadding"
+        android:paddingRight="@dimen/sidePadding"
+        android:paddingBottom="@dimen/topBottomPadding">
+
+        <!-- GroupView for the title and the description -->
+    <LinearLayout
+        android:id="@+id/texts"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        >
+        <!-- The title textView -->
+        <TextView
+            android:id="@+id/title_text_view"
+            style="@style/titleStyle"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_gravity="bottom"
+            android:maxLines="1"
+            android:ellipsize="end"
+            tools:text="le titre" />
+
+        <!-- The description textView -->
+        <TextView
+            android:id="@+id/description_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_gravity="top"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:gravity="top"
+            android:textSize="@dimen/bodyTextSize"
+            android:textColor="@color/descriptionTextColor"
+            tools:text="Description blabla jajajajan ndjndjdnjnaljndlajndljanljjdnaldnland" />
+        </LinearLayout>
+
+        <!-- GroupView for the rating system of the app -->
+        <LinearLayout
+            android:id="@+id/rating_group_view"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/texts"
+            android:layout_marginTop="@dimen/topMargin">
+
+            <!--The average review mark -->
+            <RatingBar
+                android:id="@+id/rating_bar"
+                style="@style/Widget.AppCompat.RatingBar.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/rightMargin"
+                android:isIndicator="true"
+                android:theme="@style/RatingBar"
+                android:numStars="5"
+                android:saveEnabled="true" />
+
+            <!-- The number of reviewers -->
+            <TextView
+                android:id="@+id/total_reviews"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:textSize="@dimen/ratingCount"
+                android:textColor="@color/descriptionTextColor"
+                android:text="(256)" />
+        </LinearLayout>
+
+
+        <!-- TextView that serves as a link to the website -->
+        <TextView
+            android:id = "@+id/link_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/texts"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="@dimen/topMargin"
+            android:gravity="start"
+            android:textSize="@dimen/bodyTextSize"
+            android:drawSelectorOnTop ="true"
+            android:focusable="true"
+            android:textColor="@color/siteTextColor"
+            android:text="@string/website"/>
+
+    </RelativeLayout>
+
+</LinearLayout>

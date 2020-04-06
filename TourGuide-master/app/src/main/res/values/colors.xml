@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#2196F3</color>
+    <color name="colorPrimaryDark">#1976D2</color>
+    <color name="colorAccent">#FF5252</color>
+
+    <!-- Color for the main layout's background-->
+    <color name="offWhite_background">#F8F9FD</color>
+    <!-- Color for the Title-->
+    <color name="title">#212121</color>
+    <!-- Site Text color -->
+    <color name="siteTextColor">#FF5252</color>
+
+    <!-- Description textColor -->
+    <color name="descriptionTextColor">#757575 </color>
+
+    <!-- color for neutral state of rating stars -->
+    <color name="lightGrey">#757575</color>
+
+    <!-- color for the selected state of the tab text -->
+    <color name="white">@android:color/white</color>
+
+    <!-- color for activated rating star -->
+    <color name="duskYellow">#FFA000</color>
+</resources>

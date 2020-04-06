@@ -1,0 +1,71 @@
+<resources>
+    <string name="app_name">Tour Guide</string>
+
+    <!-- Fragments names -->
+    <string name="touristSpot">Spots</string>
+    <string name="event">Events</string>
+    <string name="restaurant">Dining</string>
+    <string name="museum">Museums</string>
+
+    <string name="falseDescription">Description blabla jajajajan ndjndjdnjnaljndlajndljanljjdnaldnland</string>
+
+    <!-- The webSite text -->
+    <string name="website">Website</string>
+
+    <!-- Name of the tourist spots -->
+    <string name="stJoseph">St Joseph Oratory </string>
+    <string name="mountRoyal">Mount Royal</string>
+    <string name="oldMontreal">Old Montreal</string>
+    <string name="jeanDrapeau">Parc Jean Drapeau</string>
+    <string name="chinaTown">China Town</string>
+
+    <!-- Description for tourist spots  -->
+    <string name="stJosephDesc">Saint Joseph’s Oratory of Mount Royal, founded by Saint Brother André, is a Catholic shrine dedicated to Saint Joseph. Place of expression of faith, prayer, healing and peace, the Oratory welcomes pilgrims and visitors in a spirit of openness and compassion. </string>
+    <string name="mountRoyalDesc">Crowned with three summits, the emblematic site affectionately known as “the mountain” covers 10 km2 at the heart of Montréal. Mount Royal is home to residential areas, several of the city’s founding institutions, vast cemeteries, neighborhood parks and the magnificent 200-hectare Mount Royal Park. Having acknowledged the importance of protecting its natural and cultural qualities, municipal authorities and the Government of Quebec declared Mount Royal a heritage site. </string>
+    <string name="oldMontrealDesc">The first colonists arrived here on the shores of the St. Lawrence River, and it was thanks to the port that old Ville-Marie grew into the thriving international metropolis of modern-day Montréal. </string>
+    <string name="parcJeanDrapeauDesc">The unique parc Jean-Drapeau, renowned for its diverse cultural and sports programming, is the perfect place for family, couples and friends getaways, only 5 minutes from downtown Montreal! </string>
+    <string name="chinaTownDesc">Chinatown dates back to the 1860s when Chinese immigrants came to Canada to work in the mines and on the railroads. They settled mainly along De La Gauchetière Street near Saint-Laurent Boulevard. Today the district is less residential than commercial but it has kept its Asian flavour. The Chinese community continues to shop and celebrate its traditional festivals and holidays here. The narrow streets are lined with shops selling exotic foods, traditional crafts, martial arts accessories, herbs, and natural medicines. Acupuncture and Asian medical services can also be found here. </string>
+
+    <!-- Names for Events -->
+    <string name="osheaga">Osheaga </string>
+    <string name="rogersCup">Rogers Cup </string>
+    <string name="jazzFestival">Montreal Jazz Festival </string>
+    <string name="tasteMTL">Taste Montreal </string>
+    <string name="justForLaughs">Just For Laughs </string>
+
+    <!-- Description for Events -->
+    <string name="osheagaDesc">Osheaga 2020 will take place Friday, July 31, Saturday August 1 and Sunday August 2. Doors open at noon, and performances begin at 1:00pm and end at 11:00pm. </string>
+    <string name="rogersCupDesc">Rogers Cup presented by National Bank is a prestigious professional tennis tournament owned and operated by Tennis Canada. Since 1881 for the men and 1892 for the women, the best players in the world have showcased their skills on Canadian courts. </string>
+    <string name="jazzFestivalDesc">Ranked as the world’s largest jazz festival in the Guinness World Records, the Festival International de Jazz de Montréal has been synonymous with a passion for music for now 40 years. </string>
+    <string name="tasteMTLDesc">One of the best ways to discover a city is through its culinary culture. Several companies offer food tours of Montréal, including the city’s markets or historical neighbourhoods.</string>
+    <string name="justForLaughsDesc"> The world\'s largest comedy festival happens in Montreal. Get ready to be entairtain with a variety of shows performed by the best comedian of the world. </string>
+
+    <!-- Name of the restaurants -->
+    <string name="portus360">Portus 360</string>
+    <string name="deville">Deville DinerBar</string>
+    <string name="ilFocolaio">Il Focolaio </string>
+    <string name="barGeorge">Bar Goerge </string>
+    <string name="ikanos">Ikanos</string>
+
+    <!-- Description for restaurants  -->
+    <string name="portus360Desc">With its panoramic view, the Portus 360 reminds us of a lighthouse, a well present element in Portugal’s landscape. It safely welcomes back lovers of good food and good wine. This exceptional place reunites the finest of palates and curious of gourmets.</string>
+    <string name="devilleDesc">Deville Dinerbar is unlike any diner you’ve been in: a lovechild of whimsical nostalgia and 21st century spirit. </string>
+    <string name="ilFocolaioDesc">Since 1984 Il Focolaio has been treating our guests to a wood-burning oven pizza that shares flavours of Italy and the influence of Montreal. Il Focolaio (fireplace in Italian) depicts the maple wood burning oven where each and every one of our delicious pizzas are cooked.</string>
+    <string name="barGeorgeDesc">The old is celebrated in new ways at Bar George, a modern-day rendezvous set in the grand heritage home once belonging to Sir George Stephen. Honouring the former resident’s roots, our chefs cook up contemporary takes on classic U.K. fare, spiked with Québécois quirks, while our bar pours time-tested bevvies. </string>
+    <string name="ikanosDesc">Here, the ocean is our playground and we do our best to celebrate its bounty. We’re convinced we have the best purveyors in town and we strive to showcase only their freshest catches in our FISH BAR. </string>
+
+    <!-- Name of the museums -->
+    <string name="fineArt">Fine Art Museum</string>
+    <string name="mcCord">McCord Museum</string>
+    <string name="artContempo">Musée d\'Art Contemporain</string>
+    <string name="pac">Pac Museum </string>
+    <string name="redPath">Red Path Museum</string>
+
+    <!-- Description for each museum  -->
+    <string name="fineArtDesc">Founded in 1860 as the Art Association of Montreal by a group of Montreal art collectors and patrons, the Montreal Museum of Fine Arts (MMFA) was one of the first museums in North America to build up an encyclopedic collection worthy of the name. </string>
+    <string name="mcCordDesc">The McCord Museum celebrates our past and present life in Montreal– our history, our people, our communities. </string>
+    <string name="artContempoDesc">Located in the heart of the Quartier des Spectacles, the Musée d’art contemporain de Montréal makes today’s art a vital part of Montréal and Québec life. </string>
+    <string name="pacDesc">Designated a national archaeological and historic site, Pointe-à-Callière presents centuries of history from the settlements of our Indigenous People to the present day. </string>
+    <string name="redPathDesc">The Redpath Museum is an academic unit of McGill University. Its mandate is to foster understanding and appreciation of the diversity of our biological, geological, and cultural heritage through scientific research, collections-based study, and education. </string>
+
+</resources>
