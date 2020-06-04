@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+    
+    <ImageView
+        android:id="@+id/movieThumbnail_Iv"
+        android:layout_width="@dimen/movieThumbnail_IV_width"
+        android:layout_height="@dimen/movieThumbnail_IV_height"
+        android:layout_gravity="center_horizontal"
+        android:scaleType="centerCrop"/>
+
+    <!-- Group view that contains the extra text
+         to describes the movie -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/extra_text_top_margin"
+        android:layout_marginBottom="@dimen/extra_text_bottom_margin">
+
+            <TextView
+                android:id="@+id/movie_title_textview_main"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:singleLine="true"
+                tools:text="Spider Man est parti de la maison, boss"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/movie_title_text_size_main" />
+
+            <TextView
+                android:id="@+id/movie_year_textview_main"
+                android:layout_width="@dimen/movieThumbnail_IV_width"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                tools:text="2010"
+                android:layout_below="@id/movie_title_textview_main"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="@dimen/movie_year_text_size_main" />
+
+        </RelativeLayout>
+</LinearLayout>

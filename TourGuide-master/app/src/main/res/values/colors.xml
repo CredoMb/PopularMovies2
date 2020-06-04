@@ -22,4 +22,17 @@
 
     <!-- color for activated rating star -->
     <color name="duskYellow">#FFA000</color>
+
+    <!--Will be used to modify the ripple color of
+     the "website" textview-->
+
+    <!--<style name="SelectableItemBackground">
+        <item name="android:theme">@style/SelectableItemTheme</item>
+        <item name="android:background">?attr/selectableItemBackground</item>
+    </style>
+
+    <style name="SelectableItemTheme">
+        <item name="colorControlHighlight">@color/ripple_color</item>
+    </style>-->
+
 </resources>

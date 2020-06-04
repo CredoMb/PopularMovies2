@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:orientation="vertical"
+    android:paddingBottom="16dp">
+
+    <!-- Le groupe du nord -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:paddingBottom = "16dp"
+        android:layout_weight="2"
+        android:orientation="vertical">
+
+        <!-- La banniere "Teeguidou"-->
+        <ImageView
+            android:id="@+id/banner"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@android:color/black"
+            android:src = "@drawable/banniere_reduit"
+             />
+
+        <!--L'image principale -->
+        <ImageView
+            android:id="@+id/cover_photo"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:scaleType="centerCrop"
+            android:src = "@drawable/ordi"
+             />
+
+    </LinearLayout>
+
+    <!--Groupe du sud-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:orientation="vertical"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp">
+        <!-- Le premier texte qui suit la cover-->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="8dp"
+            android:text="@string/localisez"
+            android:textAllCaps="true"
+            android:textColor="@android:color/black"
+            android:textSize="24sp" />
+
+        <!-- L'emplacement de l'adresse -->
+
+        <LinearLayout
+            android:id="@+id/groupe_emplacement"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <!-- L'icon -->
+            <ImageView
+                android:id="@+id/icon_adresse"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:paddingTop="2dp"
+                android:paddingRight="4dp"
+                android:paddingBottom="2dp"
+                android:src="@drawable/icon_map_32" />
+
+            <!-- L'adresse -->
+            <TextView
+                android:id="@+id/adresse"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/adresse"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+        <!-- Description de l'article le moins chers -->
+
+        <LinearLayout
+            android:id="@+id/groupe_promotion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <!-- L'icone de l'euro-->
+            <ImageView
+                android:id="@+id/icon_euro"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:paddingTop="2dp"
+                android:paddingRight="4dp"
+                android:paddingBottom="2dp"
+                android:src="@drawable/icon_euro_32" />
+
+            <!-- L'adresse -->
+            <TextView
+                android:id="@+id/promotion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/prix"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <!-- Dernier texte de l'application-->
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="16dp"
+            android:text="@string/apropos"
+            android:textAllCaps="true"
+            android:textColor="@android:color/black"
+            android:textSize="24sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="8dp"
+            android:text="@string/initie"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/effort"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+</LinearLayout>

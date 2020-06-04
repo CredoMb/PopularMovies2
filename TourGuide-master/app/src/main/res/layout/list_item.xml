@@ -93,7 +93,6 @@
                 android:text="(256)" />
         </LinearLayout>
 
-
         <!-- TextView that serves as a link to the website -->
         <TextView
             android:id = "@+id/link_text_view"
@@ -107,7 +106,8 @@
             android:drawSelectorOnTop ="true"
             android:focusable="true"
             android:textColor="@color/siteTextColor"
-            android:text="@string/website"/>
+            android:text="@string/website"
+            android:background="?android:attr/selectableItemBackground"/>
 
     </RelativeLayout>
 

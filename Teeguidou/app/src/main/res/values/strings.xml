@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+<!-- App front text -->
+<string name="app_name"> Teeguidou</string>
+<string name = "localisez"> LOCALISEZ-NOUS </string>
+<string name = "adresse"> 2135 Van Horne, Montreal H3S 1P3</string>
+<string name = "prix"> Articles à partir de 6 Euros </string>
+<string name = "apropos"> A PROPOS DE NOUS </string>
+<string name = "initie"> Initié par un Montréalais, notre marque se donne pour mission de mettre du fun dans votre dressing.
+Tout ce que l\'on veut c\'est vous sortir de la routine grace à chacune des pieces présente sur le site. </string>
+<string name = "effort"> Nous faisons un effort pour rester conecté à notre clientele de maniere à lui offrir la meilleure expérience possible, tant au niveau de la présentation de notre boutique que de la qualité des produits que nous offrons. </string>
+</resources>
