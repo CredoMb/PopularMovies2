@@ -12,4 +12,5 @@
     <string name="no_result_title">No Result</string>
     <string name="no_result_text">Please change your search term and retry</string>
     <string name="close">Close</string>
+
 </resources>

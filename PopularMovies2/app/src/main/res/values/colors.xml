@@ -3,4 +3,15 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+
+    <!--
+
+        Used on the activity_main.xml layout
+    -->
+
+    <!-- colors for the text in the empty state -->
+    <color name="colorEmptyStateTitle">@android:color/black</color>
+    <color name="colorEmptyStateText">@android:color/black</color>
+    <color name="colorEmptyStateRefresh">#DCDCDC</color>
+
 </resources>
