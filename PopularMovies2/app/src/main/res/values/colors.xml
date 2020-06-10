@@ -5,7 +5,6 @@
     <color name="colorAccent">#D81B60</color>
 
     <!--
-
         Used on the activity_main.xml layout
     -->
 
@@ -13,5 +12,8 @@
     <color name="colorEmptyStateTitle">@android:color/black</color>
     <color name="colorEmptyStateText">@android:color/black</color>
     <color name="colorEmptyStateRefresh">#DCDCDC</color>
+
+    <!-- Colors used for the texts of the article-->
+    <color name="colorRefreshButtonText">@android:color/black</color>
 
 </resources>
