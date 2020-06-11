@@ -11,6 +11,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.android.popularmovies2.Data.GlideHelperClass;
+
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapterViewHolder>{
 
 
@@ -69,5 +71,61 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
         View view = inflater.inflate(layoutIdForListItem, viewGroup, shouldAttachToParentImmediately);
         return new MovieAdapterViewHolder(view);
 
+    }
+
+    /**
+     * OnBindViewHolder is called by the RecyclerView to display the data at the specified
+     * position. In this method, we update the contents of the ViewHolder to display the movie
+     * image for this particular position, using the "position" argument that is conveniently
+     * passed into us.
+     *
+     * @param movieAdapterViewHolder The ViewHolder which should be updated to represent the
+     *                               contents of the item at the given position in the data set.
+     * @param position               The position of the item within the adapter's data set.
+     */
+
+    @Override
+    public void onBindViewHolder(@NonNull MovieAdapterViewHolder movieAdapterViewHolder, int position) {
+
+        // movieAdapterViewHolder.mMovieThumbnailIv.setImageURI(Uri.parse(ImagebaseUrl));
+        /**AMovie currentMovie = mMovieData.get(position);
+
+        GlideHelperClass glideHelper = new GlideHelperClass(mContext,
+                currentMovie.getPosterPath(),
+                R.drawable.placeholder_image,
+                movieAdapterViewHolder.mMovieThumbnailIv); */
+
+        // This will load the image, from the API to the
+        // image view
+        /**
+        glideHelper.loadImage();
+
+        movieAdapterViewHolder.mMovietitleTv.setText(currentMovie.getTitle());
+        movieAdapterViewHolder.mMovieyearTv.setText(currentMovie.getYear()); */
+
+    }
+
+    /**
+     * This method simply returns the number of items to display. It is used behind the scenes
+     * to help layout our Views and for animations.
+     *
+     * @return The number of items available in our list of movies
+     */
+    @Override
+    public int getItemCount() {
+        if (mMovieData == null) return 0;
+        return mMovieData.size();
+    }
+
+    /**
+     * This method is used to set the movies on a existing MovieAdapter.
+     * This is handy when we get new data from the web but don't want to create a
+     * new MovieAdapter to display it.
+     *
+     * @param movieData The new movie data to be displayed.
+     */
+    public void setMovieData(List<AMovie> movieData) {
+        mMovieData = movieData;
+        notifyDataSetChanged();
     }
 }
