@@ -13,7 +13,8 @@ import com.example.android.popularmovies2.Data.AMovie;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements
+        MovieAdapter.MovieAdapterOnClickHandler{
 
     /**
      * The Ids for the 2 Loaders to be used in
@@ -140,6 +141,11 @@ public class MainActivity extends AppCompatActivity {
             // we will not need it.
             mProgressSpinner.setVisibility(View.GONE);
         } */
+
+    }
+
+    @Override
+    public void onClick(int postion) {
 
     }
 }
