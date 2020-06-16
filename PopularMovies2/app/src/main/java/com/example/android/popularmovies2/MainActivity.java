@@ -1,6 +1,7 @@
 package com.example.android.popularmovies2;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
@@ -104,15 +105,21 @@ public class MainActivity extends AppCompatActivity {
         // The progress spinner to use for a good
         mProgressSpinner = (ProgressBar) findViewById(R.id.main_loading_spinner);
 
+        // Create a new Grid Layout Manager
+        GridLayoutManager layoutManager = new GridLayoutManager(this, 2);
+        mRecyclerView.setHasFixedSize(true);
 
+        // Define the properties of the Layout Manager
+        int spanCount = 3; // 3 columns
+        boolean includeEdge = false;
 
-
-
+        // Attach the layout manager to the Recycler View
+        mRecyclerView.setLayoutManager(layoutManager);
 
         // The MovieAdapter is responsible for linking our movie data with the Recycler that
         // will end up displaying the data.
 
-        mMovieAdapter = new MovieAdapter(this, new ArrayList<AMovie>(), this);
+       // mMovieAdapter = new MovieAdapter(this, new ArrayList<AMovie>(), this);
 
         // Set the movie list as the data of the adapter
         mMovieAdapter.setMovieData(mMovieList);

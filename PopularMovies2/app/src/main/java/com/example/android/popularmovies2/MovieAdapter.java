@@ -22,6 +22,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
 
     private List<AMovie> mMovieData = new ArrayList<AMovie>();
     private Context mContext;
+    private final int  NUMBER_OF_MOVIE = 4;
 
     public interface MovieAdapterOnClickHandler {
         void onClick(int postion);
@@ -119,7 +120,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
     @Override
     public int getItemCount() {
         if (mMovieData == null) return 0;
-        return mMovieData.size();
+        return NUMBER_OF_MOVIE;
     }
 
     /**
