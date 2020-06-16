@@ -82,6 +82,11 @@ public class MainActivity extends AppCompatActivity implements
         // are no "null pointer" exceptions
         mMovieList = new ArrayList<AMovie>();
 
+        mMovieList.add(new AMovie());
+        mMovieList.add(new AMovie());
+        mMovieList.add(new AMovie());
+        mMovieList.add(new AMovie());
+
         // Verify if the movie list was saved as a bundle
         // and retrieve the data.
         if (savedInstanceState != null) {
@@ -101,10 +106,15 @@ public class MainActivity extends AppCompatActivity implements
         // if the API call is not successful.
         emptyStateRl.setVisibility(View.INVISIBLE);
 
-        mRecyclerView = (RecyclerView) findViewById(R.id.recyclerview_mainactivity);
+        // Find the recycler view of the Main Activity layout
+        // and store it onto a variable
+        mRecyclerView = (RecyclerView) findViewById(R.id.recyclerview_main_activity);
 
         // The progress spinner to use for a good
         mProgressSpinner = (ProgressBar) findViewById(R.id.main_loading_spinner);
+
+        //
+        mProgressSpinner.setVisibility(View.INVISIBLE);
 
         // Create a new Grid Layout Manager
         GridLayoutManager layoutManager = new GridLayoutManager(this, 2);
@@ -120,10 +130,10 @@ public class MainActivity extends AppCompatActivity implements
         // The MovieAdapter is responsible for linking our movie data with the Recycler that
         // will end up displaying the data.
 
-       // mMovieAdapter = new MovieAdapter(this, new ArrayList<AMovie>(), this);
+        mMovieAdapter = new MovieAdapter(this, mMovieList, this);
 
         // Set the movie list as the data of the adapter
-        mMovieAdapter.setMovieData(mMovieList);
+       // mMovieAdapter.setMovieData(mMovieList);
 
         // Set the adapter onto its RecyclerView
         mRecyclerView.setAdapter(mMovieAdapter);

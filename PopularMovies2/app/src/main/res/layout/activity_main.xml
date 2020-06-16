@@ -16,12 +16,9 @@
 
         <!-- Recycler view that will display the list of movies-->
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerview_mainactivity"
+            android:id="@+id/recyclerview_main_activity"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingTop="@dimen/recycler_spacing"
-            android:paddingLeft="@dimen/recycler_spacing"
-            android:paddingRight="@dimen/recycler_spacing"
             />
 
         <ProgressBar
