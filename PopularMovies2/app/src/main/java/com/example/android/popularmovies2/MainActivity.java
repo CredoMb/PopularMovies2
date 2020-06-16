@@ -108,10 +108,10 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        /*
-         * The MovieAdapter is responsible for linking our movie data with the Recycler that
-         * will end up displaying the data.
-         */
+
+        // The MovieAdapter is responsible for linking our movie data with the Recycler that
+        // will end up displaying the data.
+
         mMovieAdapter = new MovieAdapter(this, new ArrayList<AMovie>(), this);
 
         // Set the movie list as the data of the adapter
@@ -119,5 +119,20 @@ public class MainActivity extends AppCompatActivity {
 
         // Set the adapter onto its RecyclerView
         mRecyclerView.setAdapter(mMovieAdapter);
+
+        /**
+        // Start the Loader only if there's no element
+        // inside our movie list. Otherwise,
+        // remove the spinner from the screen.
+        if(mMovieList.isEmpty()) {
+            startLoaderOrEmptyState(MOVIE_LOADER_ID);
+        }
+        else {
+            // Remove the progress from the screen.
+            // As we already have data to display,
+            // we will not need it.
+            mProgressSpinner.setVisibility(View.GONE);
+        } */
+
     }
 }
