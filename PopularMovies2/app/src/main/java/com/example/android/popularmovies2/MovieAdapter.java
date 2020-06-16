@@ -103,6 +103,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
         // image view
 
         glideHelper.loadImage();
+
         /**
         movieAdapterViewHolder.mMovietitleTv.setText(currentMovie.getTitle());
         movieAdapterViewHolder.mMovieyearTv.setText(currentMovie.getYear()); */
