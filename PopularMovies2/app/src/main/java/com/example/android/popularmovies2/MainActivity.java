@@ -91,6 +91,33 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
+        // Store the entire emptyState view inside a variable
+        emptyStateRl = (RelativeLayout) findViewById(R.id.empty_group_view);
 
+        // Make the empty state invisible by default.
+        // It will only become visible
+        // if the API call is not successful.
+        emptyStateRl.setVisibility(View.INVISIBLE);
+
+        mRecyclerView = (RecyclerView) findViewById(R.id.recyclerview_mainactivity);
+
+        // The progress spinner to use for a good
+        mProgressSpinner = (ProgressBar) findViewById(R.id.main_loading_spinner);
+
+
+
+
+
+        /*
+         * The MovieAdapter is responsible for linking our movie data with the Recycler that
+         * will end up displaying the data.
+         */
+        mMovieAdapter = new MovieAdapter(this, new ArrayList<AMovie>(), this);
+
+        // Set the movie list as the data of the adapter
+        mMovieAdapter.setMovieData(mMovieList);
+
+        // Set the adapter onto its RecyclerView
+        mRecyclerView.setAdapter(mMovieAdapter);
     }
 }
