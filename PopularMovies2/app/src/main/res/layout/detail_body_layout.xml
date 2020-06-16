@@ -16,7 +16,8 @@
         android:layout_height="wrap_content"
         android:text="TextView"
         app:layout_constraintStart_toStartOf="@+id/imageView"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="THis movie is a very godd one and all the blabla"/>
 
     <ImageView
         android:id="@+id/imageView"

@@ -92,18 +92,18 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
     public void onBindViewHolder(@NonNull MovieAdapterViewHolder movieAdapterViewHolder, int position) {
 
         // movieAdapterViewHolder.mMovieThumbnailIv.setImageURI(Uri.parse(ImagebaseUrl));
-        /**AMovie currentMovie = mMovieData.get(position);
+        AMovie currentMovie = mMovieData.get(position);
 
         GlideHelperClass glideHelper = new GlideHelperClass(mContext,
                 currentMovie.getPosterPath(),
                 R.drawable.placeholder_image,
-                movieAdapterViewHolder.mMovieThumbnailIv); */
+                movieAdapterViewHolder.mMoviePosterIv);
 
         // This will load the image, from the API to the
         // image view
-        /**
-        glideHelper.loadImage();
 
+        glideHelper.loadImage();
+        /**
         movieAdapterViewHolder.mMovietitleTv.setText(currentMovie.getTitle());
         movieAdapterViewHolder.mMovieyearTv.setText(currentMovie.getYear()); */
 
