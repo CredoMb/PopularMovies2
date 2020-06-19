@@ -120,6 +120,7 @@ public class MainActivity extends AppCompatActivity implements
         GridLayoutManager layoutManager = new GridLayoutManager(this, 2);
         mRecyclerView.setHasFixedSize(true);
 
+
         // Define the properties of the Layout Manager
         int spanCount = 3; // 3 columns
         boolean includeEdge = false;
