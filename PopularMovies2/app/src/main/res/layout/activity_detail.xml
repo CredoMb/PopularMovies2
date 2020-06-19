@@ -27,6 +27,50 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"/>
+
+            <LinearLayout
+                android:id="@+id/reviewSummary_groupView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/recycler_spacing"
+                android:paddingRight="@dimen/recycler_spacing"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textView_reviewSummary_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:textColor="@android:color/black"
+
+                    android:layout_marginBottom="16dp"
+                    tools:text="8.5/10 (50 reviews)"/>
+
+                <TextView
+                    android:id="@+id/textView_reviewSummary_sample_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:textColor="@android:color/black"
+                    tools:text="Credo"/>
+
+                <TextView
+                    android:id="@+id/textView_reviewSummary_sample_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:maxLines="1"
+                    tools:text="I want to know, every body want to know, where is my life, it's"/>
+
+                <Button
+                    android:id="@+id/reviewSummary_showAllReview_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Show all 300 reviews"/>
+            </LinearLayout>
+
         </LinearLayout>
 
     </ScrollView>
