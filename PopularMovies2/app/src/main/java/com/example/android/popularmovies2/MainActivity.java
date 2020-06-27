@@ -9,7 +9,11 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
+import com.example.android.popularmovies2.APIResponsePOJO.DiscoveredMovies;
+import com.example.android.popularmovies2.Data.APIInterface;
+
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements
         MovieAdapter.MovieAdapterOnClickHandler{
@@ -48,8 +52,11 @@ public class MainActivity extends AppCompatActivity implements
     /**
      * The variable that should contain the movie list
      */
+    APIInterface apiInterface;
 
-    public static ArrayList<AMovie> mMovieList;
+    // The following variables will contain
+    // informations fetched from the API
+    List<DiscoveredMovies.AMovie> movieList;
 
     /**
      * The progress Spinner
@@ -95,7 +102,6 @@ public class MainActivity extends AppCompatActivity implements
             }
         }
 
-
         // Store the entire emptyState view inside a variable
         emptyStateRl = (RelativeLayout) findViewById(R.id.empty_group_view);
 
@@ -117,7 +123,6 @@ public class MainActivity extends AppCompatActivity implements
         // Create a new Grid Layout Manager
         GridLayoutManager layoutManager = new GridLayoutManager(this, 2);
         mRecyclerView.setHasFixedSize(true);
-
 
         // Define the properties of the Layout Manager
         int spanCount = 3; // 3 columns

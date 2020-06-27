@@ -5,13 +5,15 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 /**
- * All the element inside this
- * class represent the json propery
- * we are interested in.
+ * This is a modelisation of the
+ * json response that we should get from
+ * the "discover endpoint" of "the movie database"
  *
  * P.s. We only created property
  * that we will need during this
- * project. The Json version could be
+ * project.
+ *
+ * The Json version could be
  * bigger than our model
  *
  */
