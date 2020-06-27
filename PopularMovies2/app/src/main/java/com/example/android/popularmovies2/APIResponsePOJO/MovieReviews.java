@@ -7,8 +7,14 @@ import java.util.List;
 /**
  * This is a modelisation of the
  * json response that we should get from
- * the review endpoint of "the movie database"
+ * the "review endpoint" of "the movie database"
  *
+ * P.S. We only created property
+ * that we will need during this
+ * project.
+ *
+ * The Json version could be
+ * bigger than our model
  * */
 
 public class MovieReviews {

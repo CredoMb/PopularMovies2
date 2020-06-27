@@ -9,6 +9,11 @@ import java.util.List;
  * class represent the json propery
  * we are interested in.
  *
+ * P.s. We only created property
+ * that we will need during this
+ * project. The Json version could be
+ * bigger than our model
+ *
  */
 
 public class DiscoveredMovies {
