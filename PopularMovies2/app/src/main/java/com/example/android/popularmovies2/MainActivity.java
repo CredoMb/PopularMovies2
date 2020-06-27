@@ -9,8 +9,6 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
-import com.example.android.popularmovies2.Data.AMovie;
-
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements
