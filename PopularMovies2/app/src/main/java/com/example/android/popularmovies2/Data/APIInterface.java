@@ -11,7 +11,17 @@ import retrofit2.http.Url;
 
 public interface APIInterface {
 
-    final static String API_KEY = "cd401ba98e50ce8bf913cdce912aa430";
+    /**The Key doesn't appear on public repo */
+    public final static String API_KEY = "";
+
+    /**
+     *
+     * Constants to be used inside the url extension as the possible value of sortBy.
+     * This will determine the sortage of the API response.
+     *
+     * */
+    public final static String BY_POPULARITY = "popularity.desc";
+    public final static String BY_RATINGS = "vote_average.desc";
 
     /**
      *
@@ -21,7 +31,10 @@ public interface APIInterface {
      *
      *  */
 
-    final static String URL_EXTRA_PARAMETERS = "&language=en-US&sort_by=popularity.desc&include_adult=true&include_video=false&page=1";
+
+    public String sortBy = BY_POPULARITY;
+
+    final static String URL_EXTRA_PARAMETERS = "&language=en-US&sort_by="+ sortBy +"&include_adult=true&include_video=false&page=1";
     final static String DISCOVER_URL_EXTENSION = "discover/movie?api_key=" + API_KEY + URL_EXTRA_PARAMETERS;
 
     /**
