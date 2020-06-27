@@ -8,6 +8,7 @@ import java.util.List;
  * All the element inside this
  * class represent the json propery
  * we are interested in.
+ *
  */
 
 public class DiscoveredMovies {
