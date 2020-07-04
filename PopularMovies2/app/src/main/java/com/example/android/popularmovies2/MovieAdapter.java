@@ -2,6 +2,7 @@ package com.example.android.popularmovies2;
 
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.android.popularmovies2.APIResponsePOJO.DiscoveredMovies;
 import com.example.android.popularmovies2.Data.GlideHelperClass;
 
 import java.util.ArrayList;
@@ -18,7 +20,7 @@ import java.util.List;
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapterViewHolder>{
 
 
-    private List<AMovie> mMovieData = new ArrayList<AMovie>();
+    private List<DiscoveredMovies.AMovie> mMovieData = new ArrayList<DiscoveredMovies.AMovie>();
     private Context mContext;
     private final int  NUMBER_OF_MOVIE = 4;
 
@@ -31,7 +33,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
     /**
      * Constructor of the adaptor
      */
-    public MovieAdapter(Context context, List<AMovie> movieData,
+    public MovieAdapter(Context context, List<DiscoveredMovies.AMovie> movieData,
                         MovieAdapterOnClickHandler clickHandler) {
 
         mContext = context;
@@ -91,7 +93,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
     public void onBindViewHolder(@NonNull MovieAdapterViewHolder movieAdapterViewHolder, int position) {
 
         // movieAdapterViewHolder.mMovieThumbnailIv.setImageURI(Uri.parse(ImagebaseUrl));
-        AMovie currentMovie = mMovieData.get(position);
+        DiscoveredMovies.AMovie currentMovie = mMovieData.get(position);
 
         GlideHelperClass glideHelper = new GlideHelperClass(mContext,
                 currentMovie.getPosterPath(),
@@ -128,7 +130,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
      *
      * @param movieData The new movie data to be displayed.
      */
-    public void setMovieData(List<AMovie> movieData) {
+    public void setMovieData(List<DiscoveredMovies.AMovie> movieData) {
         mMovieData = movieData;
         notifyDataSetChanged();
     }

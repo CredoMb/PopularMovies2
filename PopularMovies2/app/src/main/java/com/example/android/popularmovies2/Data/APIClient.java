@@ -10,7 +10,7 @@ public class APIClient {
     private static Retrofit retrofit = null;
     public final String BASE_URL = "https://api.themoviedb.org/3/";
 
-    static Retrofit getClient() {
+    public static Retrofit getClient() {
 
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);

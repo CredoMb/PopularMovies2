@@ -24,6 +24,9 @@ public class DiscoveredMovies {
     public List<AMovie> movieList;
 
     public class AMovie {
+        // This will be used to build the complete URL for the
+        // poster image
+       private final String IMAGE_BASE_URL = "https://image.tmdb.org/t/p/original";
 
         /*The following variables represent the property of one
          Json movie object fetched from the API.*/
@@ -58,7 +61,9 @@ public class DiscoveredMovies {
         }
 
         public String getPosterPath() {
-            return posterPath;
+            return  IMAGE_BASE_URL + posterPath;
+
+            // Poster path should be mixed with an url
         }
 
         public Double getPopularity() {

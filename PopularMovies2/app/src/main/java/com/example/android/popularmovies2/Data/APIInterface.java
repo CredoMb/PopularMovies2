@@ -12,7 +12,7 @@ import retrofit2.http.Url;
 public interface APIInterface {
 
     /**The Key doesn't appear on public repo */
-    public final static String API_KEY = "";
+    public final static String API_KEY = "cd401ba98e50ce8bf913cdce912aa430";
 
     /**
      *
@@ -46,8 +46,8 @@ public interface APIInterface {
      * */
 
     // Get the list of popular movies
-    @GET(DISCOVER_URL_EXTENSION)
-    Call<DiscoveredMovies> doGetPopularMovies();
+    @GET
+    Call<DiscoveredMovies> doGetPopularMovies(@Url String url);
 
 
     /**
