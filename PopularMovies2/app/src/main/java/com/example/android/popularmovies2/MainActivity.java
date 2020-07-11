@@ -233,7 +233,6 @@ public class MainActivity extends AppCompatActivity implements
     }
 
 
-
     // If the user clicks on the menu to select his preferences
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -248,10 +247,6 @@ public class MainActivity extends AppCompatActivity implements
                 // This way, the movies will be displayed
                 // according to the sort preference.
                 mSortBy = BY_POPULARITY;
-
-                // Attach an empty list to the adapter.
-                // This will help us to fill back with fresh data
-                mMovieAdapter.setMovieData(new ArrayList<DiscoveredMovies.AMovie>());
 
                 fetchDiscoveredMovies(mApiInterface,mSortBy);
                 // This will call the appropriate endpoint and
@@ -268,7 +263,7 @@ public class MainActivity extends AppCompatActivity implements
             case R.id.action_ratings:
 
                 mSortBy = BY_RATINGS;
-                mMovieAdapter.setMovieData(new ArrayList<DiscoveredMovies.AMovie>());
+                // mMovieAdapter.setMovieData(new ArrayList<DiscoveredMovies.AMovie>());
                 fetchDiscoveredMovies(mApiInterface,mSortBy);
 
                 return true;
@@ -289,11 +284,14 @@ public class MainActivity extends AppCompatActivity implements
 
     public void fetchDiscoveredMovies(APIInterface apiInterface, String sortingKey){
 
-      //  apiInterface = APIClient.getClient().create(APIInterface.class);
-
+        // Create the variable "callPopularMovies" that will help us make
+        // an API call on the "discover" endpoint.
         Call<DiscoveredMovies> callPopularMovies = apiInterface.doGetDiscoveredMovies(
                 getProperUrl(DISCOVER_MOVIE,0,sortingKey));
 
+        // Make the API and use the response to fill
+        // the adapter with data. This is done on a background
+        // thread.
         callPopularMovies.enqueue(new Callback<DiscoveredMovies>() {
 
             @Override
@@ -305,6 +303,10 @@ public class MainActivity extends AppCompatActivity implements
                     /*Call<MovieCredit> callMovieCredit;
                     Call<MovieDetail> callMovieDetail;*/
                     Log.e("eza na sircé","iyo sircé");
+
+                    // Attach an empty list to the adapter.
+                    // This will help us to fill the adapter with fresh data
+                    mMovieAdapter.setMovieData(new ArrayList<DiscoveredMovies.AMovie>());
 
                     mMovieAdapter.setMovieData(resource.movieList);
                     // Set the adapter onto its RecyclerView
