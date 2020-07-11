@@ -15,7 +15,6 @@ import android.widget.RelativeLayout;
 import com.example.android.popularmovies2.APIResponsePOJO.DiscoveredMovies;
 import com.example.android.popularmovies2.APIResponsePOJO.MovieCredit;
 import com.example.android.popularmovies2.APIResponsePOJO.MovieDetail;
-import com.example.android.popularmovies2.Data.*;
 import com.example.android.popularmovies2.Data.APIClient;
 import com.example.android.popularmovies2.Data.APIInterface;
 
@@ -81,7 +80,7 @@ public class MainActivity extends AppCompatActivity implements
     private MovieAdapter mMovieAdapter;
 
 
-    APIInterface apiInterface;
+    APIInterface mApiInterface;
 
     /**
      * The variable that should contain the movie list
@@ -158,6 +157,9 @@ public class MainActivity extends AppCompatActivity implements
 
         mMovieAdapter = new MovieAdapter(this, new ArrayList<DiscoveredMovies.AMovie>(), this);
 
+        // Set the default sorting to be by popularity
+        mSortBy = BY_POPULARITY;
+
         // Set the movie list as the data of the adapter
        // mMovieAdapter.setMovieData(mMovieList);
 
@@ -166,27 +168,20 @@ public class MainActivity extends AppCompatActivity implements
 
         /**Create a method to manage the preferences of the user.
          * If the user clicks on "popular or trendy or sum like that"
-         *
          * */
-        apiInterface = APIClient.getClient().create(APIInterface.class);
+        mApiInterface = APIClient.getClient().create(APIInterface.class);
+        fetchDiscoveredMovies(mApiInterface, BY_POPULARITY);
 
-        //fetchDiscoveredMovies(APIInterface apiInterface, String sortingKey);
-
-        Call<DiscoveredMovies> callPopularMovies = apiInterface.doGetPopularMovies("discover/movie?api_key=cd401ba98e50ce8bf913cdce912aa430&language=en-US&sort_by=popularity.desc&include_adult=true&include_video=false&page=1");
-
-        //getProperUrl(DISCOVER_MOVIE,0,BY_POPULARITY)
-
+       /* Call<DiscoveredMovies> callPopularMovies = mApiInterface.doGetDiscoveredMovies(getProperUrl(DISCOVER_MOVIE,0,BY_POPULARITY));
         callPopularMovies.enqueue(new Callback<DiscoveredMovies>() {
             @Override
             public void onResponse(Call<DiscoveredMovies> call, Response<DiscoveredMovies> response) {
 
-                Log.e("Surcessful","Esimbi");
-
                 if (response.isSuccessful()) {
 
                     DiscoveredMovies resource = response.body();
-                    Call<MovieCredit> callMovieCredit;
-                    Call<MovieDetail> callMovieDetail;
+                    *//*Call<MovieCredit> callMovieCredit;
+                    Call<MovieDetail> callMovieDetail;*//*
 
                     mMovieAdapter.setMovieData(resource.movieList);
                     // Set the adapter onto its RecyclerView
@@ -197,15 +192,6 @@ public class MainActivity extends AppCompatActivity implements
                     Log.e(MainActivity.class.getSimpleName(),"API Response unsuccessful, code : "+ response.code());
                 }
 
-                // Make sure the response from the api is not null.
-                // Then, either transfert the result to the list or
-                // display a message to the log.
-                /*if(resource!=null){
-                    //movieList = resource.movieList ;
-
-                    movieList.addAll(resource.movieList);
-                }*/
-
                 // Log.e("Movie title",movieList.get(0).getTitle());
             }
 
@@ -215,7 +201,7 @@ public class MainActivity extends AppCompatActivity implements
                 Log.e(MainActivity.class.getSimpleName(),t.toString());
                 call.cancel();
             }
-        });
+        });*/
 
         /**
         // Start the Loader only if there's no element
@@ -262,11 +248,15 @@ public class MainActivity extends AppCompatActivity implements
                 // This way, the movies will be displayed
                 // according to the sort preference.
                 mSortBy = BY_POPULARITY;
+
+                // Attach an empty list to the adapter.
+                // This will help us to fill back with fresh data
                 mMovieAdapter.setMovieData(new ArrayList<DiscoveredMovies.AMovie>());
 
+                fetchDiscoveredMovies(mApiInterface,mSortBy);
                 // This will call the appropriate endpoint and
                 // return a list of movies
-               // callAppropriateEndPoint();
+                // callAppropriateEndPoint();
 
                 // We would need to recall the thing
                 // enqueue it and do whatever
@@ -274,19 +264,35 @@ public class MainActivity extends AppCompatActivity implements
                 // Destroy the previous loader and start a new one
 
                 return true;
-            case 2:
+
+            case R.id.action_ratings:
+
+                mSortBy = BY_RATINGS;
+                mMovieAdapter.setMovieData(new ArrayList<DiscoveredMovies.AMovie>());
+                fetchDiscoveredMovies(mApiInterface,mSortBy);
+
+                return true;
         }
-        return false;
+
+        return super.onOptionsItemSelected(item);
     }
 
-    /*public void fetchDiscoveredMovies(APIInterface apiInterface, String sortingKey){
+    /** This method will be used to fetch data from the "discover" endpoint.
+     *
+     * @param apiInterface is the interface used to query the different endpoints
+     *                     of the database. In this case, it will be used for the
+     *                     "discover" endpoint
+     *
+     * @param sortingKey Will determine weither the data should be queried based on the
+     *                   their popularity or their ratings.
+     * */
 
-        apiInterface.sortBy = sortingKey;
+    public void fetchDiscoveredMovies(APIInterface apiInterface, String sortingKey){
 
-        // We need to build the url externally to the
-        // api interface, bitch !
+      //  apiInterface = APIClient.getClient().create(APIInterface.class);
 
-        Call<DiscoveredMovies> callPopularMovies = apiInterface.doGetPopularMovies();
+        Call<DiscoveredMovies> callPopularMovies = apiInterface.doGetDiscoveredMovies(
+                getProperUrl(DISCOVER_MOVIE,0,sortingKey));
 
         callPopularMovies.enqueue(new Callback<DiscoveredMovies>() {
 
@@ -294,10 +300,11 @@ public class MainActivity extends AppCompatActivity implements
             public void onResponse(Call<DiscoveredMovies> call, Response<DiscoveredMovies> response) {
 
                 if (response.isSuccessful()) {
-
                     DiscoveredMovies resource = response.body();
-                    Call<MovieCredit> callMovieCredit;
-                    Call<MovieDetail> callMovieDetail;
+
+                    /*Call<MovieCredit> callMovieCredit;
+                    Call<MovieDetail> callMovieDetail;*/
+                    Log.e("eza na sircé","iyo sircé");
 
                     mMovieAdapter.setMovieData(resource.movieList);
                     // Set the adapter onto its RecyclerView
@@ -307,7 +314,6 @@ public class MainActivity extends AppCompatActivity implements
                 else {
                     Log.e(MainActivity.class.getSimpleName(),"API Response unsuccessful, code : "+ response.code());
                 }
-
             }
 
             @Override
@@ -317,7 +323,21 @@ public class MainActivity extends AppCompatActivity implements
                 call.cancel();
             }
         });
-    }*/
+
+    }
+
+
+    /** This method produce the proper string url to be used by the apiinterface.
+     *
+     * @param dataType will determine the endpoint that will should query
+     *
+     * @param movieId Will only be used when we need information about one specific
+     *                movie.Determine which movie we're requesting information for.
+     *
+     * @param sortBy  Will only be used when we need to get a collection of movies.
+     *                In this case, the movies will be based on the
+     *                value of "sortBy"
+     * */
     public String getProperUrl(String dataType, int movieId, String sortBy) {
 
         // The following will be used to query the
@@ -330,6 +350,8 @@ public class MainActivity extends AppCompatActivity implements
         // The following will be used to
         // get information about one movie. An extension will be
         // added to the url to determine the endpoint we query information from.
+        // We will query information from one of the following endpoint :
+        // credit, reviews or video
         String urlExtensionWithId = "movie/";
         urlExtensionWithId += movieId ;
 
@@ -345,32 +367,30 @@ public class MainActivity extends AppCompatActivity implements
          *  get the data we are looking for. */
 
         switch (dataType){
+            // Add the extension to get the data related to the credit of a given movie.
+            // By credit, we mean the people who participated into the construction of the movie.
             case MOVIE_CREDIT: urlExtensionWithId += "/"+ MOVIE_CREDIT ;
                 break;
 
             /*case MOVIE_DETAILS: urlExtensionWithId += "&" + "language" + "=" + "en-US";
             break;*/
 
+            // Add the extension to get the reviews related to a given movie.
             case MOVIE_REVIEWS: urlExtensionWithId += "/" + MOVIE_REVIEWS;
                 break;
 
+            // Add the extension to get the data related to the trailer of a given movie.
             case MOVIE_VIDEO: urlExtensionWithId += "/" + MOVIE_VIDEO;
                 break;
 
             case DISCOVER_MOVIE: DiscoveredMovieUrlExtension = "discover/movie?api_key=" + API_KEY + DiscoveredMovieUrlExtra;
-                Log.e("Leu lien",DiscoveredMovieUrlExtension);
                 return DiscoveredMovieUrlExtension;
         }
 
-        /* discover/movie?api_key=cd401ba98e50ce8bf913cdce912aa430&language=en-US&sort_by=popularity.desc&include_adult=true&include_video=false&page=1*/
-
-        // Finally we'll add the api key to our url extension
-        // which will be "...?api_key={the key}"
+        // Finally we'll add the api key to the url extension
+        // that uses the id.
         urlExtensionWithId += "?" + "api_key"  + "=" + API_KEY;
 
-        // https://api.themoviedb.org/3/movie/419704?api_key=cd401ba98e50ce8bf913cdce912aa430&language=en-US
-
-        Log.e("The link extension",urlExtensionWithId);
         return urlExtensionWithId;
     }
 }

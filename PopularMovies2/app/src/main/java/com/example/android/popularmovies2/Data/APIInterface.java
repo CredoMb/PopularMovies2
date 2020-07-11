@@ -44,10 +44,11 @@ public interface APIInterface {
      * These endpoints will be accessed by using
      * the correct url extension.
      * */
+    //("discover/movie?api_key=cd401ba98e50ce8bf913cdce912aa430&language=en-US&sort_by=popularity.desc&include_adult=true&include_video=false&page=1")
 
     // Get the list of popular movies
     @GET
-    Call<DiscoveredMovies> doGetPopularMovies(@Url String url);
+    Call<DiscoveredMovies> doGetDiscoveredMovies(@Url String url);
 
 
     /**
