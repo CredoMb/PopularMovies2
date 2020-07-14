@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -15,6 +16,7 @@ import android.widget.RelativeLayout;
 import com.example.android.popularmovies2.APIResponsePOJO.DiscoveredMovies;
 import com.example.android.popularmovies2.APIResponsePOJO.MovieCredit;
 import com.example.android.popularmovies2.APIResponsePOJO.MovieDetail;
+import com.example.android.popularmovies2.APIResponsePOJO.MovieReviews;
 import com.example.android.popularmovies2.Data.APIClient;
 import com.example.android.popularmovies2.Data.APIInterface;
 
@@ -89,6 +91,24 @@ public class MainActivity extends AppCompatActivity implements
     List<DiscoveredMovies.AMovie> movieList;
 
     /**
+     * The list of credit for all the movies fetched from
+     * the API.
+     * */
+    List<MovieCredit> mMoviesCredit;
+
+    /**
+     * The list of detail for all the movies fetched from
+     * the API.
+     * */
+    List<MovieDetail> mMoviesDetail;
+
+    /**
+     * The list of review for all the movies fetched from
+     * the API.
+     * */
+    List<MovieReviews> mMoviesReviews;
+
+    /**
      * The progress Spinner
      */
     private ProgressBar mProgressSpinner;
@@ -112,16 +132,6 @@ public class MainActivity extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        // Verify if the movie list was saved as a bundle
-        // and retrieve the data.
-        if (savedInstanceState != null) {
-
-            if (savedInstanceState.containsKey(MOVIE_LIST)) {
-               // mMovieList = savedInstanceState.getParcelableArrayList(MOVIE_LIST);
-
-            }
-        }
 
         // Store the entire emptyState view inside a variable
         emptyStateRl = (RelativeLayout) findViewById(R.id.empty_group_view);
@@ -160,8 +170,14 @@ public class MainActivity extends AppCompatActivity implements
         // Set the default sorting to be by popularity
         mSortBy = BY_POPULARITY;
 
+        // Initialize the variable that should store the credit of
+        // the movie. This variable will be changed inside the getCredit
+        mMoviesCredit = new ArrayList<MovieCredit>();
+        mMoviesDetail =  new ArrayList<MovieDetail>();
+        mMoviesReviews = new ArrayList<MovieReviews>();
+
         // Set the movie list as the data of the adapter
-       // mMovieAdapter.setMovieData(mMovieList);
+        // mMovieAdapter.setMovieData(mMovieList);
 
         // Create the thing to set fetch the movie
         // This will query the endpoint we need to return the list of movies
@@ -172,36 +188,6 @@ public class MainActivity extends AppCompatActivity implements
         mApiInterface = APIClient.getClient().create(APIInterface.class);
         fetchDiscoveredMovies(mApiInterface, BY_POPULARITY);
 
-       /* Call<DiscoveredMovies> callPopularMovies = mApiInterface.doGetDiscoveredMovies(getProperUrl(DISCOVER_MOVIE,0,BY_POPULARITY));
-        callPopularMovies.enqueue(new Callback<DiscoveredMovies>() {
-            @Override
-            public void onResponse(Call<DiscoveredMovies> call, Response<DiscoveredMovies> response) {
-
-                if (response.isSuccessful()) {
-
-                    DiscoveredMovies resource = response.body();
-                    *//*Call<MovieCredit> callMovieCredit;
-                    Call<MovieDetail> callMovieDetail;*//*
-
-                    mMovieAdapter.setMovieData(resource.movieList);
-                    // Set the adapter onto its RecyclerView
-                    mRecyclerView.setAdapter(mMovieAdapter);
-
-                }
-                else {
-                    Log.e(MainActivity.class.getSimpleName(),"API Response unsuccessful, code : "+ response.code());
-                }
-
-                // Log.e("Movie title",movieList.get(0).getTitle());
-            }
-
-            @Override
-            public void onFailure(Call<DiscoveredMovies> call, Throwable t) {
-                // Will print the error in case the network operation fails
-                Log.e(MainActivity.class.getSimpleName(),t.toString());
-                call.cancel();
-            }
-        });*/
 
         /**
         // Start the Loader only if there's no element
@@ -227,13 +213,7 @@ public class MainActivity extends AppCompatActivity implements
         return true;
     }
 
-    @Override
-    public void onClick(int postion) {
 
-    }
-
-
-    // If the user clicks on the menu to select his preferences
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -282,7 +262,7 @@ public class MainActivity extends AppCompatActivity implements
      *                   their popularity or their ratings.
      * */
 
-    public void fetchDiscoveredMovies(APIInterface apiInterface, String sortingKey){
+    public void fetchDiscoveredMovies(final APIInterface apiInterface, final String sortingKey){
 
         // Create the variable "callPopularMovies" that will help us make
         // an API call on the "discover" endpoint.
@@ -300,17 +280,25 @@ public class MainActivity extends AppCompatActivity implements
                 if (response.isSuccessful()) {
                     DiscoveredMovies resource = response.body();
 
-                    /*Call<MovieCredit> callMovieCredit;
-                    Call<MovieDetail> callMovieDetail;*/
-                    Log.e("eza na sircé","iyo sircé");
-
                     // Attach an empty list to the adapter.
                     // This will help us to fill the adapter with fresh data
                     mMovieAdapter.setMovieData(new ArrayList<DiscoveredMovies.AMovie>());
 
+                    // Get the movie list gotten from the API
+                    // and set it to the adapter as the movie data.
                     mMovieAdapter.setMovieData(resource.movieList);
                     // Set the adapter onto its RecyclerView
                     mRecyclerView.setAdapter(mMovieAdapter);
+
+                    // Transfert the movie list to the DetailActivity.
+                    DetailActivity.mMovieList = resource.movieList;
+                    // This method will fill the mMoviesCredit
+                    // with appropriate data.
+                    getMoviesCredit(resource.movieList,apiInterface);
+
+                    getMoviesDetail(resource.movieList,apiInterface);
+
+                    getMoviesReviews(resource.movieList,apiInterface);
 
                 }
                 else {
@@ -325,9 +313,7 @@ public class MainActivity extends AppCompatActivity implements
                 call.cancel();
             }
         });
-
     }
-
 
     /** This method produce the proper string url to be used by the apiinterface.
      *
@@ -355,8 +341,7 @@ public class MainActivity extends AppCompatActivity implements
         // We will query information from one of the following endpoint :
         // credit, reviews or video
         String urlExtensionWithId = "movie/";
-        urlExtensionWithId += movieId ;
-
+        urlExtensionWithId += movieId;
 
         /* "https://api.themoviedb.org/3/movie/{movieId}" or "https://api.themoviedb.org/3/"
          *  will be used as the principal url.
@@ -394,5 +379,140 @@ public class MainActivity extends AppCompatActivity implements
         urlExtensionWithId += "?" + "api_key"  + "=" + API_KEY;
 
         return urlExtensionWithId;
+    }
+
+    /**
+     * The next 3 methods will help us get extra information
+     * about all the movies we fetched from the API.
+     * Those informations are: the credit (getMoviesCredit),
+     * the detail (getMoviesDetail) and reviews (getMoviesReviews)
+     *
+     * Each of these 3 block of infos is located in a different endpoint.
+     *
+     * @param movieList holds the list of movies fetched from the API.
+     *                  Each movie possess a couple of basic information
+     *
+     * @param apiInterface is an entity of @APIInterface. It will help us to perform
+     *                     the API call to the proper endpoint of the API.
+     * */
+    public void getMoviesCredit(List<DiscoveredMovies.AMovie> movieList, final APIInterface apiInterface) {
+
+        // Get the credit info of every movie in the list,
+        // from the credit enpoint of the API
+        for (DiscoveredMovies.AMovie movie : movieList) {
+
+            Call<MovieCredit> callMovieCredit = apiInterface.doGetMovieCredit(getProperUrl(MOVIE_CREDIT,movie.getId(),""));
+            callMovieCredit.enqueue(new Callback<MovieCredit>() {
+
+                @Override
+                public void onResponse(Call<MovieCredit> call, Response<MovieCredit> response) {
+                    if(response.isSuccessful()){
+                        MovieCredit resource = response.body();
+
+                        // Once we get the movie credit,
+                        // add it to the mMoviesCredit list.
+                        // This will contain the credit infos for all the movies previously fetched
+                        mMoviesCredit.add(resource) ;
+                        DetailActivity.mMoviesCredits.add(resource);
+                    }
+
+                    else {
+                        Log.e(MainActivity.class.getSimpleName(),"API Response unsuccessful, code : "+ response.code());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<MovieCredit> call, Throwable t) {
+                    // Will print the error in case the network operation fails
+                    Log.e(MainActivity.class.getSimpleName(),t.toString());
+                    call.cancel();
+                }
+            });
+
+        }
+    }
+
+    public void getMoviesDetail(List<DiscoveredMovies.AMovie> movieList, final APIInterface apiInterface){
+
+        for (DiscoveredMovies.AMovie movie : movieList) {
+
+            Call<MovieDetail> callMovieDetail = apiInterface.doGetMovieDetail(getProperUrl(MOVIE_DETAILS,movie.getId(),""));
+            callMovieDetail.enqueue(new Callback<MovieDetail>() {
+
+                @Override
+                public void onResponse(Call<MovieDetail> call, Response<MovieDetail> response) {
+
+                    if(response.isSuccessful()){
+                        MovieDetail resource = response.body();
+
+                        // Once we get the movie detail,
+                        // add it to the mMoviesDetail list.
+                        // This will contain the detail infos for all the movies previously fetched.
+                        mMoviesDetail.add(resource);
+                        DetailActivity.mMoviesDetails.add(resource);
+                    }
+
+                    else {
+                        Log.e(MainActivity.class.getSimpleName(),"API Response unsuccessful, code : "+ response.code());
+                    }
+                    // Should we close the call at the end ?
+                }
+
+                @Override
+                public void onFailure(Call<MovieDetail> call, Throwable t) {
+                    // Will print the error in case the network operation fails
+                    Log.e(MainActivity.class.getSimpleName(),t.toString());
+                    call.cancel();
+                }
+            });
+
+        }
+    }
+
+    public void getMoviesReviews(List<DiscoveredMovies.AMovie> movieList, final APIInterface apiInterface){
+        for (DiscoveredMovies.AMovie movie : movieList) {
+
+            Call<MovieReviews> callMovieReviews = apiInterface.doGetMovieReviews(getProperUrl(MOVIE_REVIEWS,movie.getId(),""));
+            callMovieReviews.enqueue(new Callback<MovieReviews>() {
+
+                @Override
+                public void onResponse(Call<MovieReviews> call, Response<MovieReviews> response) {
+                    if(response.isSuccessful()){
+                        MovieReviews resource = response.body();
+
+                        // Once we get the movie review,
+                        // add it to the mMoviesReviews list.
+                        // This will contain the review infos for all the movies previously fetched.
+                        mMoviesReviews.add(resource);
+                        DetailActivity.mMoviesReviews.add(resource);
+                    }
+
+                    else {
+                        Log.e(MainActivity.class.getSimpleName(),"API Response unsuccessful, code : "+ response.code());
+                    }
+                    // Should we close the call at the end ?
+                }
+
+                @Override
+                public void onFailure(Call<MovieReviews> call, Throwable t) {
+                    // Will print the error in case the network operation fails
+                    Log.e(MainActivity.class.getSimpleName(),t.toString());
+                    call.cancel();
+                }
+            });
+
+        }
+    }
+
+    @Override
+    public void onClick(int position) {
+        // At first, make sure the adapter is not empty
+        if (mMovieAdapter.getItemCount() > 0) {
+
+            Intent intent = new Intent(MainActivity.this, DetailActivity.class);
+            intent.putExtra(DetailActivity.EXTRA_POSITION, position);
+
+            startActivity(intent);
+        }
     }
 }

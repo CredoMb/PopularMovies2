@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">PopularMovies2</string>
 
     <!-- Text for the "no internet" Empty State -->
@@ -21,5 +21,16 @@
     <string name="no_result_title">No Result</string>
     <string name="no_result_text">Please change your search term and retry</string>
     <string name="close">Close</string>
+
+    <!--
+
+    Strings for the Detail Activity
+
+     -->
+
+    <!-- Title for the review textView. It preceded by the number of reviewer
+        , which will be set in the java class.
+         &#160; -->
+    <string name="review_title"><xliff:g id="reviewers" example="50">%d</xliff:g>&#032;Reviews </string>
 
 </resources>

@@ -15,48 +15,18 @@ public interface APIInterface {
     public final static String API_KEY = "cd401ba98e50ce8bf913cdce912aa430";
 
     /**
-     *
-     * Constants to be used inside the url extension as the possible value of sortBy.
-     * This will determine the sortage of the API response.
-     *
-     * */
-    public final static String BY_POPULARITY = "popularity.desc";
-    public final static String BY_RATINGS = "vote_average.desc";
-
-    /**
-     *
-     *  The following variables will help us build the
-     *  url that will give us access to the "discover" endpoint
-     *  of the movie database API.
-     *
-     *  */
-
-
-    public String sortBy = BY_POPULARITY;
-
-    final static String URL_EXTRA_PARAMETERS = "&language=en-US&sort_by="+ sortBy +"&include_adult=true&include_video=false&page=1";
-    final static String DISCOVER_URL_EXTENSION = "discover/movie?api_key=" + API_KEY + URL_EXTRA_PARAMETERS;
-
-    /**
      * All the @GET method will
      * fetch data from a specific endpoint of the API.
      *
      * These endpoints will be accessed by using
      * the correct url extension.
+     *
+     * The urls will be built in the MainActivity
      * */
-    //("discover/movie?api_key=cd401ba98e50ce8bf913cdce912aa430&language=en-US&sort_by=popularity.desc&include_adult=true&include_video=false&page=1")
 
     // Get the list of popular movies
     @GET
     Call<DiscoveredMovies> doGetDiscoveredMovies(@Url String url);
-
-
-    /**
-     *  The following get method will receive custom
-     *  url made with the movie's ids.
-     *  The url will be built in the MainActivity
-     *
-     *  */
 
         /* Queries the movie credit endpoint */
     @GET

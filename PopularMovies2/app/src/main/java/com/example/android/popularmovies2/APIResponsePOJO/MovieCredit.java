@@ -27,6 +27,8 @@ public class MovieCredit {
     @SerializedName("crew")
     public List<Crew> crewList;
 
+    private final String UNKNOWN_DIRECTOR ="Unknown Director";
+
     // What do we need from the cast and from the crew ?
     // Keep working, your thoughts are illusions, remember that !
     public class Cast {
@@ -74,5 +76,19 @@ public class MovieCredit {
         public String getJob() {
             return job;
         }
+    }
+
+    public String getDirectorName() {
+
+        // Iterate through the movie crew list.
+        // If the job of a movie crew member is "Director",
+        // then return his name.
+        for (MovieCredit.Crew crew : crewList) {
+
+            if (crew.getJob().equals("Director") ) {
+                return crew.getName();
+            }
+        }
+        return UNKNOWN_DIRECTOR;
     }
 }

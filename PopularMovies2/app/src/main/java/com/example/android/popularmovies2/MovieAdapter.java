@@ -19,13 +19,12 @@ import java.util.List;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapterViewHolder>{
 
-
     private List<DiscoveredMovies.AMovie> mMovieData = new ArrayList<DiscoveredMovies.AMovie>();
     private Context mContext;
     private final int  NUMBER_OF_MOVIE = 4;
 
     public interface MovieAdapterOnClickHandler {
-        void onClick(int postion);
+        void onClick(int position);
     }
 
     final private MovieAdapterOnClickHandler mClickHandler;
@@ -119,7 +118,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
      */
     @Override
     public int getItemCount() {
-        if (mMovieData == null) return 0;
+        if (mMovieData == null || mMovieData.isEmpty()) return 0;
         return NUMBER_OF_MOVIE;
     }
 

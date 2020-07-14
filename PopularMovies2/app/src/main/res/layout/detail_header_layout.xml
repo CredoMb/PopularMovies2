@@ -6,8 +6,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
     <ImageView
-        android:id="@+id/imageViewMoviePosterDetail"
+        android:id="@+id/imageViewMoviePoster"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -23,8 +24,8 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
         android:text="TextView"
-        app:layout_constraintStart_toEndOf="@+id/imageViewMoviePosterDetail"
-        app:layout_constraintTop_toTopOf="@+id/imageViewMoviePosterDetail" />
+        app:layout_constraintStart_toEndOf="@+id/imageViewMoviePoster"
+        app:layout_constraintTop_toTopOf="@+id/imageViewMoviePoster" />
 
     <TextView
         android:id="@+id/textViewMovieLength"

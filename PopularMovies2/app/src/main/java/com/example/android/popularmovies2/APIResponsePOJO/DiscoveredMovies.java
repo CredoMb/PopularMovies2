@@ -32,6 +32,7 @@ public class DiscoveredMovies {
          Json movie object fetched from the API.*/
         @SerializedName("popularity")
         private Double popularity;
+
         @SerializedName("vote_count")
         private Integer voteCount;
 
