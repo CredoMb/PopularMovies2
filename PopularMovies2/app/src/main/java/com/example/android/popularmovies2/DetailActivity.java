@@ -4,10 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import android.content.Intent;
-import android.graphics.Movie;
 import android.os.Bundle;
-import android.util.Log;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,6 +16,7 @@ import com.example.android.popularmovies2.APIResponsePOJO.MovieCredit;
 import com.example.android.popularmovies2.APIResponsePOJO.MovieDetail;
 import com.example.android.popularmovies2.APIResponsePOJO.MovieReviews;
 
+import com.example.android.popularmovies2.APIResponsePOJO.MovieTrailers;
 import com.example.android.popularmovies2.Data.GlideHelperClass;
 import com.example.android.popularmovies2.databinding.ActivityDetailBinding;
 
@@ -55,6 +56,8 @@ public class DetailActivity extends AppCompatActivity {
 
     private TextView mMovieSynopsisTV;
 
+    private ListView mTrailerListView;
+
     // Will store the position of the
     // clicked Movie, after a movie as
     // been clicked in the MainActivity
@@ -76,6 +79,9 @@ public class DetailActivity extends AppCompatActivity {
 
     // Will store reviews for all the fetched movies
     public static List<MovieReviews> mMoviesReviews = new ArrayList<MovieReviews>();
+
+    // Will store trailers for all the fetched movies
+    public static List<MovieTrailers> mMoviesTrailers = new ArrayList<MovieTrailers>();
 
     private TextView reviewSumTv;
 
@@ -112,8 +118,13 @@ public class DetailActivity extends AppCompatActivity {
 
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_detail);
 
+        // We will variables to carry all the information related to the
+        // current movie. This infos include : the general infos, the details, the
+        // reviews and the trailers.
         DiscoveredMovies.AMovie currentMovie = mMovieList.get(mPosition);
         MovieDetail currentMovieDetail = mMoviesDetails.get(mPosition);
+        MovieReviews currentMovieReviews = mMoviesReviews.get(mPosition);
+        MovieTrailers currentMovieTrailers = mMoviesTrailers.get(mPosition);
 
         /** Initialize all the variables that will hold the
          *  views of the detail activity header layout.
@@ -139,6 +150,45 @@ public class DetailActivity extends AppCompatActivity {
         //mMovieFavoriteTV.setText();
 
         mMovieSynopsisTV.setText(currentMovie.getOverview());
+
+        // Each row in the list stores country name, currency and flag
+        /*List<HashMap<String,String>> aList = new ArrayList<HashMap<String,String>>();
+
+        for(int i=0;i<10;i++){
+            HashMap<String, String> hm = new HashMap<String,String>();
+
+            hm.put("txt", "Country : " + countries[i]);
+            hm.put("cur","Currency : " + currency[i]);
+            hm.put("flag", Integer.toString(flags[i]) );
+
+            aList.add(hm);
+        }
+
+        // Keys used in Hashmap
+        String[] from = { "flag","txt","cur" };
+
+        // Ids of views in listview_layout
+        int[] to = { R.id.flag,R.id.txt,R.id.cur};
+
+        // Instantiating an adapter to store each items
+        // R.layout.listview_layout defines the layout of each item
+        SimpleAdapter adapter = new SimpleAdapter(getBaseContext(), aList, R.layout.listview_layout, from, to);
+
+        // Getting a reference to listview of main.xml layout file
+        ListView listView = ( ListView ) findViewById(R.id.listview);
+
+        // Setting the adapter to the listView
+        listView.setAdapter(adapter);
+*/
+
+        mTrailerListView = (ListView) findViewById(R.id.trailer_list);
+
+        List<String> trailerList = new ArrayList<String>();
+
+        ArrayAdapter<String> trailerAdapter = new ArrayAdapter<String>(this,
+                R.layout.trailer_list_item,trailerList);
+
+        mTrailerListView.setAdapter(trailerAdapter);
 
         // Set the title of the review with the
         // exact number of reviews made for the current movie.
