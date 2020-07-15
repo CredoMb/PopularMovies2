@@ -50,23 +50,12 @@
         app:layout_constraintStart_toStartOf="@+id/imageView"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
-    <ImageButton
-        android:id="@+id/imageButtonPlay"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="8dp"
+    <ListView
+        android:id="@+id/trailer_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="@+id/textView2"
-        app:layout_constraintTop_toBottomOf="@+id/textView2"
-        tools:srcCompat="@tools:sample/avatars[0]" />
+        app:layout_constraintTop_toBottomOf="@id/textView2"/>
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="48dp"
-        android:text="TextView"
-        app:layout_constraintBottom_toBottomOf="@+id/imageButtonPlay"
-        app:layout_constraintStart_toEndOf="@+id/imageButtonPlay"
-        app:layout_constraintTop_toTopOf="@+id/imageButtonPlay" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -134,10 +134,9 @@ public class DetailActivity extends AppCompatActivity {
 
         // I don't know what to do now...
         mMovieYearTV.setText(currentMovie.getYear());
-         mMovieLenghtTV.setText(currentMovieDetail.getFormattedLength());
+        mMovieLenghtTV.setText(currentMovieDetail.getFormattedLength());
         mMovieRatingTV.setText(String.valueOf(currentMovie.getVoteAverage()));
         //mMovieFavoriteTV.setText();
-
 
         mMovieSynopsisTV.setText(currentMovie.getOverview());
 
