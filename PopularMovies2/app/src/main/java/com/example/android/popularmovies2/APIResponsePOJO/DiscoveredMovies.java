@@ -28,6 +28,13 @@ public class DiscoveredMovies {
         // poster image
        private final String IMAGE_BASE_URL = "https://image.tmdb.org/t/p/original";
 
+       // The following variables represent
+       // the index limit of the year sub string
+       // inside of the release date text.
+       private final int MOVIE_YEAR_START_INDEX = 0;
+       private final int MOVIE_YEAR_END_INDEX = 4;
+
+
         /*The following variables represent the property of one
          Json movie object fetched from the API.*/
         @SerializedName("popularity")
@@ -51,6 +58,9 @@ public class DiscoveredMovies {
         @SerializedName("release_date")
         private String releaseDate;
 
+        private String year;
+
+
         /* We have defined the necessary getters bellow. */
 
         public Integer getId() {
@@ -67,8 +77,12 @@ public class DiscoveredMovies {
             // Poster path should be mixed with an url
         }
 
-        public Double getPopularity() {
-            return popularity;
+        public String getYear() {
+            return releaseDate.substring(MOVIE_YEAR_START_INDEX,MOVIE_YEAR_END_INDEX);
+        }
+
+        public String getOverview() {
+            return overview;
         }
 
         public String getTitle() {

@@ -16,6 +16,7 @@ import com.example.android.popularmovies2.APIResponsePOJO.MovieCredit;
 import com.example.android.popularmovies2.APIResponsePOJO.MovieDetail;
 import com.example.android.popularmovies2.APIResponsePOJO.MovieReviews;
 
+import com.example.android.popularmovies2.Data.GlideHelperClass;
 import com.example.android.popularmovies2.databinding.ActivityDetailBinding;
 
 import java.util.ArrayList;
@@ -83,8 +84,6 @@ public class DetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
-        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_detail);
-
         // Receive the intent from the Main Activity
         Intent intent = getIntent();
 
@@ -111,6 +110,11 @@ public class DetailActivity extends AppCompatActivity {
             return;
         }
 
+        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_detail);
+
+        DiscoveredMovies.AMovie currentMovie = mMovieList.get(mPosition);
+        MovieDetail currentMovieDetail = mMoviesDetails.get(mPosition);
+
         /** Initialize all the variables that will hold the
          *  views of the detail activity header layout.
          *
@@ -122,11 +126,26 @@ public class DetailActivity extends AppCompatActivity {
         mMovieLenghtTV = (TextView) mBinding.movieHeader.findViewById(R.id.textViewMovieLength);
         mMovieRatingTV = (TextView) mBinding.movieHeader.findViewById(R.id.textViewMovieRating);
         mMovieFavoriteTV = (TextView) mBinding.movieHeader.findViewById(R.id.textViewFavorite);
-        mMovieSynopsisTV = (TextView) mBinding.movieHeader.findViewById(R.id.textViewMovieSynopsis);
+        mMovieSynopsisTV = (TextView) mBinding.movieBody.findViewById(R.id.textViewMovieSynopsis);
+
+        // Add content to the views
+
+        setImageWithUri(mMoviePoster,currentMovie.getPosterPath());
+
+        // I don't know what to do now...
+        mMovieYearTV.setText(currentMovie.getYear());
+         mMovieLenghtTV.setText(currentMovieDetail.getFormattedLength());
+        mMovieRatingTV.setText(String.valueOf(currentMovie.getVoteAverage()));
+        //mMovieFavoriteTV.setText();
+
+
+        mMovieSynopsisTV.setText(currentMovie.getOverview());
 
         // Set the title of the review with the
         // exact number of reviews made for the current movie.
         mBinding.textViewReviewSummaryTitle.setText(buildReviewTitle(mMoviesReviews.get(mPosition)));
+
+        /**/
     }
 
     // pass the 4 lists
@@ -138,12 +157,22 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     private String buildReviewTitle(MovieReviews movieReviews) {
-
         return getString(R.string.review_title, movieReviews.reviewList.size());
 
         // Vote count located in "AMovie" is different from review number from the "MovieReview"
         //  The vote count is usually a bigger number
     }
-    //
-    // What should we do now ? Idk !
+
+    private void setImageWithUri(ImageView imageView, String imageUri){
+
+        GlideHelperClass glideHelper = new GlideHelperClass(this,
+                imageUri,
+                R.drawable.placeholder_image,
+                imageView);
+
+        // This will load the image, from the API to the
+        // image view
+        glideHelper.loadImage();
+    }
+
 }
