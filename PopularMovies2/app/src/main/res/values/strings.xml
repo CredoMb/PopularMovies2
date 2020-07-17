@@ -28,9 +28,13 @@
 
      -->
 
-    <!-- Title for the review textView. It preceded by the number of reviewer
-        , which will be set in the java class.
+    <!-- Text for the review title textView. It preceded by the number of reviewer,
+         which will be set in the java class.
          &#160; -->
     <string name="review_title"><xliff:g id="reviewers" example="50">%d</xliff:g>&#032;Reviews </string>
+
+    <!-- Text for the trailer list item. It followed by a number, which represent
+         the position of the trailer video. -->
+    <string name="trailer_position">Trailer &#032;<xliff:g id="position" example="1">%d</xliff:g></string>
 
 </resources>

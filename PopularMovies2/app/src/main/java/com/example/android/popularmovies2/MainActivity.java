@@ -12,11 +12,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.example.android.popularmovies2.APIResponsePOJO.DiscoveredMovies;
 import com.example.android.popularmovies2.APIResponsePOJO.MovieCredit;
 import com.example.android.popularmovies2.APIResponsePOJO.MovieDetail;
 import com.example.android.popularmovies2.APIResponsePOJO.MovieReviews;
+import com.example.android.popularmovies2.APIResponsePOJO.MovieTrailers;
 import com.example.android.popularmovies2.Data.APIClient;
 import com.example.android.popularmovies2.Data.APIInterface;
 
@@ -59,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements
     final String MOVIE_CREDIT = "credits";
     final String MOVIE_DETAILS = "details";
     final String MOVIE_REVIEWS = "reviews";
-    final String MOVIE_VIDEO = "videos";
+    final String MOVIE_TRAILER = "videos";
     final String DISCOVER_MOVIE = "discover";
 
     /**
@@ -300,6 +302,8 @@ public class MainActivity extends AppCompatActivity implements
 
                     getMoviesReviews(resource.movieList,apiInterface);
 
+                    getMoviesTrailers(resource.movieList,apiInterface);
+
                 }
                 else {
                     Log.e(MainActivity.class.getSimpleName(),"API Response unsuccessful, code : "+ response.code());
@@ -367,7 +371,7 @@ public class MainActivity extends AppCompatActivity implements
                 break;
 
             // Add the extension to get the data related to the trailer of a given movie.
-            case MOVIE_VIDEO: urlExtensionWithId += "/" + MOVIE_VIDEO;
+            case MOVIE_TRAILER: urlExtensionWithId += "/" + MOVIE_TRAILER;
                 break;
 
             case DISCOVER_MOVIE: DiscoveredMovieUrlExtension = "discover/movie?api_key=" + API_KEY + DiscoveredMovieUrlExtra;
@@ -504,8 +508,62 @@ public class MainActivity extends AppCompatActivity implements
         }
     }
 
+    /** Continue here, ladies and gentleman*/
+   public void getMoviesTrailers(List<DiscoveredMovies.AMovie> movieList, final APIInterface apiInterface) {
+
+        for (DiscoveredMovies.AMovie movie : movieList) {
+
+            Call<MovieTrailers> callMovieTrailers = apiInterface.doGetMovieTrailers(getProperUrl(MOVIE_TRAILER,movie.getId(),""));
+            callMovieTrailers.enqueue(new Callback<MovieTrailers>() {
+
+                @Override
+                public void onResponse(Call<MovieTrailers> call, Response<MovieTrailers> response) {
+                    if(response.isSuccessful()) {
+
+                        MovieTrailers resource = response.body();
+                        // Once we get the movie review,
+                        // add it to the mMoviesReviews list.
+                        // This will contain the review infos for all the movies previously fetched.
+
+                        //  mMoviesTrailers.add(resource);
+                        DetailActivity.mMoviesTrailers.add(resource);
+
+                        Log.e("Ba banini","ba de risque");
+
+                        if(resource.trailerList.isEmpty()) {
+                           // Toast.makeText(this,"eza videu",Toast.LENGTH_LONG).show();
+                            //Log.e("Ba banini",resource.trailerList.get(0).getTrailerUrl());
+
+                            // Prendre l'id d'un des 4 films et essayer de trouver manuellment ses
+                            // trailers puis
+                        }
+                        else {
+
+                            //Log.e("Baa vide","trailer");
+
+                        }
+                    }
+
+                    else {
+                        Log.e(MainActivity.class.getSimpleName(),"API Response unsuccessful, code : "+ response.code());
+                    }
+                    // Should we close the call at the end ?
+                }
+
+                @Override
+                public void onFailure(Call<MovieTrailers> call, Throwable t) {
+                    // Will print the error in case the network operation fails
+                    Log.e(MainActivity.class.getSimpleName(),t.toString());
+                    call.cancel();
+                }
+            });
+
+        }
+    }
+
     @Override
     public void onClick(int position) {
+
         // At first, make sure the adapter is not empty
         if (mMovieAdapter.getItemCount() > 0) {
 

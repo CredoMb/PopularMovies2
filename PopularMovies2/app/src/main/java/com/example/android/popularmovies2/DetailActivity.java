@@ -68,7 +68,7 @@ public class DetailActivity extends AppCompatActivity {
 
     // Will store the list of movies gotten from
     // the network request made in the MainActivity
-    public static List<DiscoveredMovies.AMovie> mMovieList;
+    public static List<DiscoveredMovies.AMovie> mMovieList = new ArrayList<DiscoveredMovies.AMovie>();
 
     // Will store the credit of all the fetched movies.
     // This includes the crew and the actors.
@@ -124,14 +124,24 @@ public class DetailActivity extends AppCompatActivity {
         DiscoveredMovies.AMovie currentMovie = mMovieList.get(mPosition);
         MovieDetail currentMovieDetail = mMoviesDetails.get(mPosition);
         MovieReviews currentMovieReviews = mMoviesReviews.get(mPosition);
-        MovieTrailers currentMovieTrailers = mMoviesTrailers.get(mPosition);
 
-        /** Initialize all the variables that will hold the
+        // mMoviesTrailers = new ArrayList<MovieTrailers>();
+        // mMoviesReviews.get(mPosition).movieId
+
+        int empty = mMoviesTrailers.get(mPosition).movieId;
+
+        Toast.makeText(this, String.valueOf(empty), Toast.LENGTH_SHORT).show();
+
+        // MovieTrailers currentMovieTrailers = mMoviesTrailers.get(mPosition);
+
+        /*
+
+        *//** Initialize all the variables that will hold the
          *  views of the detail activity header layout.
          *
          *  All the following view are from a separated
          *  layout included in the layout of the detail activity
-         *  */
+         *  *//*
         mMoviePoster = (ImageView) mBinding.movieHeader.findViewById(R.id.imageViewMoviePoster);
         mMovieYearTV = (TextView) mBinding.movieHeader.findViewById(R.id.textViewMovieYear);
         mMovieLenghtTV = (TextView) mBinding.movieHeader.findViewById(R.id.textViewMovieLength);
@@ -147,9 +157,9 @@ public class DetailActivity extends AppCompatActivity {
         mMovieYearTV.setText(currentMovie.getYear());
         mMovieLenghtTV.setText(currentMovieDetail.getFormattedLength());
         mMovieRatingTV.setText(String.valueOf(currentMovie.getVoteAverage()));
-        //mMovieFavoriteTV.setText();
+       */ //mMovieFavoriteTV.setText();
 
-        mMovieSynopsisTV.setText(currentMovie.getOverview());
+      //  mMovieSynopsisTV.setText(currentMovie.getOverview());
 
         // Each row in the list stores country name, currency and flag
         /*List<HashMap<String,String>> aList = new ArrayList<HashMap<String,String>>();
@@ -181,18 +191,20 @@ public class DetailActivity extends AppCompatActivity {
         listView.setAdapter(adapter);
 */
 
-        mTrailerListView = (ListView) findViewById(R.id.trailer_list);
+     //   Toast.makeText(this, mMoviesTrailers.size(), Toast.LENGTH_SHORT).show();
+
+        /*mTrailerListView = (ListView) findViewById(R.id.trailer_list);
 
         List<String> trailerList = new ArrayList<String>();
 
         ArrayAdapter<String> trailerAdapter = new ArrayAdapter<String>(this,
                 R.layout.trailer_list_item,trailerList);
 
-        mTrailerListView.setAdapter(trailerAdapter);
+        mTrailerListView.setAdapter(trailerAdapter);*/
 
         // Set the title of the review with the
         // exact number of reviews made for the current movie.
-        mBinding.textViewReviewSummaryTitle.setText(buildReviewTitle(mMoviesReviews.get(mPosition)));
+      //  mBinding.textViewReviewSummaryTitle.setText(buildReviewTitle(mMoviesReviews.get(mPosition)));
 
         /**/
     }

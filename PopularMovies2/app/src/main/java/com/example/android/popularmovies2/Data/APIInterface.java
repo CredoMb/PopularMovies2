@@ -4,6 +4,7 @@ import com.example.android.popularmovies2.APIResponsePOJO.DiscoveredMovies;
 import com.example.android.popularmovies2.APIResponsePOJO.MovieCredit;
 import com.example.android.popularmovies2.APIResponsePOJO.MovieDetail;
 import com.example.android.popularmovies2.APIResponsePOJO.MovieReviews;
+import com.example.android.popularmovies2.APIResponsePOJO.MovieTrailers;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -40,7 +41,7 @@ public interface APIInterface {
     @GET
     Call<MovieReviews> doGetMovieReviews(@Url String url);
 
-    /*@GET
-    Call<MovieTrailer> doGetMovieTrailer(@Url String url);
-    */
+    /* Queries the trailer endpoint */
+    @GET
+    Call<MovieTrailers> doGetMovieTrailers(@Url String url);
 }
