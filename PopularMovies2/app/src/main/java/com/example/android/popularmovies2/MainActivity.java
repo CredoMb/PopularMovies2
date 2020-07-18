@@ -422,6 +422,13 @@ public class MainActivity extends AppCompatActivity implements
 
                     else {
                         Log.e(MainActivity.class.getSimpleName(),"API Response unsuccessful, code : "+ response.code());
+
+                        // In case the response wasn't successful, add a null object
+                        // to the credit list. This will ensure that
+                        // all the list contains the same number of elements
+                        // and every position across all the lists
+                        // reference information about the same movie.
+                        DetailActivity.mMoviesCredits.add(null);
                     }
                 }
 
@@ -459,8 +466,12 @@ public class MainActivity extends AppCompatActivity implements
                     else {
                         Log.e(MainActivity.class.getSimpleName(),"API Response unsuccessful, code : "+ response.code());
 
-                        // When the response wasn't successful, then add an empty MovieDetail
-                        DetailActivity.mMoviesDetails.add(new MovieDetail());
+                        // In case the response wasn't successful, add a null object
+                        // to the reviews list. This will ensure that
+                        // all the list contains the same number of elements
+                        // and every position across all the lists
+                        // reference information about the same movie.
+                        DetailActivity.mMoviesDetails.add(null);
                     }
                     // Should we close the call at the end ?
                 }
@@ -496,6 +507,13 @@ public class MainActivity extends AppCompatActivity implements
 
                     else {
                         Log.e(MainActivity.class.getSimpleName(),"API Response unsuccessful, code : "+ response.code());
+
+                        // In case the response wasn't successful, add a null object
+                        // to the reviews list. This will ensure that
+                        // all the list contains the same number of elements
+                        // and every position across all the lists
+                        // reference information about the same movie.
+                        DetailActivity.mMoviesReviews.add(null);
                     }
                     // Should we close the call at the end ?
                 }
@@ -533,7 +551,7 @@ public class MainActivity extends AppCompatActivity implements
 
                         Log.e("Ba banini","ba de risque");
 
-                        if(resource.trailerList.isEmpty()) {
+                        /*if(resource.trailerList.isEmpty()) {
                            // Toast.makeText(this,"eza videu",Toast.LENGTH_LONG).show();
                             //Log.e("Ba banini",resource.trailerList.get(0).getTrailerUrl());
 
@@ -544,11 +562,17 @@ public class MainActivity extends AppCompatActivity implements
 
                             //Log.e("Baa vide","trailer");
 
-                        }
+                        }*/
                     }
 
                     else {
                         Log.e(MainActivity.class.getSimpleName(),"API Response unsuccessful, code : "+ response.code());
+                        // In case the response wasn't successful, add a null object
+                        // to the trailer list. This will ensure that
+                        // all the list contains the same number of elements
+                        // and every position across all the lists
+                        // reference information about the same movie.
+                        DetailActivity.mMoviesTrailers.add(null);
                     }
                     // Should we close the call at the end ?
                 }
