@@ -458,6 +458,9 @@ public class MainActivity extends AppCompatActivity implements
 
                     else {
                         Log.e(MainActivity.class.getSimpleName(),"API Response unsuccessful, code : "+ response.code());
+
+                        // When the response wasn't successful, then add an empty MovieDetail
+                        DetailActivity.mMoviesDetails.add(new MovieDetail());
                     }
                     // Should we close the call at the end ?
                 }
