@@ -17,7 +17,7 @@ import com.google.gson.annotations.SerializedName;
 public class MovieDetail {
 
     @SerializedName("original_title")
-    String title;
+    public String title;
 
     @SerializedName("runtime")
     public int runtime;

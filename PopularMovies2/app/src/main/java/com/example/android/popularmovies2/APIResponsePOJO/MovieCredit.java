@@ -18,8 +18,10 @@ import java.util.List;
  * */
 
 public class MovieCredit {
+/*
     @SerializedName("id")
     public int id;
+*/
 
     @SerializedName("cast")
     public List<Cast> castList;
@@ -27,6 +29,8 @@ public class MovieCredit {
     @SerializedName("crew")
     public List<Crew> crewList;
 
+    // Will be the default value for all the
+    // movies that don't have directors.
     private final String UNKNOWN_DIRECTOR ="Unknown Director";
 
     // What do we need from the cast and from the crew ?

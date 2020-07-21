@@ -35,8 +35,11 @@ public class DiscoveredMovies {
        private final int MOVIE_YEAR_END_INDEX = 4;
 
 
-        /*The following variables represent the property of one
-         Json movie object fetched from the API.*/
+        /**
+         * Except from the "Year" variable
+         * The following variables represent the property of one
+         * Json movie object fetched from the API.
+         * */
         @SerializedName("popularity")
         private Double popularity;
 
@@ -60,8 +63,10 @@ public class DiscoveredMovies {
 
         private String year;
 
-
-        /* We have defined the necessary getters bellow. */
+        /**
+         *  We have defined the necessary
+         *  getters bellow.
+         *  */
 
         public Integer getId() {
             return id;
@@ -73,8 +78,6 @@ public class DiscoveredMovies {
 
         public String getPosterPath() {
             return  IMAGE_BASE_URL + posterPath;
-
-            // Poster path should be mixed with an url
         }
 
         public String getYear() {
@@ -97,5 +100,53 @@ public class DiscoveredMovies {
             return releaseDate;
         }
 
+
+        /**
+         *  Next, we have the variables that
+         *  represent the POJO of the Data
+         *  fetched from other endpoints of the API.
+         *
+         *  All those datas are movie's
+         *  complementary information
+         *
+         * */
+        private MovieCredit movieCredit;
+        private MovieDetail movieDetail;
+        private MovieReviews movieReviews;
+        private MovieTrailers movieTrailers;
+
+        /**Getters for the POJO*/
+        public MovieCredit getMovieCredit() {
+            return movieCredit;
+        }
+
+        public MovieDetail getMovieDetail() {
+            return movieDetail;
+        }
+
+        public MovieReviews getMovieReviews() {
+            return movieReviews;
+        }
+
+        public MovieTrailers getMovieTrailers() {
+            return movieTrailers;
+        }
+
+        /**Setters for the POJO*/
+        public void setMovieCredit(MovieCredit movieCredit) {
+            this.movieCredit = movieCredit;
+        }
+
+        public void setMovieDetail(MovieDetail movieDetail) {
+            this.movieDetail = movieDetail;
+        }
+
+        public void setMovieReviews(MovieReviews movieReviews) {
+            this.movieReviews = movieReviews;
+        }
+
+        public void setMovieTrailers(MovieTrailers movieTrailers) {
+            this.movieTrailers = movieTrailers;
+        }
     }
 }

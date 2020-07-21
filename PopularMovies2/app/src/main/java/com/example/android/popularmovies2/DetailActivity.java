@@ -133,9 +133,11 @@ public class DetailActivity extends AppCompatActivity {
         /*if(mMoviesTrailers.get(mPosition)!= null) {
             empty = mMoviesTrailers.get(mPosition).movieId;
             mMoviesReviews.get(mPosition).movieId;
+            mMovieList.get(mPosition).getId()
+
         }*/
 
-        empty = mMovieList.get(mPosition).getId();
+        empty = mMoviesReviews.get(mPosition).movieId;
 
         Toast.makeText(this, String.valueOf(empty), Toast.LENGTH_SHORT).show();
 
