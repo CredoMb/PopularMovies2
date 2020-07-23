@@ -4,9 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.LoaderManager;
+import android.content.AsyncTaskLoader;
 import android.content.Intent;
+import android.content.Loader;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,19 +19,16 @@ import com.example.android.popularmovies2.APIResponsePOJO.DiscoveredMovies;
 import com.example.android.popularmovies2.APIResponsePOJO.MovieCredit;
 import com.example.android.popularmovies2.APIResponsePOJO.MovieDetail;
 import com.example.android.popularmovies2.APIResponsePOJO.MovieReviews;
-import com.example.android.popularmovies2.APIResponsePOJO.MovieTrailers;
 import com.example.android.popularmovies2.Data.APIClient;
 import com.example.android.popularmovies2.Data.APIInterface;
+import com.example.android.popularmovies2.Data.QueryUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
 public class MainActivity extends AppCompatActivity implements
-        MovieAdapter.MovieAdapterOnClickHandler {
+        MovieAdapter.MovieAdapterOnClickHandler,
+        LoaderManager.LoaderCallbacks<List<DiscoveredMovies.Movie>>{
 
     /**
      * The Ids for the 2 Loaders to be used in
@@ -70,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements
      * The variable that should contain the movie list
      */
 
-    List<DiscoveredMovies.AMovie> movieList;
+    List<DiscoveredMovies.Movie> mMovieList;
 
     /**
      * The list of credit for all the movies fetched from
@@ -147,7 +146,7 @@ public class MainActivity extends AppCompatActivity implements
         // The MovieAdapter is responsible for linking our movie data with the Recycler that
         // will end up displaying the data.
 
-        mMovieAdapter = new MovieAdapter(this, new ArrayList<DiscoveredMovies.AMovie>(), this);
+        mMovieAdapter = new MovieAdapter(this, new ArrayList<DiscoveredMovies.Movie>(), this);
 
         // Set the default sorting to be by popularity
         mSortBy = BY_POPULARITY;
@@ -186,6 +185,64 @@ public class MainActivity extends AppCompatActivity implements
             // we will not need it.
             mProgressSpinner.setVisibility(View.GONE);
         } */
+
+        // Start the loader to display the movies that we fetched
+        getLoaderManager().initLoader(MOVIE_LOADER_ID, null, MainActivity.this).forceLoad();
+    }
+
+    @Override
+    public Loader<List<DiscoveredMovies.Movie>> onCreateLoader(int i, Bundle bundle) {
+        // MovieLoader(this,mApiInterface,mSortBy);
+        return new AsyncTaskLoader<List<DiscoveredMovies.Movie>>(this) {
+            @Override
+            public List<DiscoveredMovies.Movie> loadInBackground() {
+                if (mApiInterface == null) {
+                    return new ArrayList<DiscoveredMovies.Movie>();
+                }
+                // Make the network request and
+                // return a list of movie
+                List<DiscoveredMovies.Movie> movieList
+                        = QueryUtils.fetchMoviesData(mApiInterface, mSortBy);
+
+                // The list should already be ready
+                // mMovieList is ready but misses certain things
+
+                return movieList;
+            }
+        };
+    }
+
+    @Override
+    public void onLoadFinished(Loader<List<DiscoveredMovies.Movie>> loader, List<DiscoveredMovies.Movie> movies) {
+
+        // Clear the adapter by setting an empty ArrayList
+        mMovieAdapter.setMovieData(new ArrayList<DiscoveredMovies.Movie>());
+
+        if (movies != null && !movies.isEmpty()) {
+
+            // Update the movie list of DetailActivity
+            DetailActivity.mMovieList = movies;
+
+            // Set data onto the adapter
+            mMovieList = movies;
+            mMovieAdapter.setMovieData(mMovieList);
+        }
+           // else --> make the relative view appear
+          // that's it !
+    }
+
+    @Override
+    public void onLoaderReset(Loader<List<DiscoveredMovies.Movie>> loader) {
+
+        // Create a new empty Movie list for the Adapter
+        mMovieList = new ArrayList<DiscoveredMovies.Movie>();
+        mMovieAdapter = new MovieAdapter(this, mMovieList, this);
+        mRecyclerView.setAdapter(mMovieAdapter);
+
+        // If there's no internet connection display the emptystate view
+        /*if (!isNetworkConnected()) {
+            emptyStateRl.setVisibility(View.VISIBLE);
+        }*/
 
     }
 
@@ -227,7 +284,7 @@ public class MainActivity extends AppCompatActivity implements
             case R.id.action_ratings:
 
                 mSortBy = BY_RATINGS;
-                // mMovieAdapter.setMovieData(new ArrayList<DiscoveredMovies.AMovie>());
+                // mMovieAdapter.setMovieData(new ArrayList<DiscoveredMovies.Movie>());
 
                 return true;
         }
@@ -255,7 +312,7 @@ public class MainActivity extends AppCompatActivity implements
      *
      * Each of these 3 block of infos is located in a different endpoint.
      *
-     * @param movieList holds the list of movies fetched from the API.
+     * @param mMovieList holds the list of movies fetched from the API.
      *                  Each movie possess a couple of basic information
      *
      * @param apiInterface is an entity of @APIInterface. It will help us to perform
@@ -268,37 +325,11 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public void onClick(int position) {
 
-        // At first, make sure the adapter is not empty
-
-        // Until all the list have the same size,
-        // don't do nothing.
-
-        // Before setting the list to the adapter,
-        // fill all the other lists
-
-        // We are not sure that they gonna be executed, cause
-        // they
-
-        // Put the loader list charge inside of the
-        // last method call. that's my take on this...
-
-        if(movieList.size() == DetailActivity.mMovieList.size() &&
-                movieList.size() ==  DetailActivity.mMoviesCredits.size() &&
-                movieList.size() ==  DetailActivity.mMoviesDetails.size() &&
-                movieList.size() ==  DetailActivity.mMoviesTrailers.size()
-        ) {
             Intent intent = new Intent(MainActivity.this, DetailActivity.class);
             intent.putExtra(DetailActivity.EXTRA_POSITION, position);
 
             startActivity(intent);
-        }
 
-        if (mMovieAdapter.getItemCount() > 0) {
 
-           /* Intent intent = new Intent(MainActivity.this, DetailActivity.class);
-            intent.putExtra(DetailActivity.EXTRA_POSITION, position);
-
-            startActivity(intent);*/
-        }
     }
 }

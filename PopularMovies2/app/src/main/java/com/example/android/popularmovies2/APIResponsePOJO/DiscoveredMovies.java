@@ -21,9 +21,9 @@ import java.util.List;
 public class DiscoveredMovies {
 
     @SerializedName("results")
-    public List<AMovie> movieList;
+    public List<Movie> movieList;
 
-    public class AMovie {
+    public class Movie {
         // This will be used to build the complete URL for the
         // poster image
        private final String IMAGE_BASE_URL = "https://image.tmdb.org/t/p/original";
@@ -33,7 +33,6 @@ public class DiscoveredMovies {
        // inside of the release date text.
        private final int MOVIE_YEAR_START_INDEX = 0;
        private final int MOVIE_YEAR_END_INDEX = 4;
-
 
         /**
          * Except from the "Year" variable

@@ -18,14 +18,14 @@ import retrofit2.Response;
 public final class QueryUtils {
 
     /** The Tag to be used in log messages*/
-    String TAG = getClass().getSimpleName();
+    private static String TAG = MainActivity.class.getSimpleName();
 
     /**
      *  This will store the api key necessary
      *  to query any endpoint.
      *
      *  */
-    final String API_KEY = "cd401ba98e50ce8bf913cdce912aa430";
+    private static final String API_KEY = "cd401ba98e50ce8bf913cdce912aa430";
 
     /**
      *
@@ -36,11 +36,11 @@ public final class QueryUtils {
      *  build the URL using "MOVIE_CREDIT"
      *
      *  */
-    final String MOVIE_CREDIT = "credits";
-    final String MOVIE_DETAILS = "details";
-    final String MOVIE_REVIEWS = "reviews";
-    final String MOVIE_TRAILER = "videos";
-    final String DISCOVER_MOVIE = "discover";
+    private static final String MOVIE_CREDIT = "credits";
+    private static final String MOVIE_DETAILS = "details";
+    private static final String MOVIE_REVIEWS = "reviews";
+    private static final String MOVIE_TRAILER = "videos";
+    private static final String DISCOVER_MOVIE = "discover";
 
     /**
      * Will be used
@@ -49,7 +49,7 @@ public final class QueryUtils {
      * the base url.
      *
      * */
-    APIInterface mApiInterface;
+    private static APIInterface mApiInterface;
 
     /**
      * Create a private constructor because no one should ever create a {@link QueryUtils} object.
@@ -61,7 +61,7 @@ public final class QueryUtils {
 
 
     /** Continu*/
-    public List<DiscoveredMovies.AMovie> fetchMoviesData(final APIInterface apiInterface, final String sortingKey){
+    public static List<DiscoveredMovies.Movie> fetchMoviesData(final APIInterface apiInterface, final String sortingKey){
 
         // Create the variable "callPopularMovies" that will help us make
         // an API call on the "discover" endpoint.
@@ -100,7 +100,7 @@ public final class QueryUtils {
 
     }
 
-    private MovieCredit getMoviesCredit(DiscoveredMovies.AMovie movie, final APIInterface apiInterface) {
+    private static MovieCredit getMoviesCredit(DiscoveredMovies.Movie movie, final APIInterface apiInterface) {
 
         // From the credit endpoint of the API,
         // Get the credit info of every movie in the list.
@@ -139,9 +139,9 @@ public final class QueryUtils {
     }
 
 
-    /*public void getMoviesDetail(List<DiscoveredMovies.AMovie> movieList, final APIInterface apiInterface){
+    /*public void getMoviesDetail(List<DiscoveredMovies.Movie> movieList, final APIInterface apiInterface){
 
-        for (DiscoveredMovies.AMovie movie : movieList) {
+        for (DiscoveredMovies.Movie movie : movieList) {
 
             Call<MovieDetail> callMovieDetail = apiInterface.doGetMovieDetail(getProperUrl(MOVIE_DETAILS,movie.getId(),""));
             callMovieDetail.enqueue(new Callback<MovieDetail>() {
@@ -183,8 +183,8 @@ public final class QueryUtils {
         }
     }
 
-    public void getMoviesReviews(List<DiscoveredMovies.AMovie> movieList, final APIInterface apiInterface){
-        for (DiscoveredMovies.AMovie movie : movieList) {
+    public void getMoviesReviews(List<DiscoveredMovies.Movie> movieList, final APIInterface apiInterface){
+        for (DiscoveredMovies.Movie movie : movieList) {
 
             Call<MovieReviews> callMovieReviews = apiInterface.doGetMovieReviews(getProperUrl(MOVIE_REVIEWS,movie.getId(),""));
             callMovieReviews.enqueue(new Callback<MovieReviews>() {
@@ -227,11 +227,11 @@ public final class QueryUtils {
 
     *//** Continue here, ladies and gentleman*/
     /*
-    public void getMoviesTrailersAndPopulateAdapter(List<DiscoveredMovies.AMovie> movieList, final APIInterface apiInterface) {
+    public void getMoviesTrailersAndPopulateAdapter(List<DiscoveredMovies.Movie> movieList, final APIInterface apiInterface) {
 
         Call<MovieTrailers> callMovieTrailers; //= apiInterface.doGetMovieTrailers(getProperUrl(MOVIE_TRAILER,movie.getId(),""));
 
-        for (DiscoveredMovies.AMovie movie : movieList) {
+        for (DiscoveredMovies.Movie movie : movieList) {
 
 
             callMovieTrailers = apiInterface.doGetMovieTrailers(getProperUrl(MOVIE_TRAILER,movie.getId(),""));
@@ -312,7 +312,7 @@ public final class QueryUtils {
      *                value of "sortBy"
      * */
 
-    public String getProperUrl(String dataType, int movieId, String sortBy) {
+    private static String getProperUrl(String dataType, int movieId, String sortBy) {
 
         // The following will be used to query the
         // discovered movies endpoint.
@@ -372,7 +372,18 @@ public final class QueryUtils {
     // trailers and reviews) for each movie and
     // add them.
 
-    public List<DiscoveredMovies.AMovie> completeMoviesData(DiscoveredMovies discoveredMovies) {
+    private static List<DiscoveredMovies.Movie> completeMoviesData(DiscoveredMovies discoveredMovies) {
+
+        // In case the movie list is empty,
+        // display a warning and return an empty list
+        if(discoveredMovies.movieList.isEmpty()) {
+            Log.w(TAG,"The API returned an empty movie list");
+            return new ArrayList<DiscoveredMovies.Movie>();
+        }
+
+        // Extract the list of movies from the
+        // discoveredMovies object.
+        List<DiscoveredMovies.Movie> movieList = discoveredMovies.movieList;
 
         mApiInterface = APIClient.getClient().create(APIInterface.class);
 
@@ -384,10 +395,6 @@ public final class QueryUtils {
         MovieTrailers trailers = new MovieTrailers();
         MovieReviews reviews = new MovieReviews();
         MovieDetail details = new MovieDetail();
-
-        // Extract the list of movies from the
-        // discoveredMovies object.
-        List<DiscoveredMovies.AMovie> movieList = discoveredMovies.movieList;
 
         // For each movie, add its extra information.
         for (int i=0; i < movieList.size(); i++) {

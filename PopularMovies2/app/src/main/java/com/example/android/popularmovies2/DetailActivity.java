@@ -5,7 +5,6 @@ import androidx.databinding.DataBindingUtil;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -64,11 +63,11 @@ public class DetailActivity extends AppCompatActivity {
     int mPosition;
 
     // Will store the movie that was clicked on
-    DiscoveredMovies.AMovie mClickedMovie;
+    DiscoveredMovies.Movie mClickedMovie;
 
     // Will store the list of movies gotten from
     // the network request made in the MainActivity
-    public static List<DiscoveredMovies.AMovie> mMovieList = new ArrayList<DiscoveredMovies.AMovie>();
+    public static List<DiscoveredMovies.Movie> mMovieList = new ArrayList<DiscoveredMovies.Movie>();
 
     // Will store the credit of all the fetched movies.
     // This includes the crew and the actors.
@@ -121,7 +120,7 @@ public class DetailActivity extends AppCompatActivity {
         // We will variables to carry all the information related to the
         // current movie. This infos include : the general infos, the details, the
         // reviews and the trailers.
-        DiscoveredMovies.AMovie currentMovie = mMovieList.get(mPosition);
+        DiscoveredMovies.Movie currentMovie = mMovieList.get(mPosition);
         MovieDetail currentMovieDetail = mMoviesDetails.get(mPosition);
         MovieReviews currentMovieReviews = mMoviesReviews.get(mPosition);
 
@@ -229,7 +228,7 @@ public class DetailActivity extends AppCompatActivity {
     private String buildReviewTitle(MovieReviews movieReviews) {
         return getString(R.string.review_title, movieReviews.reviewList.size());
 
-        // Vote count located in "AMovie" is different from review number from the "MovieReview"
+        // Vote count located in "Movie" is different from review number from the "MovieReview"
         //  The vote count is usually a bigger number
     }
 

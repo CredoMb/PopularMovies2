@@ -2,7 +2,6 @@ package com.example.android.popularmovies2;
 
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +18,7 @@ import java.util.List;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapterViewHolder>{
 
-    private List<DiscoveredMovies.AMovie> mMovieData = new ArrayList<DiscoveredMovies.AMovie>();
+    private List<DiscoveredMovies.Movie> mMovieData = new ArrayList<DiscoveredMovies.Movie>();
     private Context mContext;
     private final int  NUMBER_OF_MOVIE = 4;
 
@@ -32,7 +31,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
     /**
      * Constructor of the adaptor
      */
-    public MovieAdapter(Context context, List<DiscoveredMovies.AMovie> movieData,
+    public MovieAdapter(Context context, List<DiscoveredMovies.Movie> movieData,
                         MovieAdapterOnClickHandler clickHandler) {
 
         mContext = context;
@@ -92,7 +91,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
     public void onBindViewHolder(@NonNull MovieAdapterViewHolder movieAdapterViewHolder, int position) {
 
         // movieAdapterViewHolder.mMovieThumbnailIv.setImageURI(Uri.parse(ImagebaseUrl));
-        DiscoveredMovies.AMovie currentMovie = mMovieData.get(position);
+        DiscoveredMovies.Movie currentMovie = mMovieData.get(position);
 
         GlideHelperClass glideHelper = new GlideHelperClass(mContext,
                 currentMovie.getPosterPath(),
@@ -130,7 +129,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
      *
      * @param movieData The new movie data to be displayed.
      */
-    public void setMovieData(List<DiscoveredMovies.AMovie> movieData) {
+    public void setMovieData(List<DiscoveredMovies.Movie> movieData) {
         mMovieData = movieData;
         notifyDataSetChanged();
     }
