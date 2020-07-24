@@ -136,7 +136,7 @@ public class DiscoveredMovies {
             this.movieCredit = movieCredit;
         }
 
-        public void setMovieDetail(MovieDetail movieDetail) {
+        public void setMovieDetails(MovieDetail movieDetail) {
             this.movieDetail = movieDetail;
         }
 

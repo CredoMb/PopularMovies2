@@ -7,6 +7,7 @@ import com.example.android.popularmovies2.APIResponsePOJO.MovieCredit;
 import com.example.android.popularmovies2.APIResponsePOJO.MovieDetail;
 import com.example.android.popularmovies2.APIResponsePOJO.MovieReviews;
 import com.example.android.popularmovies2.APIResponsePOJO.MovieTrailers;
+import com.example.android.popularmovies2.DetailActivity;
 import com.example.android.popularmovies2.MainActivity;
 
 import java.util.ArrayList;
@@ -100,7 +101,8 @@ public final class QueryUtils {
 
     }
 
-    private static MovieCredit getMoviesCredit(DiscoveredMovies.Movie movie, final APIInterface apiInterface) {
+
+    private static MovieCredit getMovieCredit(DiscoveredMovies.Movie movie, final APIInterface apiInterface) {
 
         // From the credit endpoint of the API,
         // Get the credit info of every movie in the list.
@@ -116,16 +118,13 @@ public final class QueryUtils {
             Log.e(TAG,"A problem occured with the API call " + e.getMessage());
         }
 
+        MovieCredit resource = new MovieCredit();
+
             // In case the call was successful
             // use the data from the server's response
             if(response != null && response.isSuccessful()){
-                MovieCredit resource = response.body();
+                resource = response.body();
 
-                // Once we get the movie credit,
-                // add it to the mMoviesCredit list.
-                // This will contain the credit infos for all the movies previously fetched
-               // movie.setMovieCredit(resource);
-                return resource;
             }
 
             else {
@@ -135,170 +134,109 @@ public final class QueryUtils {
                 // to the credit info of the movie
                 movie.setMovieCredit(null);
             }
-              return null;
+              return resource;
     }
 
+    private static MovieDetail getMovieDetails(DiscoveredMovies.Movie movie, final APIInterface apiInterface){
 
-    /*public void getMoviesDetail(List<DiscoveredMovies.Movie> movieList, final APIInterface apiInterface){
+        Call<MovieDetail> callMovieDetail = apiInterface.doGetMovieDetail(getProperUrl(MOVIE_DETAILS, movie.getId(), ""));
+        Response<MovieDetail> response = null;
 
-        for (DiscoveredMovies.Movie movie : movieList) {
-
-            Call<MovieDetail> callMovieDetail = apiInterface.doGetMovieDetail(getProperUrl(MOVIE_DETAILS,movie.getId(),""));
-            callMovieDetail.enqueue(new Callback<MovieDetail>() {
-
-                @Override
-                public void onResponse(Call<MovieDetail> call, Response<MovieDetail> response) {
-
-                    if(response.isSuccessful()){
-                        MovieDetail resource = response.body();
-
-                        // Once we get the movie detail,
-                        // add it to the mMoviesDetail list.
-                        // This will contain the detail infos for all the movies previously fetched.
-                        mMoviesDetail.add(resource);
-                        DetailActivity.mMoviesDetails.add(resource);
-                    }
-
-                    else {
-                        Log.e(MainActivity.class.getSimpleName(),"API Response unsuccessful, code : "+ response.code());
-
-                        // In case the response wasn't successful, add a null object
-                        // to the reviews list. This will ensure that
-                        // all the list contains the same number of elements
-                        // and every position across all the lists
-                        // reference information about the same movie.
-                        DetailActivity.mMoviesDetails.add(null);
-                    }
-                    // Should we close the call at the end ?
-                }
-
-                @Override
-                public void onFailure(Call<MovieDetail> call, Throwable t) {
-                    // Will print the error in case the network operation fails
-                    Log.e(MainActivity.class.getSimpleName(),t.toString());
-                    call.cancel();
-                }
-            });
-
-        }
-    }
-
-    public void getMoviesReviews(List<DiscoveredMovies.Movie> movieList, final APIInterface apiInterface){
-        for (DiscoveredMovies.Movie movie : movieList) {
-
-            Call<MovieReviews> callMovieReviews = apiInterface.doGetMovieReviews(getProperUrl(MOVIE_REVIEWS,movie.getId(),""));
-            callMovieReviews.enqueue(new Callback<MovieReviews>() {
-
-                @Override
-                public void onResponse(Call<MovieReviews> call, Response<MovieReviews> response) {
-                    if(response.isSuccessful()){
-                        MovieReviews resource = response.body();
-
-                        // Once we get the movie review,
-                        // add it to the mMoviesReviews list.
-                        // This will contain the review infos for all the movies previously fetched.
-                        mMoviesReviews.add(resource);
-                        DetailActivity.mMoviesReviews.add(resource);
-                    }
-
-                    else {
-                        Log.e(MainActivity.class.getSimpleName(),"API Response unsuccessful, code : "+ response.code());
-
-                        // In case the response wasn't successful, add a null object
-                        // to the reviews list. This will ensure that
-                        // all the list contains the same number of elements
-                        // and every position across all the lists
-                        // reference information about the same movie.
-                        DetailActivity.mMoviesReviews.add(null);
-                    }
-                    // Should we close the call at the end ?
-                }
-
-                @Override
-                public void onFailure(Call<MovieReviews> call, Throwable t) {
-                    // Will print the error in case the network operation fails
-                    Log.e(MainActivity.class.getSimpleName(),t.toString());
-                    call.cancel();
-                }
-            });
-
-        }
-    }
-
-    *//** Continue here, ladies and gentleman*/
-    /*
-    public void getMoviesTrailersAndPopulateAdapter(List<DiscoveredMovies.Movie> movieList, final APIInterface apiInterface) {
-
-        Call<MovieTrailers> callMovieTrailers; //= apiInterface.doGetMovieTrailers(getProperUrl(MOVIE_TRAILER,movie.getId(),""));
-
-        for (DiscoveredMovies.Movie movie : movieList) {
-
-
-            callMovieTrailers = apiInterface.doGetMovieTrailers(getProperUrl(MOVIE_TRAILER,movie.getId(),""));
-            callMovieTrailers.enqueue(new Callback<MovieTrailers>() {
-
-                @Override
-                public void onResponse(Call<MovieTrailers> call, Response<MovieTrailers> response) {
-                    // Dois je essayer de faire un baye ici
-                    //
-
-                    if(response.isSuccessful()) {
-
-                        MovieTrailers resource = response.body();
-                        // Once we get the movie review,
-                        // add it to the mMoviesReviews list.
-                        // This will contain the review infos for all the movies previously fetched.
-
-                        //  mMoviesTrailers.add(resource);
-                        DetailActivity.mMoviesTrailers.add(resource);
-
-                        Log.e("Ba banini","ba de risque");
-
-                        *//*if(resource.trailerList.isEmpty()) {
-                           // Toast.makeText(this,"eza videu",Toast.LENGTH_LONG).show();
-                            //Log.e("Ba banini",resource.trailerList.get(0).getTrailerUrl());
-
-                            // Prendre l'id d'un des 4 films et essayer de trouver manuellment ses
-                            // trailers puis
-                        }
-                        else {
-
-                            //Log.e("Baa vide","trailer");
-
-                        }*//*
-                    }
-
-                    else {
-                        Log.e(MainActivity.class.getSimpleName(),"API Response unsuccessful, code : "+ response.code());
-                        // In case the response wasn't successful, add a null object
-                        // to the trailer list. This will ensure that
-                        // all the list contains the same number of elements
-                        // and every position across all the lists
-                        // reference information about the same movie.
-                        DetailActivity.mMoviesTrailers.add(null);
-                    }
-                    // Should we close the call at the end ?
-                }
-
-                @Override
-                public void onFailure(Call<MovieTrailers> call, Throwable t) {
-                    // Will print the error in case the network operation fails
-                    Log.e(MainActivity.class.getSimpleName(),t.toString());
-                    call.cancel();
-                }
-            });
-
+        // Make the API call to the details endpoint
+        try {
+            response = callMovieDetail.execute();
+        } catch (Exception e) {
+            Log.e(TAG, "A problem occured with the API call " + e.getMessage());
         }
 
-        // Get the movie list gotten from the API
-        // and set it to the adapter as the movie data.
-        mMovieAdapter.setMovieData(movieList);
-        // Set the adapter onto its RecyclerView
-        mRecyclerView.setAdapter(mMovieAdapter);
+        MovieDetail resource = new MovieDetail();
+
+        // In case the call was successful
+        // use the data from the server's response
+        if (response != null && response.isSuccessful()) {
+            resource = response.body();
+
+            // Once we get the movie details,
+            // add it to the mMoviesCredit list.
+            // This will contain the details infos for all the movies previously fetched
+            // movie.setMovieCredit(resource);
+            return resource;
+
+        } else {
+            Log.e(MainActivity.class.getSimpleName(), "API Response unsuccessful, code : " + response.code());
+
+            // In case the response wasn't successful, add a null object
+            // to the details info of the movie
+            movie.setMovieDetails(null);
+        }
+
+        return resource;
     }
-*/
-    // Pour chaque film : prendre ses details, reviews & credit
-    //
+
+    private static MovieReviews getMovieReviews(DiscoveredMovies.Movie movie, final APIInterface apiInterface){
+
+        // From the review endpoint of the API,
+        // Get the review info of every movie in the list.
+
+        Call<MovieReviews> callMovieReview = apiInterface.doGetMovieReviews(getProperUrl(MOVIE_REVIEWS, movie.getId(), ""));
+        Response<MovieReviews> response = null;
+
+        // Make the API call to the review endpoint
+        try {
+            response = callMovieReview.execute();
+        } catch (Exception e) {
+            Log.e(TAG, "A problem occured with the API call " + e.getMessage());
+        }
+
+        MovieReviews resource = new MovieReviews();
+
+        // In case the call was successful
+        // use the data from the server's response
+        if (response != null && response.isSuccessful()) {
+            resource = response.body();
+
+        } else {
+            Log.e(MainActivity.class.getSimpleName(), "API Response unsuccessful, code : " + response.code());
+
+            // In case the response wasn't successful, add a null object
+            // to the reviews info of the movie
+            movie.setMovieReviews(null);
+        }
+        return resource;
+
+    }
+
+    private static MovieTrailers getMovieTrailers(DiscoveredMovies.Movie movie, final APIInterface apiInterface) {
+
+        // From the trailers endpoint of the API,
+        // Get the trailers info of every movie in the list.
+
+        Call<MovieTrailers> callMovieTrailers = apiInterface.doGetMovieTrailers(getProperUrl(MOVIE_TRAILER, movie.getId(), ""));
+        Response<MovieTrailers> response = null;
+
+        // Make the API call to the review endpoint
+        try {
+            response = callMovieTrailers.execute();
+        } catch (Exception e) {
+            Log.e(TAG, "A problem occured with the API call " + e.getMessage());
+        }
+
+        MovieTrailers resource = new MovieTrailers();
+
+        // In case the call was successful
+        // use the data from the server's response
+        if (response != null && response.isSuccessful()) {
+            resource = response.body();
+
+        } else {
+            Log.e(MainActivity.class.getSimpleName(), "API Response unsuccessful, code : " + response.code());
+
+            // In case the response wasn't successful, add a null object
+            // to the trailers info of the movie.
+            movie.setMovieTrailers(null);
+        }
+        return resource;
+    }
 
     /** This method produce the proper string url to be used by the apiinterface.
      *
@@ -400,21 +338,20 @@ public final class QueryUtils {
         for (int i=0; i < movieList.size(); i++) {
 
             // Fetch the credit information of the current movie
-            credit = getMoviesCredit(movieList.get(i),mApiInterface);
+            credit = getMovieCredit(movieList.get(i),mApiInterface);
+            trailers = getMovieTrailers(movieList.get(i),mApiInterface);
+            reviews = getMovieReviews(movieList.get(i),mApiInterface);
+            details = getMovieDetails(movieList.get(i),mApiInterface);
 
             // Set the new credit information of the current movie
             movieList.get(i).setMovieCredit(credit);
+            //movieList.get(i).setMovieTrailers(trailers);
+            movieList.get(i).setMovieReviews(reviews);
+            movieList.get(i).setMovieDetails(details);
 
             /*
-            getMoviesDetail(resource.movieList,apiInterface);
-
+            getMovieDetail(resource.movieList,apiInterface);
             getMoviesReviews(resource.movieList,apiInterface);*/
-
-            // This method will help us do 3 things:
-            // Retrieve the trailer data from the api,
-            // set the movie data onto the adapter
-            // and attach the adapter to the Recycler view
-            //getMoviesTrailersAndPopulateAdapter(resource.movieList,apiInterface);
 
         }
 

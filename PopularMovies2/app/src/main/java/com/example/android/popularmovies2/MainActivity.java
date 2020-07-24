@@ -9,11 +9,13 @@ import android.content.AsyncTaskLoader;
 import android.content.Intent;
 import android.content.Loader;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.example.android.popularmovies2.APIResponsePOJO.DiscoveredMovies;
 import com.example.android.popularmovies2.APIResponsePOJO.MovieCredit;
@@ -147,6 +149,7 @@ public class MainActivity extends AppCompatActivity implements
         // will end up displaying the data.
 
         mMovieAdapter = new MovieAdapter(this, new ArrayList<DiscoveredMovies.Movie>(), this);
+        mRecyclerView.setAdapter(mMovieAdapter);
 
         // Set the default sorting to be by popularity
         mSortBy = BY_POPULARITY;
@@ -192,10 +195,11 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public Loader<List<DiscoveredMovies.Movie>> onCreateLoader(int i, Bundle bundle) {
-        // MovieLoader(this,mApiInterface,mSortBy);
+
         return new AsyncTaskLoader<List<DiscoveredMovies.Movie>>(this) {
             @Override
             public List<DiscoveredMovies.Movie> loadInBackground() {
+
                 if (mApiInterface == null) {
                     return new ArrayList<DiscoveredMovies.Movie>();
                 }
@@ -210,6 +214,7 @@ public class MainActivity extends AppCompatActivity implements
                 return movieList;
             }
         };
+
     }
 
     @Override

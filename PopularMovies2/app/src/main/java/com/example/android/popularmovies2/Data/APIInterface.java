@@ -6,6 +6,9 @@ import com.example.android.popularmovies2.APIResponsePOJO.MovieDetail;
 import com.example.android.popularmovies2.APIResponsePOJO.MovieReviews;
 import com.example.android.popularmovies2.APIResponsePOJO.MovieTrailers;
 
+import java.util.Collection;
+import java.util.Objects;
+
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Url;
