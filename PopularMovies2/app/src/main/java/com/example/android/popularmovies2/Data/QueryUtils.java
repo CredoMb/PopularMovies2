@@ -18,25 +18,24 @@ import retrofit2.Response;
 
 public final class QueryUtils {
 
-    /** The Tag to be used in log messages*/
+    /**
+     * The Tag to be used in log messages
+     */
     private static String TAG = MainActivity.class.getSimpleName();
 
     /**
-     *  This will store the api key necessary
-     *  to query any endpoint.
-     *
-     *  */
+     * This will store the api key necessary
+     * to query any endpoint.
+     */
     private static final String API_KEY = "cd401ba98e50ce8bf913cdce912aa430";
 
     /**
-     *
-     *  The following constants will be use to form
-     *  the right URL based on the endpoints we'd like to
-     *  query. As an example, to query
-     *  the "movie credit" endpoint, we will
-     *  build the URL using "MOVIE_CREDIT"
-     *
-     *  */
+     * The following constants will be use to form
+     * the right URL based on the endpoints we'd like to
+     * query. As an example, to query
+     * the "movie credit" endpoint, we will
+     * build the URL using "MOVIE_CREDIT"
+     */
     private static final String MOVIE_CREDIT = "credits";
     private static final String MOVIE_DETAILS = "details";
     private static final String MOVIE_REVIEWS = "reviews";
@@ -48,8 +47,7 @@ public final class QueryUtils {
      * to fetch data from
      * the server. It contains
      * the base url.
-     *
-     * */
+     */
     private static APIInterface mApiInterface;
 
     /**
@@ -61,13 +59,15 @@ public final class QueryUtils {
     }
 
 
-    /** Continu*/
-    public static List<DiscoveredMovies.Movie> fetchMoviesData(final APIInterface apiInterface, final String sortingKey){
+    /**
+     * Continu
+     */
+    public static List<DiscoveredMovies.Movie> fetchMoviesData(final APIInterface apiInterface, final String sortingKey) {
 
         // Create the variable "callPopularMovies" that will help us make
         // an API call on the "discover" endpoint.
         Call<DiscoveredMovies> callPopularMovies = apiInterface.doGetDiscoveredMovies(
-                getProperUrl(DISCOVER_MOVIE,0,sortingKey));
+                getProperUrl(DISCOVER_MOVIE, 0, sortingKey));
 
         // Create a response variable that will
         // receive the response from the API call.
@@ -75,26 +75,24 @@ public final class QueryUtils {
 
         // Make the API call, try to talk to the server
         // and get popular movies out of the call.
-        try{
-             response = callPopularMovies.execute();
-        }
-        catch (Exception e) {
-            Log.e(TAG,"A problem occured with the API call " + e.getMessage());
+        try {
+            response = callPopularMovies.execute();
+        } catch (Exception e) {
+            Log.e(TAG, "A problem occured with the API call " + e.getMessage());
         }
 
         // Create url --> make http --> get the json onto an other method
         DiscoveredMovies resource = new DiscoveredMovies();
         // Check if the call was successful and
         // use the response.
-        if (response!= null && response.isSuccessful()) {
+        if (response != null && response.isSuccessful()) {
 
             // from the server response,
             // get the discovered movie and return.
             resource = response.body();
 
-        }
-        else {
-            Log.e(MainActivity.class.getSimpleName(),"API Response unsuccessful, code : "+ response.code());
+        } else {
+            Log.e(MainActivity.class.getSimpleName(), "API Response unsuccessful, code : " + response.code());
         }
 
         return completeMoviesData(resource);
@@ -107,37 +105,40 @@ public final class QueryUtils {
         // From the credit endpoint of the API,
         // Get the credit info of every movie in the list.
 
-        Call<MovieCredit> callMovieCredit = apiInterface.doGetMovieCredit(getProperUrl(MOVIE_CREDIT,movie.getId(),""));
+        Call<MovieCredit> callMovieCredit = apiInterface.doGetMovieCredit(getProperUrl(MOVIE_CREDIT, movie.getId(), ""));
         Response<MovieCredit> response = null;
 
         // Make the API call to the credit endpoint
-        try{
+        try {
             response = callMovieCredit.execute();
-        }
-        catch (Exception e) {
-            Log.e(TAG,"A problem occured with the API call " + e.getMessage());
+        } catch (Exception e) {
+            Log.e(TAG, "A problem occured with the API call on the Credit endpoint" + e.getMessage());
         }
 
         MovieCredit resource = new MovieCredit();
+        String unsuccessfulMessage = "API Response unsuccessful on the Credits endpoint";
 
-            // In case the call was successful
-            // use the data from the server's response
-            if(response != null && response.isSuccessful()){
-                resource = response.body();
+        // In case the call was successful
+        // use the data from the server's response
+        if (response != null && response.isSuccessful()) {
+            resource = response.body();
 
+        } else {
+            // Only if the response is not null,
+            // add its code to the unsuccessfulMessage variable
+            if (response != null) {
+                unsuccessfulMessage += ", code :" + response.code();
             }
 
-            else {
-                Log.e(MainActivity.class.getSimpleName(),"API Response unsuccessful, code : "+ response.code());
-
-                // In case the response wasn't successful, add a null object
-                // to the credit info of the movie
-                movie.setMovieCredit(null);
-            }
-              return resource;
+            Log.e(MainActivity.class.getSimpleName(), unsuccessfulMessage);
+            // In case the response wasn't successful, add a null object
+            // to the credit info of the movie
+            movie.setMovieCredit(null);
+        }
+        return resource;
     }
 
-    private static MovieDetail getMovieDetails(DiscoveredMovies.Movie movie, final APIInterface apiInterface){
+    private static MovieDetail getMovieDetails(DiscoveredMovies.Movie movie, final APIInterface apiInterface) {
 
         Call<MovieDetail> callMovieDetail = apiInterface.doGetMovieDetail(getProperUrl(MOVIE_DETAILS, movie.getId(), ""));
         Response<MovieDetail> response = null;
@@ -146,10 +147,11 @@ public final class QueryUtils {
         try {
             response = callMovieDetail.execute();
         } catch (Exception e) {
-            Log.e(TAG, "A problem occured with the API call " + e.getMessage());
+            Log.e(TAG, "A problem occured with the API call on the Details endpoint " + e.getMessage());
         }
 
         MovieDetail resource = new MovieDetail();
+        String unsuccessfulMessage = "API Response unsuccessful on the Details endpoint";
 
         // In case the call was successful
         // use the data from the server's response
@@ -163,7 +165,14 @@ public final class QueryUtils {
             return resource;
 
         } else {
-            Log.e(MainActivity.class.getSimpleName(), "API Response unsuccessful, code : " + response.code());
+
+            // Only if the response is not null,
+            // add its code to the unsuccessfulMessage variable
+            if (response != null) {
+                unsuccessfulMessage += ", code :" + response.code();
+            }
+
+            Log.e(MainActivity.class.getSimpleName(), unsuccessfulMessage);
 
             // In case the response wasn't successful, add a null object
             // to the details info of the movie
@@ -173,7 +182,7 @@ public final class QueryUtils {
         return resource;
     }
 
-    private static MovieReviews getMovieReviews(DiscoveredMovies.Movie movie, final APIInterface apiInterface){
+    private static MovieReviews getMovieReviews(DiscoveredMovies.Movie movie, final APIInterface apiInterface) {
 
         // From the review endpoint of the API,
         // Get the review info of every movie in the list.
@@ -185,10 +194,11 @@ public final class QueryUtils {
         try {
             response = callMovieReview.execute();
         } catch (Exception e) {
-            Log.e(TAG, "A problem occured with the API call " + e.getMessage());
+            Log.e(TAG, "A problem occured with the API call on the Reviews endpoint" + e.getMessage());
         }
 
         MovieReviews resource = new MovieReviews();
+        String unsuccessfulMessage = "API Response unsuccessful on the Reviews endpoint";
 
         // In case the call was successful
         // use the data from the server's response
@@ -196,7 +206,14 @@ public final class QueryUtils {
             resource = response.body();
 
         } else {
-            Log.e(MainActivity.class.getSimpleName(), "API Response unsuccessful, code : " + response.code());
+
+            // Only if the response is not null,
+            // add its code to the unsuccessfulMessage variable
+            if (response != null) {
+                unsuccessfulMessage += ", code :" + response.code();
+            }
+
+            Log.e(MainActivity.class.getSimpleName(), unsuccessfulMessage);
 
             // In case the response wasn't successful, add a null object
             // to the reviews info of the movie
@@ -215,13 +232,18 @@ public final class QueryUtils {
         Response<MovieTrailers> response = null;
 
         // Make the API call to the review endpoint
+        // Why the API call is not happening ?
+
+        // is it the link ?
+
         try {
             response = callMovieTrailers.execute();
         } catch (Exception e) {
-            Log.e(TAG, "A problem occured with the API call " + e.getMessage());
+            Log.e(TAG, "A problem occured with the API call on the Trailers endpoint " + e.getMessage());
         }
 
         MovieTrailers resource = new MovieTrailers();
+        String unsuccessfulMessage = "API Response unsuccessful on the Trailers endpoint";
 
         // In case the call was successful
         // use the data from the server's response
@@ -229,7 +251,14 @@ public final class QueryUtils {
             resource = response.body();
 
         } else {
-            Log.e(MainActivity.class.getSimpleName(), "API Response unsuccessful, code : " + response.code());
+
+            // Only if the response is not null,
+            // add its code to the unsuccessfulMessage variable
+            if (response != null) {
+                unsuccessfulMessage += ", code :" + response.code();
+            }
+
+            Log.e(MainActivity.class.getSimpleName(), unsuccessfulMessage);
 
             // In case the response wasn't successful, add a null object
             // to the trailers info of the movie.
@@ -238,26 +267,25 @@ public final class QueryUtils {
         return resource;
     }
 
-    /** This method produce the proper string url to be used by the apiinterface.
+    /**
+     * This method produce the proper string url to be used by the apiinterface.
      *
      * @param dataType will determine the endpoint that will should query
-     *
-     * @param movieId Will only be used when we need information about one specific
-     *                movie.Determine which movie we're requesting information for.
-     *
-     * @param sortBy  Will only be used when we need to get a collection of movies.
-     *                In this case, the movies will be based on the
-     *                value of "sortBy"
-     * */
+     * @param movieId  Will only be used when we need information about one specific
+     *                 movie.Determine which movie we're requesting information for.
+     * @param sortBy   Will only be used when we need to get a collection of movies.
+     *                 In this case, the movies will be based on the
+     *                 value of "sortBy"
+     */
 
     private static String getProperUrl(String dataType, int movieId, String sortBy) {
 
         // The following will be used to query the
         // discovered movies endpoint.
-        String DiscoveredMovieUrlExtra = "&language=en-US&sort_by="+ sortBy
-                +"&include_adult=true&include_video=false&page=1";
+        String DiscoveredMovieUrlExtra = "&language=en-US&sort_by=" + sortBy
+                + "&include_adult=true&include_video=false&page=1";
 
-        String DiscoveredMovieUrlExtension = "" ;
+        String DiscoveredMovieUrlExtension = "";
 
         // The following will be used to
         // get information about one movie. An extension will be
@@ -277,30 +305,34 @@ public final class QueryUtils {
          *  It will help us to query the right endpoint and
          *  get the data we are looking for. */
 
-        switch (dataType){
+        switch (dataType) {
             // Add the extension to get the data related to the credit of a given movie.
             // By credit, we mean the people who participated into the construction of the movie.
-            case MOVIE_CREDIT: urlExtensionWithId += "/"+ MOVIE_CREDIT ;
+            case MOVIE_CREDIT:
+                urlExtensionWithId += "/" + MOVIE_CREDIT;
                 break;
 
             /*case MOVIE_DETAILS: urlExtensionWithId += "&" + "language" + "=" + "en-US";
             break;*/
 
             // Add the extension to get the reviews related to a given movie.
-            case MOVIE_REVIEWS: urlExtensionWithId += "/" + MOVIE_REVIEWS;
+            case MOVIE_REVIEWS:
+                urlExtensionWithId += "/" + MOVIE_REVIEWS;
                 break;
 
             // Add the extension to get the data related to the trailer of a given movie.
-            case MOVIE_TRAILER: urlExtensionWithId += "/" + MOVIE_TRAILER;
+            case MOVIE_TRAILER:
+                urlExtensionWithId += "/" + MOVIE_TRAILER;
                 break;
 
-            case DISCOVER_MOVIE: DiscoveredMovieUrlExtension = "discover/movie?api_key=" + API_KEY + DiscoveredMovieUrlExtra;
+            case DISCOVER_MOVIE:
+                DiscoveredMovieUrlExtension = "discover/movie?api_key=" + API_KEY + DiscoveredMovieUrlExtra;
                 return DiscoveredMovieUrlExtension;
         }
 
         // Finally we'll add the api key to the url extension
         // that uses the id.
-        urlExtensionWithId += "?" + "api_key"  + "=" + API_KEY;
+        urlExtensionWithId += "?" + "api_key" + "=" + API_KEY;
 
         return urlExtensionWithId;
     }
@@ -314,8 +346,8 @@ public final class QueryUtils {
 
         // In case the movie list is empty,
         // display a warning and return an empty list
-        if(discoveredMovies.movieList.isEmpty()) {
-            Log.w(TAG,"The API returned an empty movie list");
+        if (discoveredMovies.movieList.isEmpty()) {
+            Log.w(TAG, "The API returned an empty movie list");
             return new ArrayList<DiscoveredMovies.Movie>();
         }
 
@@ -335,17 +367,17 @@ public final class QueryUtils {
         MovieDetail details = new MovieDetail();
 
         // For each movie, add its extra information.
-        for (int i=0; i < movieList.size(); i++) {
+        for (int i = 0; i < movieList.size(); i++) {
 
             // Fetch the credit information of the current movie
-            credit = getMovieCredit(movieList.get(i),mApiInterface);
-            trailers = getMovieTrailers(movieList.get(i),mApiInterface);
-            reviews = getMovieReviews(movieList.get(i),mApiInterface);
-            details = getMovieDetails(movieList.get(i),mApiInterface);
+            trailers = getMovieTrailers(movieList.get(i), mApiInterface);
+            credit = getMovieCredit(movieList.get(i), mApiInterface);
+            reviews = getMovieReviews(movieList.get(i), mApiInterface);
+            details = getMovieDetails(movieList.get(i), mApiInterface);
 
             // Set the new credit information of the current movie
             movieList.get(i).setMovieCredit(credit);
-            //movieList.get(i).setMovieTrailers(trailers);
+            movieList.get(i).setMovieTrailers(trailers);
             movieList.get(i).setMovieReviews(reviews);
             movieList.get(i).setMovieDetails(details);
 

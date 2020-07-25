@@ -47,4 +47,5 @@ public interface APIInterface {
     /* Queries the trailer endpoint */
     @GET
     Call<MovieTrailers> doGetMovieTrailers(@Url String url);
+
 }
