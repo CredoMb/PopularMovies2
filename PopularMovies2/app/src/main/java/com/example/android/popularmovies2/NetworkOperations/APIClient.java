@@ -1,4 +1,4 @@
-package com.example.android.popularmovies2.Data;
+package com.example.android.popularmovies2.NetworkOperations;
 
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;

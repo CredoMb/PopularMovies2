@@ -9,21 +9,19 @@ import android.content.AsyncTaskLoader;
 import android.content.Intent;
 import android.content.Loader;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.example.android.popularmovies2.APIResponsePOJO.DiscoveredMovies;
 import com.example.android.popularmovies2.APIResponsePOJO.MovieCredit;
 import com.example.android.popularmovies2.APIResponsePOJO.MovieDetail;
 import com.example.android.popularmovies2.APIResponsePOJO.MovieReviews;
-import com.example.android.popularmovies2.Data.APIClient;
-import com.example.android.popularmovies2.Data.APIInterface;
-import com.example.android.popularmovies2.Data.QueryUtils;
+import com.example.android.popularmovies2.NetworkOperations.APIClient;
+import com.example.android.popularmovies2.NetworkOperations.APIInterface;
+import com.example.android.popularmovies2.NetworkOperations.QueryUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -234,6 +232,7 @@ public class MainActivity extends AppCompatActivity implements
         }
            // else --> make the relative view appear
           // that's it !
+
     }
 
     @Override

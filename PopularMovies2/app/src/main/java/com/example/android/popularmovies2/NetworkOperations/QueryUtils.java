@@ -1,4 +1,4 @@
-package com.example.android.popularmovies2.Data;
+package com.example.android.popularmovies2.NetworkOperations;
 
 import android.util.Log;
 
@@ -7,7 +7,6 @@ import com.example.android.popularmovies2.APIResponsePOJO.MovieCredit;
 import com.example.android.popularmovies2.APIResponsePOJO.MovieDetail;
 import com.example.android.popularmovies2.APIResponsePOJO.MovieReviews;
 import com.example.android.popularmovies2.APIResponsePOJO.MovieTrailers;
-import com.example.android.popularmovies2.DetailActivity;
 import com.example.android.popularmovies2.MainActivity;
 
 import java.util.ArrayList;
@@ -228,13 +227,12 @@ public final class QueryUtils {
         // From the trailers endpoint of the API,
         // Get the trailers info of every movie in the list.
 
-        Call<MovieTrailers> callMovieTrailers = apiInterface.doGetMovieTrailers(getProperUrl(MOVIE_TRAILER, movie.getId(), ""));
+        Call<MovieTrailers> callMovieTrailers = apiInterface.doGetMovieTrailers(getProperUrl(MOVIE_TRAILER, movie.getId() , ""));
         Response<MovieTrailers> response = null;
 
         // Make the API call to the review endpoint
         // Why the API call is not happening ?
-
-        // is it the link ?
+        // Log.e("zeu link",getProperUrl(MOVIE_TRAILER, movie.getId() , ""));
 
         try {
             response = callMovieTrailers.execute();
@@ -262,9 +260,20 @@ public final class QueryUtils {
 
             // In case the response wasn't successful, add a null object
             // to the trailers info of the movie.
+
+            // The line bellow has no effect because the parameter
+            // doesn't carry changes outside of the method.
             movie.setMovieTrailers(null);
+
+            // if we can al
+
+            // Shouldn't this be somewhere else ?
+            // I don't know where to put it...
+            //
+            //
         }
         return resource;
+
     }
 
     /**
@@ -315,14 +324,14 @@ public final class QueryUtils {
             /*case MOVIE_DETAILS: urlExtensionWithId += "&" + "language" + "=" + "en-US";
             break;*/
 
-            // Add the extension to get the reviews related to a given movie.
-            case MOVIE_REVIEWS:
-                urlExtensionWithId += "/" + MOVIE_REVIEWS;
-                break;
-
             // Add the extension to get the data related to the trailer of a given movie.
             case MOVIE_TRAILER:
                 urlExtensionWithId += "/" + MOVIE_TRAILER;
+                break;
+
+            // Add the extension to get the reviews related to a given movie.
+            case MOVIE_REVIEWS:
+                urlExtensionWithId += "/" + MOVIE_REVIEWS;
                 break;
 
             case DISCOVER_MOVIE:

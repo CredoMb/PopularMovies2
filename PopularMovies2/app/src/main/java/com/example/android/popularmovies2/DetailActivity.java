@@ -4,22 +4,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import android.content.Intent;
-import android.graphics.Movie;
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.android.popularmovies2.APIResponsePOJO.DiscoveredMovies;
-import com.example.android.popularmovies2.APIResponsePOJO.MovieCredit;
 import com.example.android.popularmovies2.APIResponsePOJO.MovieDetail;
 import com.example.android.popularmovies2.APIResponsePOJO.MovieReviews;
 
 import com.example.android.popularmovies2.APIResponsePOJO.MovieTrailers;
-import com.example.android.popularmovies2.Data.GlideHelperClass;
+import com.example.android.popularmovies2.NetworkOperations.GlideHelperClass;
 import com.example.android.popularmovies2.databinding.ActivityDetailBinding;
 
 import java.util.ArrayList;
@@ -179,7 +175,7 @@ public class DetailActivity extends AppCompatActivity {
         HashMap<String,String> trailerHashMap = new HashMap<String,String>();
 
         // Why is the size thing not working ?
-        int i = currentMovie.getMovieTrailers().trailerList.size();
+       // int i = currentMovie.getMovieTrailers().trailerList.size();
 
         // The line bellow will add the following couple
 
@@ -205,7 +201,7 @@ public class DetailActivity extends AppCompatActivity {
         // a layout, a "source" (from) array and a "destination" (to).
 
         // Context + list
-/*
+        /*
         SimpleAdapter adapter = new SimpleAdapter(getBaseContext(), trailerWithPosition,
                 R.layout.detail_body_layout, from, to);
 

@@ -30,17 +30,6 @@
         app:layout_constraintTop_toBottomOf="@+id/textViewMovieSynopsis"
         tools:srcCompat="@tools:sample/avatars[0]" />
 
-    <ImageView
-        android:id="@+id/imageViewSecondDivider"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="24dp"
-        android:background="@android:color/darker_gray"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageButtonPlay"
-        tools:srcCompat="@tools:sample/avatars[0]" />
-
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"

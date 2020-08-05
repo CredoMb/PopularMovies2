@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.android.popularmovies2.APIResponsePOJO.DiscoveredMovies;
-import com.example.android.popularmovies2.Data.GlideHelperClass;
+import com.example.android.popularmovies2.NetworkOperations.GlideHelperClass;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.example.android.popularmovies2.Data;
+package com.example.android.popularmovies2.NetworkOperations;
 
 import android.content.Context;
 import android.text.TextUtils;

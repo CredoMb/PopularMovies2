@@ -5,9 +5,9 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 public class MovieTrailers {
-/*
+
     @SerializedName("id")
-    public int movieId;*/
+    public int movieId;
 
     @SerializedName("results")
     public List<Trailer> trailerList;

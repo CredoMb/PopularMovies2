@@ -1,10 +1,12 @@
-package com.example.android.popularmovies2.Data;
+package com.example.android.popularmovies2;
 
 import android.content.Context;
 
 import androidx.loader.content.AsyncTaskLoader;
 
 import com.example.android.popularmovies2.APIResponsePOJO.DiscoveredMovies;
+import com.example.android.popularmovies2.NetworkOperations.APIInterface;
+import com.example.android.popularmovies2.NetworkOperations.QueryUtils;
 
 import java.util.ArrayList;
 import java.util.List;
