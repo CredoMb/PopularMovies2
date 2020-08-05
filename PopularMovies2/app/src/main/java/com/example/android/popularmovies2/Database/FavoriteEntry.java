@@ -21,14 +21,14 @@ public class FavoriteEntry {
     private int numberOfTrailers;
 
     @ColumnInfo(name = "release_date")
-    private Date releaseDate;
+    private String releaseDate;
     private byte[] posterImage;
 
     // Do you store the favorite as a Preference ?
 
     @Ignore
     public FavoriteEntry(String synopsis, float rating,
-                         int numberOfTrailers, Date releaseDate, byte[] posterImage) {
+                         int numberOfTrailers, String releaseDate, byte[] posterImage) {
 
         this.synopsis = synopsis;
         this.rating = rating;
@@ -38,7 +38,7 @@ public class FavoriteEntry {
     }
 
     public FavoriteEntry(int id, String synopsis, float rating,
-                         int numberOfTrailers, Date releaseDate, byte[] posterImage) {
+                         int numberOfTrailers, String releaseDate, byte[] posterImage) {
         this.id = id;
         this.synopsis = synopsis;
         this.rating = rating;
@@ -69,7 +69,7 @@ public class FavoriteEntry {
         return numberOfTrailers;
     }
 
-    public Date getReleaseDate() {
+    public String getReleaseDate() {
         return releaseDate;
     }
 
@@ -95,7 +95,7 @@ public class FavoriteEntry {
         this.numberOfTrailers = numberOfTrailers;
     }
 
-    public void setReleaseDate(Date releaseDate) {
+    public void setReleaseDate(String releaseDate) {
         this.releaseDate = releaseDate;
     }
 }

@@ -19,6 +19,7 @@ import com.example.android.popularmovies2.APIResponsePOJO.DiscoveredMovies;
 import com.example.android.popularmovies2.APIResponsePOJO.MovieCredit;
 import com.example.android.popularmovies2.APIResponsePOJO.MovieDetail;
 import com.example.android.popularmovies2.APIResponsePOJO.MovieReviews;
+import com.example.android.popularmovies2.Database.FavoriteEntry;
 import com.example.android.popularmovies2.NetworkOperations.APIClient;
 import com.example.android.popularmovies2.NetworkOperations.APIInterface;
 import com.example.android.popularmovies2.NetworkOperations.QueryUtils;
@@ -109,6 +110,8 @@ public class MainActivity extends AppCompatActivity implements
 
     private RelativeLayout emptyStateRl;
 
+    public static List<FavoriteEntry> favoriteMovies = new ArrayList<FavoriteEntry>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -170,9 +173,8 @@ public class MainActivity extends AppCompatActivity implements
          * If the user clicks on "popular or trendy or sum like that"
          *
          * */
+
         mApiInterface = APIClient.getClient().create(APIInterface.class);
-
-
         /**
         // Start the Loader only if there's no element
         // inside our movie list. Otherwise,

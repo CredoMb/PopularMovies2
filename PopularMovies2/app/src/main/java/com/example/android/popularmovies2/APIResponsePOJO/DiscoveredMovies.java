@@ -62,6 +62,8 @@ public class DiscoveredMovies {
 
         private String year;
 
+        public boolean isFavorite;
+
         /**
          *  We have defined the necessary
          *  getters bellow.

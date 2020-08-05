@@ -8,14 +8,14 @@ import androidx.lifecycle.LiveData;
 
 import java.util.List;
 
-public class MainViewModel extends AndroidViewModel {
+public class DetailViewModel extends AndroidViewModel {
 
     // Constant for logging
-    private static final String TAG = MainViewModel.class.getSimpleName();
+    private static final String TAG = DetailViewModel.class.getSimpleName();
 
     private LiveData<List<FavoriteEntry>> favorites;
 
-    public MainViewModel(Application application) {
+    public DetailViewModel(Application application) {
         super(application);
         AppDatabase database = AppDatabase.getInstance(this.getApplication());
         Log.d(TAG, "Actively retrieving the favorites from the DataBase");

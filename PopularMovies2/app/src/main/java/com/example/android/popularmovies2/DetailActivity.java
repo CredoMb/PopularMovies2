@@ -1,10 +1,18 @@
 package com.example.android.popularmovies2;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -15,14 +23,21 @@ import com.example.android.popularmovies2.APIResponsePOJO.MovieDetail;
 import com.example.android.popularmovies2.APIResponsePOJO.MovieReviews;
 
 import com.example.android.popularmovies2.APIResponsePOJO.MovieTrailers;
+import com.example.android.popularmovies2.Database.AppDatabase;
+import com.example.android.popularmovies2.Database.AppExecutors;
+import com.example.android.popularmovies2.Database.DetailViewModel;
+import com.example.android.popularmovies2.Database.FavoriteEntry;
 import com.example.android.popularmovies2.NetworkOperations.GlideHelperClass;
 import com.example.android.popularmovies2.databinding.ActivityDetailBinding;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 public class DetailActivity extends AppCompatActivity {
+
+    private static final String TAG = DetailActivity.class.getSimpleName();
 
     ActivityDetailBinding mBinding;
 
@@ -36,7 +51,6 @@ public class DetailActivity extends AppCompatActivity {
     // This constant will be used as the maximum
     // value for the review.
     private final String REVIEW_AVERAGE_MAXIMUM = "/10";
-
 
     /**
      *  The following 5 variables will store
@@ -81,6 +95,10 @@ public class DetailActivity extends AppCompatActivity {
 
     private TextView reviewSumTv;
 
+    // The following variable will represent the database
+    // of favorite movies.
+    private AppDatabase mDb;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -113,15 +131,16 @@ public class DetailActivity extends AppCompatActivity {
         }
 
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_detail);
+        mDb = AppDatabase.getInstance(getApplicationContext());
 
         // The following variables will carry all the information related to the
         // current movie. This infos include : the general infos, the details, the
         // reviews, the trailers and the movie director.
-        DiscoveredMovies.Movie currentMovie = mMovieList.get(mPosition);
-        List<MovieTrailers.Trailer> currentMovieTrailerList = currentMovie.getMovieTrailers().trailerList;
-        MovieDetail currentMovieDetails = currentMovie.getMovieDetail();
-        String currentMovieDirector = currentMovie.getMovieCredit().getDirectorName();
-        List<MovieReviews.Review> currentMovieReviewList = currentMovie.getMovieReviews().reviewList;
+        final DiscoveredMovies.Movie currentMovie = mMovieList.get(mPosition);
+        final List<MovieTrailers.Trailer> currentMovieTrailerList = currentMovie.getMovieTrailers().trailerList;
+        final MovieDetail currentMovieDetails = currentMovie.getMovieDetail();
+        final String currentMovieDirector = currentMovie.getMovieCredit().getDirectorName();
+        final List<MovieReviews.Review> currentMovieReviewList = currentMovie.getMovieReviews().reviewList;
 
         /**All the variables above don't create bugs to
          * the program*/
@@ -146,14 +165,60 @@ public class DetailActivity extends AppCompatActivity {
         mMovieSynopsisTV = (TextView) mBinding.movieBody.findViewById(R.id.textViewMovieSynopsis);
 
         // Add content to the views
-
         setImageWithUri(mMoviePoster,currentMovie.getPosterPath());
 
         // I don't know what to do now...
         mMovieYearTV.setText(currentMovie.getYear());
         mMovieLenghtTV.setText(currentMovieDetails.getFormattedLength());
         mMovieRatingTV.setText(String.valueOf(currentMovie.getVoteAverage())+REVIEW_AVERAGE_MAXIMUM);
-        /* */ //mMovieFavoriteTV.setText();
+
+        // Set a listener onto the favorite textview,
+        // so that when clicked on, it
+        // registers or removes a movie from the favorites.
+        mMovieFavoriteTV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                // If the movie is not marked as a favorite,
+                // then add it to the favorite data base.
+                if (!currentMovie.isFavorite) {
+                    // Convert the current movie poster to an array
+                    // of byte.
+                    byte[] posterDrawableByte = drawableToByte(mMoviePoster.getDrawable());
+
+                    // Build a new favorite with all it feature.
+                    // Each feature/property of the favorite represent
+                    // an entry in the database
+                    final FavoriteEntry fav = new FavoriteEntry(currentMovie.getOverview(),
+                            currentMovie.getVoteAverage(),
+                            0
+                            , currentMovie.getReleaseDate()
+                            , posterDrawableByte);
+
+                    // Insert the favorite into the database.
+                    insertNewFav(fav);
+                }
+
+
+                // Show a toast to say that it was added to the favorites
+                else if (currentMovie.isFavorite) {
+                    // If the current movie was already in the favorite
+                    // list, this means that it should be removed.
+                    AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            // Remove the movie from the favorite list
+                            mDb.favoriteDao().deleteFavorite(fav);
+
+                            // Remove the movie from the favorite
+                            // list of the main activity.
+                            MainActivity.favoriteMovies.remove(fav);
+                        }
+                    });
+                }
+
+            }
+        });
         mMovieSynopsisTV.setText(currentMovie.getOverview());
 
         // Each row in the list stores country name, currency and flag
@@ -175,7 +240,7 @@ public class DetailActivity extends AppCompatActivity {
         HashMap<String,String> trailerHashMap = new HashMap<String,String>();
 
         // Why is the size thing not working ?
-       // int i = currentMovie.getMovieTrailers().trailerList.size();
+        // int i = currentMovie.getMovieTrailers().trailerList.size();
 
         // The line bellow will add the following couple
 
@@ -263,6 +328,61 @@ public class DetailActivity extends AppCompatActivity {
         // This will load the image, from the API to the
         // image view
         glideHelper.loadImage();
+    }
+
+    /** */
+    private void setupViewModel(){
+
+        // Ok mister ViewModel Provider could find me the
+        // View Model that as the nature "DetailViewModel.class".
+        // No problem, let me find among the view model set
+        DetailViewModel viewModel = ViewModelProviders.of(this).get(DetailViewModel.class);
+
+        // This will set an observer onto the data base
+        // it self.
+        viewModel.getFavorites().observe(this, new Observer<List<FavoriteEntry>>() {
+            @Override
+            public void onChanged(@Nullable List<FavoriteEntry> favoriteEntries) {
+                Log.d(TAG, "Updating list of tasks from LiveData in ViewModel");
+
+                // Pass the list of favorite movies
+                // to the MainActivity
+                MainActivity.favoriteMovies = favoriteEntries;
+
+               // helloWTv.setText(favoriteEntries.get(0).getSynopsis());
+               /* imageView.setImageBitmap(BitmapFactory.decodeByteArray(favoriteEntries.get(0).getPosterImage(),0,
+                        favoriteEntries.get(0).getPosterImage().length)); */
+               // mAdapter.setTasks(favoriteEntries);
+            }
+        });
+    }
+
+    public void insertNewFav(final FavoriteEntry fav) {
+
+        // Create a working thread so the
+        // database operation won't block the
+        // UI thread.
+        AppExecutors.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                // insert new task in the database
+                mDb.favoriteDao().insertFavorite(fav);
+            }
+        });
+    }
+
+    private byte[] drawableToByte(Drawable drawable) {
+
+        // Turn the drawable into a bitmap
+        Bitmap bitmap = ((BitmapDrawable)drawable).getBitmap();
+
+        // Turn the bitmap into a byteArray
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        byte[] byteArray = stream.toByteArray();
+
+        // Return the byte array after conversion.
+        return byteArray;
     }
 
 }
