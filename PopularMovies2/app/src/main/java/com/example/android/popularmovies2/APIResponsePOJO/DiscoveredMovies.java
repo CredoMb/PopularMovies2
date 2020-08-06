@@ -62,6 +62,8 @@ public class DiscoveredMovies {
 
         private String year;
 
+        // Will be used to mark a movie as
+        // favorite
         public boolean isFavorite;
 
         /**

@@ -16,6 +16,11 @@ public class FavoriteEntry {
     @PrimaryKey(autoGenerate = true)
     private int id;
     private String synopsis;
+
+    // The following variable will
+    // represent the id in theMovieDataBase API.
+    private int tmdbId;
+
     private float rating;
 
     private int numberOfTrailers;
@@ -27,19 +32,21 @@ public class FavoriteEntry {
     // Do you store the favorite as a Preference ?
 
     @Ignore
-    public FavoriteEntry(String synopsis, float rating,
+    public FavoriteEntry(String synopsis,int tmdbId,float rating,
                          int numberOfTrailers, String releaseDate, byte[] posterImage) {
 
         this.synopsis = synopsis;
+        this.tmdbId = tmdbId;
         this.rating = rating;
         this.numberOfTrailers = numberOfTrailers;
         this.releaseDate = releaseDate;
         this.posterImage = posterImage;
     }
 
-    public FavoriteEntry(int id, String synopsis, float rating,
+    public FavoriteEntry(int id, String synopsis,int tmdbId, float rating,
                          int numberOfTrailers, String releaseDate, byte[] posterImage) {
         this.id = id;
+        this.tmdbId = tmdbId;
         this.synopsis = synopsis;
         this.rating = rating;
         this.numberOfTrailers = numberOfTrailers;
@@ -61,6 +68,8 @@ public class FavoriteEntry {
         return synopsis;
     }
 
+    public int getTmdbId () { return tmdbId;}
+
     public float getRating() {
         return rating;
     }
@@ -74,7 +83,6 @@ public class FavoriteEntry {
     }
 
     /**Setters */
-
     public void setId(int id) {
         this.id = id;
     }
@@ -85,6 +93,10 @@ public class FavoriteEntry {
 
     public void setSynopsis(String synopsis) {
         this.synopsis = synopsis;
+    }
+
+    public void setTmdbId (int tmdbId) {
+        this.tmdbId = tmdbId;
     }
 
     public void setRating(float rating) {

@@ -99,6 +99,9 @@ public class DetailActivity extends AppCompatActivity {
     // of favorite movies.
     private AppDatabase mDb;
 
+    // Will hold the list of favorite movies
+    private static List<FavoriteEntry> mFavoriteMovies = new ArrayList<FavoriteEntry>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -131,7 +134,11 @@ public class DetailActivity extends AppCompatActivity {
         }
 
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_detail);
+        // Initialize the database and set up the view model to
+        // observe the database. This will automatically update
+        // the favorite lists whenever the data base changes
         mDb = AppDatabase.getInstance(getApplicationContext());
+        setupViewModel();
 
         // The following variables will carry all the information related to the
         // current movie. This infos include : the general infos, the details, the
@@ -142,16 +149,16 @@ public class DetailActivity extends AppCompatActivity {
         final String currentMovieDirector = currentMovie.getMovieCredit().getDirectorName();
         final List<MovieReviews.Review> currentMovieReviewList = currentMovie.getMovieReviews().reviewList;
 
+
         /**All the variables above don't create bugs to
          * the program*/
 
-
-      //  empty = mMoviesReviews.get(mPosition).movieId;
+         //empty = mMoviesReviews.get(mPosition).movieId;
 
         // MovieTrailers currentMovieTrailers = mMoviesTrailers.get(mPosition);
 
         /** Initialize all the variables that will hold the
-         *  views of the detail activity header layout.
+         *  views of the header layout from the detail activity .
          *
          *   All the following view are from a separated
          *  layout included in the layout of the detail activity
@@ -167,6 +174,22 @@ public class DetailActivity extends AppCompatActivity {
         // Add content to the views
         setImageWithUri(mMoviePoster,currentMovie.getPosterPath());
 
+        // Verify if the movie the user just clicked on is part of the
+        // favorite list.
+        if (isAFavorite(currentMovie)) {
+
+            // In case the movie is present in the
+            // favorite list, then set its
+            // "isFavorite" variable to be true.
+            currentMovie.isFavorite = true;
+
+            // Change the mention of the favorite textView
+            mMovieFavoriteTV.setTextColor(getColor(R.color.colorAccent));
+
+            /**Continue here, go inside of the click listener
+             * and set back the color of the textview*/
+        }
+
         // I don't know what to do now...
         mMovieYearTV.setText(currentMovie.getYear());
         mMovieLenghtTV.setText(currentMovieDetails.getFormattedLength());
@@ -179,42 +202,37 @@ public class DetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                // Convert the current movie poster to an array
+                // of byte.
+                byte[] posterDrawableByte = drawableToByte(mMoviePoster.getDrawable());
+
+                // Build a new favorite with all it feature.
+                // Each feature/property of the favorite represent
+                // an entry in the database
+                final FavoriteEntry fav = new FavoriteEntry(currentMovie.getOverview(),
+                        currentMovie.getId(),
+                        currentMovie.getVoteAverage(),
+                        0
+                        , currentMovie.getReleaseDate()
+                        , posterDrawableByte);
+
                 // If the movie is not marked as a favorite,
                 // then add it to the favorite data base.
                 if (!currentMovie.isFavorite) {
-                    // Convert the current movie poster to an array
-                    // of byte.
-                    byte[] posterDrawableByte = drawableToByte(mMoviePoster.getDrawable());
-
-                    // Build a new favorite with all it feature.
-                    // Each feature/property of the favorite represent
-                    // an entry in the database
-                    final FavoriteEntry fav = new FavoriteEntry(currentMovie.getOverview(),
-                            currentMovie.getVoteAverage(),
-                            0
-                            , currentMovie.getReleaseDate()
-                            , posterDrawableByte);
-
                     // Insert the favorite into the database.
-                    insertNewFav(fav);
+                    insertNewFav(fav,currentMovie.getTitle());
                 }
 
-
-                // Show a toast to say that it was added to the favorites
                 else if (currentMovie.isFavorite) {
-                    // If the current movie was already in the favorite
-                    // list, this means that it should be removed.
-                    AppExecutors.getInstance().diskIO().execute(new Runnable() {
-                        @Override
-                        public void run() {
-                            // Remove the movie from the favorite list
-                            mDb.favoriteDao().deleteFavorite(fav);
 
-                            // Remove the movie from the favorite
-                            // list of the main activity.
-                            MainActivity.favoriteMovies.remove(fav);
-                        }
-                    });
+                    // Remove the movie from the favorite
+                    // data base
+                    removeFromFav(fav,currentMovie.getTitle());
+
+                    // Set its favorite boolean to
+                    // false. Why can't we set it
+                    // from the Main activity ?
+                    currentMovie.isFavorite = false;
                 }
 
             }
@@ -343,21 +361,17 @@ public class DetailActivity extends AppCompatActivity {
         viewModel.getFavorites().observe(this, new Observer<List<FavoriteEntry>>() {
             @Override
             public void onChanged(@Nullable List<FavoriteEntry> favoriteEntries) {
-                Log.d(TAG, "Updating list of tasks from LiveData in ViewModel");
+                Log.d(TAG, "Updating list of favorites from LiveData in ViewModel");
 
-                // Pass the list of favorite movies
-                // to the MainActivity
+                // Update the list of favorite movies
+                // in the MainActivity and DetailActivity.
                 MainActivity.favoriteMovies = favoriteEntries;
-
-               // helloWTv.setText(favoriteEntries.get(0).getSynopsis());
-               /* imageView.setImageBitmap(BitmapFactory.decodeByteArray(favoriteEntries.get(0).getPosterImage(),0,
-                        favoriteEntries.get(0).getPosterImage().length)); */
-               // mAdapter.setTasks(favoriteEntries);
+                mFavoriteMovies = favoriteEntries;
             }
         });
     }
 
-    public void insertNewFav(final FavoriteEntry fav) {
+    public void insertNewFav(final FavoriteEntry fav,final String movieTitle) {
 
         // Create a working thread so the
         // database operation won't block the
@@ -367,6 +381,32 @@ public class DetailActivity extends AppCompatActivity {
             public void run() {
                 // insert new task in the database
                 mDb.favoriteDao().insertFavorite(fav);
+
+                // Show a Toast to notify the user
+                // that the movie has been added to the
+                // database.
+                Toast.makeText(getApplicationContext(),movieTitle +
+                        " was added to the favorites",Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    public void removeFromFav(final FavoriteEntry fav,final String movieTitle) {
+
+        // If the current movie was already in the favorite
+        // list, this means that it should be removed.
+        AppExecutors.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                // Remove the movie from the favorite list
+                mDb.favoriteDao().deleteFavorite(fav);
+
+                // Remove the movie from the favorite
+                // list of the main activity.
+                MainActivity.favoriteMovies.remove(fav);
+
+                Toast.makeText(getApplicationContext(),movieTitle +
+                        " was removed from the favorites",Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -383,6 +423,22 @@ public class DetailActivity extends AppCompatActivity {
 
         // Return the byte array after conversion.
         return byteArray;
+    }
+
+    private boolean isAFavorite(DiscoveredMovies.Movie movie) {
+
+        // get the list
+        for (FavoriteEntry fav:mFavoriteMovies){
+
+            // In case the movie is found in the
+            // favorite list, then return true.
+            if (movie.getId() == fav.getTmdbId()) {
+                return true;
+            }
+        }
+
+        // If it is, then set its boolean
+        return false;
     }
 
 }
