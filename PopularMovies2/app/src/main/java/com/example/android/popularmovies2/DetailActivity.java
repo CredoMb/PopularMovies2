@@ -77,6 +77,21 @@ public class DetailActivity extends AppCompatActivity {
 
     private ListView mTrailerListView;
 
+    /**
+     * The following variable will store
+     * the movie that has just been
+     * clicked on.
+     * */
+
+     DiscoveredMovies.Movie mCurrentMovie;
+
+     /*
+     List<MovieTrailers.Trailer> mCurrentMovieTrailerList = mCurrentMovie.getMovieTrailers().trailerList;
+     MovieDetail mCurrentMovieDetails = mCurrentMovie.getMovieDetail();
+     String mCurrentMovieDirector;
+     List<MovieReviews.Review> mCurrentMovieReviewList ;
+     */
+
     // Will store the position of the
     // clicked Movie, after a movie as
     // been clicked in the MainActivity
@@ -136,24 +151,26 @@ public class DetailActivity extends AppCompatActivity {
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_detail);
         // Initialize the database and set up the view model to
         // observe the database. This will automatically update
-        // the favorite lists whenever the data base changes
+        // the favorite lists whenever the data base changes.
         mDb = AppDatabase.getInstance(getApplicationContext());
+
+        // On top of that, the method "setupViewModel" verifies if a
+        // movie is marked as favorite to alter the color of
+        // its TextView
         setupViewModel();
 
         // The following variables will carry all the information related to the
         // current movie. This infos include : the general infos, the details, the
         // reviews, the trailers and the movie director.
-        final DiscoveredMovies.Movie currentMovie = mMovieList.get(mPosition);
-        final List<MovieTrailers.Trailer> currentMovieTrailerList = currentMovie.getMovieTrailers().trailerList;
-        final MovieDetail currentMovieDetails = currentMovie.getMovieDetail();
-        final String currentMovieDirector = currentMovie.getMovieCredit().getDirectorName();
-        final List<MovieReviews.Review> currentMovieReviewList = currentMovie.getMovieReviews().reviewList;
+        mCurrentMovie = mMovieList.get(mPosition);
+        final List<MovieTrailers.Trailer> currentMovieTrailerList = mCurrentMovie.getMovieTrailers().trailerList;
+        final MovieDetail currentMovieDetails = mCurrentMovie.getMovieDetail();
+        final String currentMovieDirector = mCurrentMovie.getMovieCredit().getDirectorName();
+        final List<MovieReviews.Review> currentMovieReviewList = mCurrentMovie.getMovieReviews().reviewList;
 
 
         /**All the variables above don't create bugs to
          * the program*/
-
-         //empty = mMoviesReviews.get(mPosition).movieId;
 
         // MovieTrailers currentMovieTrailers = mMoviesTrailers.get(mPosition);
 
@@ -172,28 +189,13 @@ public class DetailActivity extends AppCompatActivity {
         mMovieSynopsisTV = (TextView) mBinding.movieBody.findViewById(R.id.textViewMovieSynopsis);
 
         // Add content to the views
-        setImageWithUri(mMoviePoster,currentMovie.getPosterPath());
+        setImageWithUri(mMoviePoster,mCurrentMovie.getPosterPath());
 
-        // Verify if the movie the user just clicked on is part of the
-        // favorite list.
-        if (isAFavorite(currentMovie)) {
-
-            // In case the movie is present in the
-            // favorite list, then set its
-            // "isFavorite" variable to be true.
-            currentMovie.isFavorite = true;
-
-            // Change the mention of the favorite textView
-            mMovieFavoriteTV.setTextColor(getColor(R.color.colorAccent));
-
-            /**Continue here, go inside of the click listener
-             * and set back the color of the textview*/
-        }
 
         // I don't know what to do now...
-        mMovieYearTV.setText(currentMovie.getYear());
+        mMovieYearTV.setText(mCurrentMovie.getYear());
         mMovieLenghtTV.setText(currentMovieDetails.getFormattedLength());
-        mMovieRatingTV.setText(String.valueOf(currentMovie.getVoteAverage())+REVIEW_AVERAGE_MAXIMUM);
+        mMovieRatingTV.setText(String.valueOf(mCurrentMovie.getVoteAverage())+REVIEW_AVERAGE_MAXIMUM);
 
         // Set a listener onto the favorite textview,
         // so that when clicked on, it
@@ -209,35 +211,49 @@ public class DetailActivity extends AppCompatActivity {
                 // Build a new favorite with all it feature.
                 // Each feature/property of the favorite represent
                 // an entry in the database
-                final FavoriteEntry fav = new FavoriteEntry(currentMovie.getOverview(),
-                        currentMovie.getId(),
-                        currentMovie.getVoteAverage(),
-                        0
-                        , currentMovie.getReleaseDate()
-                        , posterDrawableByte);
+                final FavoriteEntry fav = new FavoriteEntry(mCurrentMovie.getOverview(),
+                        mCurrentMovie.getId(),
+                        mCurrentMovie.getVoteAverage(),
+                        0,
+                         mCurrentMovie.getReleaseDate()
+                        , null);
+
+                // Check for the Kissing Booth
 
                 // If the movie is not marked as a favorite,
                 // then add it to the favorite data base.
-                if (!currentMovie.isFavorite) {
+                 if (!mCurrentMovie.isFavorite) {
                     // Insert the favorite into the database.
-                    insertNewFav(fav,currentMovie.getTitle());
+                    insertNewFav(fav);
+
+                     // Show a Toast to notify the user
+                     // that the movie has been added to the
+                     // database.
+                     Toast.makeText(getApplicationContext(),mCurrentMovie.getTitle() +
+                             " was added to the favorites",Toast.LENGTH_LONG).show();
+
+                    // Change the mention of the favorite textView
+                  //  mMovieFavoriteTV.setTextColor(getColor(R.color.colorAccent));
+
+                    //
                 }
 
-                else if (currentMovie.isFavorite) {
+                 /*else if (currentMovie.isFavorite) */
+                 else {
 
                     // Remove the movie from the favorite
                     // data base
-                    removeFromFav(fav,currentMovie.getTitle());
+                    removeFromFav(fav,mCurrentMovie.getTitle());
 
                     // Set its favorite boolean to
                     // false. Why can't we set it
                     // from the Main activity ?
-                    currentMovie.isFavorite = false;
+                    mCurrentMovie.isFavorite = false;
                 }
 
             }
         });
-        mMovieSynopsisTV.setText(currentMovie.getOverview());
+        mMovieSynopsisTV.setText(mCurrentMovie.getOverview());
 
         // Each row in the list stores country name, currency and flag
 
@@ -367,11 +383,27 @@ public class DetailActivity extends AppCompatActivity {
                 // in the MainActivity and DetailActivity.
                 MainActivity.favoriteMovies = favoriteEntries;
                 mFavoriteMovies = favoriteEntries;
+
+                // Verify if the current movie is part of the
+                // favorite list.
+                if (isAFavorite(mCurrentMovie)) {
+
+                    // In case the movie is present in the
+                    // favorite list, then set its
+                    // "isFavorite" variable to be true.
+                    mCurrentMovie.isFavorite = true;
+
+                    // Change the mention of the favorite textView.
+                    mMovieFavoriteTV.setTextColor(getColor(R.color.colorAccent));
+
+                }
+                // We can setup the view model and verify the favorite
+                //
             }
         });
     }
 
-    public void insertNewFav(final FavoriteEntry fav,final String movieTitle) {
+    public void insertNewFav(final FavoriteEntry fav) {
 
         // Create a working thread so the
         // database operation won't block the
@@ -379,14 +411,9 @@ public class DetailActivity extends AppCompatActivity {
         AppExecutors.getInstance().diskIO().execute(new Runnable() {
             @Override
             public void run() {
-                // insert new task in the database
+                // insert new task in the database.
                 mDb.favoriteDao().insertFavorite(fav);
 
-                // Show a Toast to notify the user
-                // that the movie has been added to the
-                // database.
-                Toast.makeText(getApplicationContext(),movieTitle +
-                        " was added to the favorites",Toast.LENGTH_LONG).show();
             }
         });
     }
