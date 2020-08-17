@@ -263,6 +263,12 @@ public final class QueryUtils {
 
             // The line bellow has no effect because the parameter
             // doesn't carry changes outside of the method.
+
+            /**We set the trailer to null in case of
+             * a failure.
+             *
+             * Now, let find out manually if those movies
+             * have trailer or not*/
             movie.setMovieTrailers(null);
 
             // if we can al
@@ -389,6 +395,8 @@ public final class QueryUtils {
             movieList.get(i).setMovieTrailers(trailers);
             movieList.get(i).setMovieReviews(reviews);
             movieList.get(i).setMovieDetails(details);
+
+            //
 
             /*
             getMovieDetail(resource.movieList,apiInterface);

@@ -13,6 +13,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -163,7 +164,9 @@ public class DetailActivity extends AppCompatActivity {
         // current movie. This infos include : the general infos, the details, the
         // reviews, the trailers and the movie director.
         mCurrentMovie = mMovieList.get(mPosition);
-        final List<MovieTrailers.Trailer> currentMovieTrailerList = mCurrentMovie.getMovieTrailers().trailerList;
+        List<MovieTrailers.Trailer> currentMovieTrailerList = new ArrayList<MovieTrailers.Trailer>();
+        currentMovieTrailerList =
+                mCurrentMovie.getMovieTrailers().trailerList;
         final MovieDetail currentMovieDetails = mCurrentMovie.getMovieDetail();
         final String currentMovieDirector = mCurrentMovie.getMovieCredit().getDirectorName();
         final List<MovieReviews.Review> currentMovieReviewList = mCurrentMovie.getMovieReviews().reviewList;
@@ -194,6 +197,11 @@ public class DetailActivity extends AppCompatActivity {
 
         // I don't know what to do now...
         mMovieYearTV.setText(mCurrentMovie.getYear());
+
+/*
+        Log.e("Laidui ",String.valueOf(mCurrentMovie.getId()));
+*/
+
         mMovieLenghtTV.setText(currentMovieDetails.getFormattedLength());
         mMovieRatingTV.setText(String.valueOf(mCurrentMovie.getVoteAverage())+REVIEW_AVERAGE_MAXIMUM);
 
@@ -257,33 +265,26 @@ public class DetailActivity extends AppCompatActivity {
 
         // Each row in the list stores country name, currency and flag
 
-        /* List<HashMap<String,String>> aList = new ArrayList<HashMap<String,String>>();
+        List<String> trailersTextList = new ArrayList<String>();
 
-        for(int i=0;i<10;i++){
-            HashMap<String, String> hm = new HashMap<String,String>();
+        if(currentMovieTrailerList!= null && !currentMovieTrailerList.isEmpty()  ) {
+            for (int i =0; i < currentMovieTrailerList.size(); i++) {
+                trailersTextList.add("Trailer "+ String.valueOf(i+1));
 
-            hm.put("txt", "Country : " + countries[i]);
-            hm.put("cur","Currency : " + currency[i]);
-            hm.put("flag", Integer.toString(flags[i]) );
-
-            aList.add(hm);
+            }
         }
-        */
 
-        List <HashMap<String,String>> trailerWithPosition = new ArrayList<HashMap<String,String>>();
-        HashMap<String,String> trailerHashMap = new HashMap<String,String>();
+        String[] trailerTextArray = trailersTextList.toArray(new String[trailersTextList.size()]);
+        // Log.e("Leu trilere",trailerTextArray[1]);
+        // android.R.layout.simple_list_item_1
 
-        // Why is the size thing not working ?
-        // int i = currentMovie.getMovieTrailers().trailerList.size();
+        ArrayAdapter simpleAdapter = new ArrayAdapter<>(this,R.layout.trailer_list_item, R.id.trailer_position,trailerTextArray);
 
-        // The line bellow will add the following couple
+        // ArrayAdapter simpleAdapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,trailerTextArray);
 
-        /*
-        for (int i =0; i < currentMovieTrailerList.size(); i++) {
+        mTrailerListView = (ListView) findViewById(R.id.trailer_list);
+        mTrailerListView.setAdapter(simpleAdapter);
 
-            *//*trailerHashMap.put("trailer","Trailer "+ String.valueOf(i+1));
-            trailerWithPosition.add(trailerHashMap);*//*
-        }*/
 
         // Trailer positions
         //
@@ -295,46 +296,13 @@ public class DetailActivity extends AppCompatActivity {
         // Ids of views in listview_layout
         int[] to = {R.id.trailer_position};
 
-        // Besides from the context, which is the first parameter,
-        // this adapter takes in a list of HashMap(trailerWithPosition),
-        // a layout, a "source" (from) array and a "destination" (to).
-
-        // Context + list
-        /*
-        SimpleAdapter adapter = new SimpleAdapter(getBaseContext(), trailerWithPosition,
-                R.layout.detail_body_layout, from, to);
-
-        mTrailerListView = (ListView) findViewById(R.id.trailer_list);
-        mTrailerListView.setAdapter(adapter);*/
-
-        /*
-        // Instantiating an adapter to store each items
-        // R.layout.listview_layout defines the layout of each item
-        SimpleAdapter adapter = new SimpleAdapter(getBaseContext(), aList, R.layout.listview_layout, from, to);
-
-        // Getting a reference to listview of main.xml layout file
-        ListView listView = ( ListView ) findViewById(R.id.listview);
-
-        // Setting the adapter to the listView
-        listView.setAdapter(adapter); */
-
-     //   Toast.makeText(this, mMoviesTrailers.size(), Toast.LENGTH_SHORT).show();
-
-/*
-        List<String> trailerList = new ArrayList<String>();
-        trailerList = currentMovie.getMovieTrailers().trailerList;
-
-        ArrayAdapter<String> trailerAdapter = new ArrayAdapter<String>(this,
-                R.layout.trailer_list_item,trailerList);
-        mTrailerListView.setAdapter(trailerAdapter);*/
-
         /**/
 
         // Set the title of the review with the
         // exact number of reviews made for the current movie.
       //  mBinding.textViewReviewSummaryTitle.setText(buildReviewTitle(mMoviesReviews.get(mPosition)));
 
-        /**/
+
     }
 
     // pass the 4 lists

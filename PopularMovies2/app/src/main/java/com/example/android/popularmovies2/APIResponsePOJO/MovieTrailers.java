@@ -17,7 +17,7 @@ public class MovieTrailers {
         private final String TRAILER_BASE_URL = "https://www.youtube.com/watch?v=";
 
         @SerializedName("id")
-        private int id;
+        private String id;
 
         @SerializedName("name")
         private String name;
