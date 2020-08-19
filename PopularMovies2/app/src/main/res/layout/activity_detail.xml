@@ -7,7 +7,7 @@
     xmlns:bind="http://schemas.android.com/apk/res-auto"
     >
 
-    <androidx.core.widget.NestedScrollView
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true">
@@ -44,7 +44,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
-                    android:textSize="20sp"
+                    android:textSize="@dimen/review_title_textsize"
                     android:textColor="@android:color/black"
                     android:layout_marginBottom="16dp"
                     tools:text="50 reviews"/>
@@ -54,7 +54,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
-                    android:textSize="16sp"
+                    android:textSize="@dimen/review_author_textsize"
                     android:textColor="@android:color/black"
                     tools:text="Credo"/>
 
@@ -62,7 +62,7 @@
                     android:id="@+id/textView_reviewSummarySample_body"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="14sp"
+                    android:textSize="@dimen/review_body_textsize"
                     android:maxLines="1"
                     tools:text="I want to know, every body want to know, where is my life, it's"/>
 
@@ -70,11 +70,12 @@
                     android:id="@+id/button_reviewSummary_showAllReview"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Show all 300 reviews"/>
+                    tools:text="@string/show_all_review"/>
+
             </LinearLayout>
 
         </LinearLayout>
 
-    </androidx.core.widget.NestedScrollView>
+    </ScrollView>
 
 </layout>

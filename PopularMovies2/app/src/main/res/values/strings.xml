@@ -47,6 +47,9 @@
     <!-- Text to be used when there is no review to display -->
     <string name="no_review">No reviews</string>
 
+    <!-- Text to be used when there is no review to display -->
+    <string name="show_all_review">Show all reviews</string>
+
     <!-- Text to be used whenever there's no data for the
          movie the user clicked on -->
     <string name="data_not_available">Movie Data is not available</string>
@@ -55,5 +58,8 @@
          being setup -->
     <string name="view_model_setup">Updating the list of favorites from LiveData in ViewModel</string>
 
+    <!-- Text to be used in the Toast message after a movie
+         has been removed from the favorites -->
+    <string name="removed_favorite">&#032;was removed from the favorites</string>
 
 </resources>

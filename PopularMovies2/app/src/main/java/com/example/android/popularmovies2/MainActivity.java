@@ -32,13 +32,13 @@ public class MainActivity extends AppCompatActivity implements
         LoaderManager.LoaderCallbacks<List<DiscoveredMovies.Movie>>{
 
     /**
-     * The Ids for the 2 Loaders to be used in
+     * The Ids for the Loader to be used in
      * this activity.
      */
     private static final int MOVIE_LOADER_ID = 0;
 
     /**
-     * Will be used as the base url and parameter will be
+     * Will be used as the base url for the API
      */
     private String MOVIE_REQUEST_URL = "https://api.themoviedb.org/3/discover/movie?";
 
@@ -50,8 +50,8 @@ public class MainActivity extends AppCompatActivity implements
 
     /**
      * Will be used as values for the mSort variable.
-     * This will determine the order with which the movies
-     * are displayed inside the Main Activity
+     * This will determine the category of movies
+     * to display inside the Main Activity
      */
     private String BY_POPULARITY = "popularity.desc";
     private String BY_RATINGS = "vote_average.desc";
@@ -63,7 +63,8 @@ public class MainActivity extends AppCompatActivity implements
     private RecyclerView mRecyclerView;
     private MovieAdapter mMovieAdapter;
 
-
+    /** Will be used to access each endpoint of the
+     *  API*/
     APIInterface mApiInterface;
 
     /**
@@ -175,6 +176,7 @@ public class MainActivity extends AppCompatActivity implements
          * */
 
         mApiInterface = APIClient.getClient().create(APIInterface.class);
+
         /**
         // Start the Loader only if there's no element
         // inside our movie list. Otherwise,

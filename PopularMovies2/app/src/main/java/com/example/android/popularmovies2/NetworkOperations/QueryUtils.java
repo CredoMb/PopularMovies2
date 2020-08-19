@@ -26,7 +26,7 @@ public final class QueryUtils {
      * This will store the api key necessary
      * to query any endpoint.
      */
-    private static final String API_KEY = "cd401ba98e50ce8bf913cdce912aa430";
+    private static final String API_KEY = "";
 
     /**
      * The following constants will be use to form

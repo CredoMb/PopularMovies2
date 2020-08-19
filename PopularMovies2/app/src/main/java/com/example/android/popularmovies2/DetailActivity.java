@@ -33,7 +33,6 @@ import com.example.android.popularmovies2.databinding.ActivityDetailBinding;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class DetailActivity extends AppCompatActivity {
@@ -247,14 +246,15 @@ public class DetailActivity extends AppCompatActivity {
         // Check if the movie has reviews
         if (currentMovieReviewList != null && !currentMovieReviewList.isEmpty()) {
             // Set the number of reviews with the text "reviews"
-            numberOfReviews = getString(R.string.review_title,currentMovieReviewList.size());
+            numberOfReviews = getString(R.string.review_title, currentMovieReviewList.size());
 
             // Get the text of the first review
             firstReviewContent = currentMovieReviewList.get(0).getContent();
 
             // Get the author of the first review
             firstReviewAuthor = currentMovieReviewList.get(0).getAuthor();
-        } else {
+        }
+        else {
 
             // Make invisible the views for the body and
             // the author of the review sample.
@@ -272,11 +272,24 @@ public class DetailActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * This method will close the activity
+     * and display a toast. Will be used
+     * when there are no movie data available
+     */
+
     private void closeOnError() {
         finish();
         Toast.makeText(this, getString(R.string.data_not_available), Toast.LENGTH_LONG).show();
     }
 
+    /**
+     * This method help us to load an image onto an image view
+     * by using the GlideHelperClass object.
+     *
+     * @param imageView is the imageView we should load the image onto
+     * @param imageUri  is the uri of the image to load.
+     */
 
     private void setImageWithUri(ImageView imageView, String imageUri) {
 
@@ -290,7 +303,15 @@ public class DetailActivity extends AppCompatActivity {
         glideHelper.loadImage();
     }
 
-
+    /**
+     * This method setup the view model to observe the favorite data base.
+     * <p>
+     * As we have 2 lists of favorite movies, one in the MainActivity
+     * and the other in the DetailActivity, we need to update them
+     * everytime the database changes.
+     * <p>
+     * This will be possible with the view model observing the database.
+     */
     private void setupViewModel() {
 
         // Ok mister ViewModel Provider could find me the
@@ -327,6 +348,14 @@ public class DetailActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * This method is used to insert a new element into the
+     * favorite data base. The task is done inside a
+     * working thread.
+     *
+     * @param fav is the FavoriteEntry object to insert
+     *            in the database
+     */
     public void insertNewFav(final FavoriteEntry fav) {
 
         // Create a working thread so the
@@ -342,6 +371,16 @@ public class DetailActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * This method is used to remove an element from the
+     * favorite data base. The task is done inside a
+     * working thread.
+     *
+     * @param fav        is the FavoriteEntry object to remove
+     *                   from the database
+     * @param movieTitle is the title of the movie to remove.
+     *                   It's used to create a confirmation Toast.
+     */
     public void removeFromFav(final FavoriteEntry fav, final String movieTitle) {
 
         // If the current movie was already in the favorite
@@ -357,11 +396,17 @@ public class DetailActivity extends AppCompatActivity {
                 MainActivity.favoriteMovies.remove(fav);
 
                 Toast.makeText(getApplicationContext(), movieTitle +
-                        " was removed from the favorites", Toast.LENGTH_LONG).show();
+                        getString(R.string.removed_favorite), Toast.LENGTH_LONG).show();
             }
         });
     }
 
+    /**
+     * This method converts a "Drawable" to an array of byte.
+     * This way, we can store the movie image inside the database.
+     *
+     * @param drawable is the actual drawable to convert
+     */
     private byte[] drawableToByte(Drawable drawable) {
 
         // Turn the drawable into a bitmap
@@ -376,6 +421,16 @@ public class DetailActivity extends AppCompatActivity {
         return byteArray;
     }
 
+    /**
+     * This method tells us wether or not a given movie
+     * is in the favorite list.
+     * <p>
+     * If the movie is a favorite, the method returns true
+     * and false otherwise
+     *
+     * @param movie represent the movie we are checking
+     *              for in the favorite list
+     */
     private boolean isAFavorite(DiscoveredMovies.Movie movie) {
 
         // get the list
