@@ -12,13 +12,17 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.example.android.popularmovies2.APIResponsePOJO.DiscoveredMovies;
 import com.example.android.popularmovies2.APIResponsePOJO.MovieCredit;
 import com.example.android.popularmovies2.APIResponsePOJO.MovieDetail;
 import com.example.android.popularmovies2.APIResponsePOJO.MovieReviews;
+import com.example.android.popularmovies2.APIResponsePOJO.MovieTrailers;
 import com.example.android.popularmovies2.Database.FavoriteEntry;
 import com.example.android.popularmovies2.NetworkOperations.APIClient;
 import com.example.android.popularmovies2.NetworkOperations.APIInterface;
@@ -206,7 +210,12 @@ public class MainActivity extends AppCompatActivity implements
                     return new ArrayList<DiscoveredMovies.Movie>();
                 }
                 // Make the network request and
-                // return a list of movie
+                // return a list of movie.
+                // Each movie on the list only contains the
+                // Image and details of the movie.
+
+                // The reviews, credit and trailer will be fetch
+                // in the Detail Activity.
                 List<DiscoveredMovies.Movie> movieList
                         = QueryUtils.fetchMoviesData(mApiInterface, mSortBy);
 
@@ -340,4 +349,46 @@ public class MainActivity extends AppCompatActivity implements
 
 
     }
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

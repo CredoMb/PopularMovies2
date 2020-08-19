@@ -26,7 +26,7 @@ public final class QueryUtils {
      * This will store the api key necessary
      * to query any endpoint.
      */
-    private static final String API_KEY = "";
+    private static final String API_KEY = "cd401ba98e50ce8bf913cdce912aa430";
 
     /**
      * The following constants will be use to form
@@ -94,12 +94,12 @@ public final class QueryUtils {
             Log.e(MainActivity.class.getSimpleName(), "API Response unsuccessful, code : " + response.code());
         }
 
-        return completeMoviesData(resource);
+        return completeMoviesDetails(resource);
 
     }
 
 
-    private static MovieCredit getMovieCredit(DiscoveredMovies.Movie movie, final APIInterface apiInterface) {
+    public static MovieCredit getMovieCredit(DiscoveredMovies.Movie movie, final APIInterface apiInterface) {
 
         // From the credit endpoint of the API,
         // Get the credit info of every movie in the list.
@@ -181,7 +181,7 @@ public final class QueryUtils {
         return resource;
     }
 
-    private static MovieReviews getMovieReviews(DiscoveredMovies.Movie movie, final APIInterface apiInterface) {
+    public static MovieReviews getMovieReviews(DiscoveredMovies.Movie movie, final APIInterface apiInterface) {
 
         // From the review endpoint of the API,
         // Get the review info of every movie in the list.
@@ -222,7 +222,7 @@ public final class QueryUtils {
 
     }
 
-    private static MovieTrailers getMovieTrailers(DiscoveredMovies.Movie movie, final APIInterface apiInterface) {
+    public static MovieTrailers getMovieTrailers(DiscoveredMovies.Movie movie, final APIInterface apiInterface) {
 
         // From the trailers endpoint of the API,
         // Get the trailers info of every movie in the list.
@@ -357,7 +357,7 @@ public final class QueryUtils {
     // trailers and reviews) for each movie and
     // add them.
 
-    private static List<DiscoveredMovies.Movie> completeMoviesData(DiscoveredMovies discoveredMovies) {
+    private static List<DiscoveredMovies.Movie> completeMoviesDetails(DiscoveredMovies discoveredMovies) {
 
         // In case the movie list is empty,
         // display a warning and return an empty list
@@ -376,24 +376,24 @@ public final class QueryUtils {
         // information about the movie.
         // Those informations will be fetched from
         // different endpoints of the API.
-        MovieCredit credit = new MovieCredit();
-        MovieTrailers trailers = new MovieTrailers();
-        MovieReviews reviews = new MovieReviews();
+      //  MovieCredit credit = new MovieCredit();
+        // MovieTrailers trailers = new MovieTrailers();
+        //MovieReviews reviews = new MovieReviews();
         MovieDetail details = new MovieDetail();
 
         // For each movie, add its extra information.
         for (int i = 0; i < movieList.size(); i++) {
 
             // Fetch the credit information of the current movie
-            trailers = getMovieTrailers(movieList.get(i), mApiInterface);
-            credit = getMovieCredit(movieList.get(i), mApiInterface);
-            reviews = getMovieReviews(movieList.get(i), mApiInterface);
+            //trailers = getMovieTrailers(movieList.get(i), mApiInterface);
+            //credit = getMovieCredit(movieList.get(i), mApiInterface);
+           // reviews = getMovieReviews(movieList.get(i), mApiInterface);
             details = getMovieDetails(movieList.get(i), mApiInterface);
 
             // Set the new credit information of the current movie
-            movieList.get(i).setMovieCredit(credit);
-            movieList.get(i).setMovieTrailers(trailers);
-            movieList.get(i).setMovieReviews(reviews);
+            //movieList.get(i).setMovieCredit(credit);
+           // movieList.get(i).setMovieTrailers(trailers);
+          //  movieList.get(i).setMovieReviews(reviews);
             movieList.get(i).setMovieDetails(details);
 
             //

@@ -6,10 +6,16 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.app.LoaderManager;
+import android.content.AsyncTaskLoader;
+import android.content.Context;
 import android.content.Intent;
+import android.content.Loader;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -20,6 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.android.popularmovies2.APIResponsePOJO.DiscoveredMovies;
+import com.example.android.popularmovies2.APIResponsePOJO.MovieCredit;
 import com.example.android.popularmovies2.APIResponsePOJO.MovieDetail;
 import com.example.android.popularmovies2.APIResponsePOJO.MovieReviews;
 
@@ -28,16 +35,41 @@ import com.example.android.popularmovies2.Database.AppDatabase;
 import com.example.android.popularmovies2.Database.AppExecutors;
 import com.example.android.popularmovies2.Database.DetailViewModel;
 import com.example.android.popularmovies2.Database.FavoriteEntry;
+import com.example.android.popularmovies2.NetworkOperations.APIClient;
+import com.example.android.popularmovies2.NetworkOperations.APIInterface;
 import com.example.android.popularmovies2.NetworkOperations.GlideHelperClass;
+import com.example.android.popularmovies2.NetworkOperations.QueryUtils;
 import com.example.android.popularmovies2.databinding.ActivityDetailBinding;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-public class DetailActivity extends AppCompatActivity {
+public class DetailActivity extends AppCompatActivity implements
+        LoaderManager.LoaderCallbacks<Map<String,Object>> {
 
     private static final String TAG = DetailActivity.class.getSimpleName();
+
+
+     // The Ids for the Loader to be used in
+     // this activity.
+
+    private static final int MOVIE_LOADER_ID = 1;
+
+    // Will be used to store the trailer
+    // in the Map of the Loader result.
+    private static final String MOVIE_TRAILERS = "trailers";
+
+    // Will be used to store the reviews
+    // in the Map of the Loader result.
+    private static final String MOVIE_REVIEWS = "reviews";
+
+    // Will be used to store the credit
+    // in the Map of the Loader result.
+    private static final String MOVIE_CREDIT ="credit" ;
+
 
     ActivityDetailBinding mBinding;
 
@@ -61,6 +93,9 @@ public class DetailActivity extends AppCompatActivity {
     private TextView mMovieRatingTV;
     private TextView mMovieFavoriteTV;
 
+    // Will be used to access each endpoint of the
+    //  API
+    APIInterface mApiInterface;
 
     // The following variable will store
     // the views of the detail_body_layout.xml
@@ -142,17 +177,14 @@ public class DetailActivity extends AppCompatActivity {
         // current movie. This infos include : the general infos, the details, the
         // reviews, the trailers and the movie director.
         mCurrentMovie = mMovieList.get(mPosition);
-        List<MovieTrailers.Trailer> currentMovieTrailerList = new ArrayList<MovieTrailers.Trailer>();
-        currentMovieTrailerList = mCurrentMovie.getMovieTrailers().trailerList;
-        final MovieDetail currentMovieDetails = mCurrentMovie.getMovieDetail();
-        final String currentMovieDirector = mCurrentMovie.getMovieCredit().getDirectorName();
-        final List<MovieReviews.Review> currentMovieReviewList = mCurrentMovie.getMovieReviews().reviewList;
+
+        mApiInterface = APIClient.getClient().create(APIInterface.class);
 
         /**
          * Initialize all the variables that will hold the
          * views of the detail activity layout.
          *
-         *  */
+         * */
         mMoviePoster = (ImageView) mBinding.movieHeader.findViewById(R.id.imageViewMoviePoster);
         mMovieYearTV = (TextView) mBinding.movieHeader.findViewById(R.id.textViewMovieYear);
         mMovieLenghtTV = (TextView) mBinding.movieHeader.findViewById(R.id.textViewMovieLength);
@@ -160,6 +192,102 @@ public class DetailActivity extends AppCompatActivity {
         mMovieFavoriteTV = (TextView) mBinding.movieHeader.findViewById(R.id.textViewFavorite);
         mMovieSynopsisTV = (TextView) mBinding.movieBody.findViewById(R.id.textViewMovieSynopsis);
 
+        // Activate the Loader to fetch the complementary informations
+        // of the current movie and populate the UI with it.
+        startLoaderOrEmptyState(MOVIE_LOADER_ID);
+
+    }
+
+    @Override
+    public Loader<Map<String,Object>> onCreateLoader(int i, Bundle bundle) {
+
+        return new AsyncTaskLoader<Map<String,Object>>(this) {
+            @Override
+            public Map<String,Object> loadInBackground() {
+
+                Map<String,Object> movieInfosHashMap = new HashMap<String,Object>();
+
+                if (mApiInterface == null) {
+                    return movieInfosHashMap;
+                }
+                // Make the network request and
+                // return a list of movie.
+                // Each movie on the list only contains the
+                // Image and details of the movie.
+
+                // Get the reviews, credit and trailer of the current movie
+                // from the appropriate endpoints.
+                movieInfosHashMap.put(MOVIE_TRAILERS,
+                        QueryUtils.getMovieTrailers(mCurrentMovie, mApiInterface));
+
+                movieInfosHashMap.put(MOVIE_REVIEWS,
+                        QueryUtils.getMovieReviews(mCurrentMovie, mApiInterface));
+
+                movieInfosHashMap.put(MOVIE_CREDIT,
+                        QueryUtils.getMovieCredit(mCurrentMovie, mApiInterface));
+
+                return movieInfosHashMap;
+            }
+        };
+
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Map<String,Object>> loader, Map<String,Object> movieInfosHashMap) {
+
+        if (movieInfosHashMap != null) {
+
+            // Get all the complementary data from the hashmap
+            MovieTrailers trailers = (MovieTrailers) movieInfosHashMap.get(MOVIE_TRAILERS);
+            MovieCredit credit = (MovieCredit)  movieInfosHashMap.get(MOVIE_CREDIT);
+            MovieReviews reviews = (MovieReviews) movieInfosHashMap.get(MOVIE_REVIEWS);
+
+            // Add the complementary information
+            // to the current movie.
+            mCurrentMovie.setMovieTrailers(trailers);
+            mCurrentMovie.setMovieCredit(credit);
+            mCurrentMovie.setMovieReviews(reviews);
+
+            // Update the movie list with the extended version
+            // of the current movie
+            mMovieList.set(mPosition,mCurrentMovie);
+
+            // Now populate the layout with the
+            // current movie's data
+            populateDetailLayout();
+        }
+        // else --> make the relative view appear
+        // that's it !
+
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Map<String,Object>> loader) {
+
+        // Create a new empty Movie list for the Adapter
+
+
+        // If there's no internet connection display the emptystate view
+        /*if (!isNetworkConnected()) {
+            emptyStateRl.setVisibility(View.VISIBLE);
+        }*/
+
+    }
+
+    /**
+     * This method will populate the layout
+     * with the current movie's data
+     */
+
+    private void populateDetailLayout () {
+
+        List<MovieTrailers.Trailer> currentMovieTrailerList = new ArrayList<MovieTrailers.Trailer>();
+        currentMovieTrailerList = mCurrentMovie.getMovieTrailers().trailerList;
+        final List<MovieReviews.Review> currentMovieReviewList = mCurrentMovie.getMovieReviews().reviewList;
+        final MovieDetail currentMovieDetails = mCurrentMovie.getMovieDetail();
+        final String currentMovieDirector = mCurrentMovie.getMovieCredit().getDirectorName();
+
+        // Chercher une application ou j'ai une
 
         // Add content to the views
         setImageWithUri(mMoviePoster, mCurrentMovie.getPosterPath());
@@ -215,61 +343,101 @@ public class DetailActivity extends AppCompatActivity {
         });
         mMovieSynopsisTV.setText(mCurrentMovie.getOverview());
 
-        List<String> trailersTextList = new ArrayList<String>();
+        // Add the trailers and reviews to the UI
+        addTrailerAndReviews(currentMovieTrailerList,currentMovieReviewList);
+    }
 
-        // If the movie has trailer, add to each list index
-        // the text "Trailer " + "i+1" . "i+1" represent the position
-        // of a trailer. Ex: If a movies has 2 trailer, the
-        // list will contain the following texts "Trailer 1" & "Trailer 2"
-        if (currentMovieTrailerList != null && !currentMovieTrailerList.isEmpty()) {
-            for (int i = 0; i < currentMovieTrailerList.size(); i++) {
-                trailersTextList.add(getString(R.string.trailer) + String.valueOf(i + 1));
+    /**
+     *  This method will be used to populate the review sample
+     *  and trailer data on the UI.
+     *
+     *  @param movieTrailerList is the list of trailers for the current movie
+     *  @param movieReviewList is the list of reviews for the current movie
+     *
+     *  */
+   private void addTrailerAndReviews(List<MovieTrailers.Trailer> movieTrailerList,
+                                     List<MovieReviews.Review> movieReviewList) {
 
-            }
+       List<String> trailersTextList = new ArrayList<String>();
+
+       // If the movie has trailer, add to each list index
+       // the text "Trailer " + "i+1" . "i+1" represent the position
+       // of a trailer. Ex: If a movies has 2 trailer, the
+       // list will contain the following texts "Trailer 1" & "Trailer 2"
+       if (movieTrailerList != null && !movieTrailerList.isEmpty()) {
+           for (int i = 0; i < movieTrailerList.size(); i++) {
+               trailersTextList.add(getString(R.string.trailer) + String.valueOf(i + 1));
+
+           }
+       }
+
+
+       // Turn the trailer text list into an array
+       // and use it as the data source for our adapter.
+       String[] trailerTextArray = trailersTextList.toArray(new String[trailersTextList.size()]);
+       ArrayAdapter simpleAdapter = new ArrayAdapter<>(this, R.layout.trailer_list_item, R.id.trailer_position, trailerTextArray);
+
+       // Find the listview and attach the simple adapter to it
+       mTrailerListView = (ListView) findViewById(R.id.trailer_list);
+       mTrailerListView.setAdapter(simpleAdapter);
+
+       // Create variables to hold informations about
+       // the review sample.
+       String numberOfReviews = getString(R.string.no_review);
+       String firstReviewContent = "";
+       String firstReviewAuthor = "";
+
+       // Check if the movie has reviews
+       if (movieReviewList != null && !movieReviewList.isEmpty()) {
+           // Set the number of reviews with the text "reviews"
+           numberOfReviews = getString(R.string.review_title, movieReviewList.size());
+
+           // Get the text of the first review
+           firstReviewContent = movieReviewList.get(0).getContent();
+
+           // Get the author of the first review
+           firstReviewAuthor = movieReviewList.get(0).getAuthor();
+       } else {
+
+           // Make invisible the views for the body and
+           // the author of the review sample.
+           mBinding.textViewReviewSummarySampleAuthor.setVisibility(View.INVISIBLE);
+           mBinding.textViewReviewSummarySampleBody.setVisibility(View.INVISIBLE);
+
+           // Remove the "show all reviews" button by
+           // making it invisible
+           mBinding.buttonReviewSummaryShowAllReview.setVisibility(View.INVISIBLE);
+       }
+
+       mBinding.textViewReviewSummaryTitle.setText(numberOfReviews);
+       mBinding.textViewReviewSummarySampleAuthor.setText(firstReviewAuthor);
+       mBinding.textViewReviewSummarySampleBody.setText(firstReviewContent);
+   }
+
+    /**
+     * Method to Check the Network connection and return true or false
+     * based on the network connection state.
+     *
+     */
+    private boolean isNetworkConnected() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+
+        return activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting();
+    }
+
+    private void startLoaderOrEmptyState(int loaderId) {
+        // Check the status of the network, then either launch the Loader or
+        // display the Empty State
+
+        // MOVIE_LOADER_ID
+        if (isNetworkConnected()) {
+            getLoaderManager().initLoader(loaderId, null, DetailActivity.this).forceLoad();
+        } else {
+           // mEmptyStateRl.setVisibility(View.VISIBLE);
         }
-
-        // Turn the trailer text list into an array
-        // and use it as the data source for our adapter.
-        String[] trailerTextArray = trailersTextList.toArray(new String[trailersTextList.size()]);
-        ArrayAdapter simpleAdapter = new ArrayAdapter<>(this, R.layout.trailer_list_item, R.id.trailer_position, trailerTextArray);
-
-        // Find the listview and attach the simple adapter to it
-        mTrailerListView = (ListView) findViewById(R.id.trailer_list);
-        mTrailerListView.setAdapter(simpleAdapter);
-
-        // Create variables to hold informations about
-        // the review sample.
-        String numberOfReviews = getString(R.string.no_review);
-        String firstReviewContent = "";
-        String firstReviewAuthor = "";
-
-        // Check if the movie has reviews
-        if (currentMovieReviewList != null && !currentMovieReviewList.isEmpty()) {
-            // Set the number of reviews with the text "reviews"
-            numberOfReviews = getString(R.string.review_title, currentMovieReviewList.size());
-
-            // Get the text of the first review
-            firstReviewContent = currentMovieReviewList.get(0).getContent();
-
-            // Get the author of the first review
-            firstReviewAuthor = currentMovieReviewList.get(0).getAuthor();
-        }
-        else {
-
-            // Make invisible the views for the body and
-            // the author of the review sample.
-            mBinding.textViewReviewSummarySampleAuthor.setVisibility(View.INVISIBLE);
-            mBinding.textViewReviewSummarySampleBody.setVisibility(View.INVISIBLE);
-
-            // Remove the "show all reviews" button by
-            // making it invisible
-            mBinding.buttonReviewSummaryShowAllReview.setVisibility(View.INVISIBLE);
-        }
-
-        mBinding.textViewReviewSummaryTitle.setText(numberOfReviews);
-        mBinding.textViewReviewSummarySampleAuthor.setText(firstReviewAuthor);
-        mBinding.textViewReviewSummarySampleBody.setText(firstReviewContent);
-
     }
 
     /**
@@ -446,5 +614,6 @@ public class DetailActivity extends AppCompatActivity {
         // If it is, then set its boolean
         return false;
     }
+
 
 }

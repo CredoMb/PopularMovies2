@@ -23,7 +23,10 @@ public class DiscoveredMovies {
     @SerializedName("results")
     public List<Movie> movieList;
 
-    public class Movie {
+    public static class Movie {
+
+        public Movie() {}
+
         // This will be used to build the complete URL for the
         // poster image
        private final String IMAGE_BASE_URL = "https://image.tmdb.org/t/p/original";
