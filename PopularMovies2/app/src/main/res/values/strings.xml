@@ -30,11 +30,30 @@
 
     <!-- Text for the review title textView. It preceded by the number of reviewer,
          which will be set in the java class.
-         &#160; -->
-    <string name="review_title"><xliff:g id="reviewers" example="50">%d</xliff:g>&#032;Reviews </string>
+          -->
+    <string name="review_title"><xliff:g example="50" id="reviewers">%d</xliff:g>&#032;reviews </string>
 
     <!-- Text for the trailer list item. It followed by a number, which represent
          the position of the trailer video. -->
-    <string name="trailer_position">Trailer &#032;<xliff:g id="position" example="1">%d</xliff:g></string>
+    <string name="trailer_position">Trailer &#032;<xliff:g example="1" id="position">%d</xliff:g></string>
+
+    <!-- Text for the toast message after a movie has been added
+         to the favorite database -->
+    <string name="added_to_fav">&#032;was added to the favorites</string>
+
+    <!-- Text for the list of Trailers -->
+    <string name="trailer">Trailer&#032;</string>
+
+    <!-- Text to be used when there is no review to display -->
+    <string name="no_review">No reviews</string>
+
+    <!-- Text to be used whenever there's no data for the
+         movie the user clicked on -->
+    <string name="data_not_available">Movie Data is not available</string>
+
+    <!-- Text to display on the log when the View Model is
+         being setup -->
+    <string name="view_model_setup">Updating the list of favorites from LiveData in ViewModel</string>
+
 
 </resources>

@@ -48,50 +48,32 @@ public class DetailActivity extends AppCompatActivity {
     //The default position of a movie inside the movie list
     private int DEFAULT_POSITION = -1;
 
-
     // This constant will be used as the maximum
     // value for the review.
     private final String REVIEW_AVERAGE_MAXIMUM = "/10";
 
-    /**
-     *  The following 5 variables will store
-     *  the views of the detail_header_layout.xml
-     *
-     *  As it's included in the activity_detail.xml,
-     *  we can not use data binding to reference to its views.
-     *  */
+
+    // The following 5 variables will store
+    // the views of the detail_header_layout.xml
+
     private ImageView mMoviePoster;
     private TextView mMovieYearTV;
     private TextView mMovieLenghtTV;
     private TextView mMovieRatingTV;
     private TextView mMovieFavoriteTV;
 
-    /**
-     *  The following variable will store
-     *  the views of the detail_body_layout.xml
-     *
-     *  As it's included in the activity_detail.xml,
-     *  we can not use data binding to reference its views.
-     *  */
+
+    // The following variable will store
+    // the views of the detail_body_layout.xml
 
     private TextView mMovieSynopsisTV;
-
     private ListView mTrailerListView;
 
-    /**
-     * The following variable will store
-     * the movie that has just been
-     * clicked on.
-     * */
+    // The following variable will store
+    // the movie that has just been
+    // clicked on by the user.
 
-     DiscoveredMovies.Movie mCurrentMovie;
-
-     /*
-     List<MovieTrailers.Trailer> mCurrentMovieTrailerList = mCurrentMovie.getMovieTrailers().trailerList;
-     MovieDetail mCurrentMovieDetails = mCurrentMovie.getMovieDetail();
-     String mCurrentMovieDirector;
-     List<MovieReviews.Review> mCurrentMovieReviewList ;
-     */
+    DiscoveredMovies.Movie mCurrentMovie;
 
     // Will store the position of the
     // clicked Movie, after a movie as
@@ -106,13 +88,8 @@ public class DetailActivity extends AppCompatActivity {
     // the network request made in the MainActivity
     public static List<DiscoveredMovies.Movie> mMovieList = new ArrayList<DiscoveredMovies.Movie>();
 
-    // Will store the credit of all the fetched movies.
-    // This includes the crew and the actors.
-
-    private TextView reviewSumTv;
-
     // The following variable will represent the database
-    // of favorite movies.
+    // that will store the favorite movies.
     private AppDatabase mDb;
 
     // Will hold the list of favorite movies
@@ -150,14 +127,16 @@ public class DetailActivity extends AppCompatActivity {
         }
 
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_detail);
-        // Initialize the database and set up the view model to
-        // observe the database. This will automatically update
-        // the favorite lists whenever the data base changes.
+
+        // Initialize the database
         mDb = AppDatabase.getInstance(getApplicationContext());
 
-        // On top of that, the method "setupViewModel" verifies if a
-        // movie is marked as favorite to alter the color of
-        // its TextView
+        // Set up the view model to observe the database.
+        // This will automatically update
+        // the favorite lists whenever the data base changes.
+        // On top of that, the method "setupViewModel" verifies the current
+        // movie is marked as favorite and alter the color of
+        // its favorite view.
         setupViewModel();
 
         // The following variables will carry all the information related to the
@@ -165,23 +144,14 @@ public class DetailActivity extends AppCompatActivity {
         // reviews, the trailers and the movie director.
         mCurrentMovie = mMovieList.get(mPosition);
         List<MovieTrailers.Trailer> currentMovieTrailerList = new ArrayList<MovieTrailers.Trailer>();
-        currentMovieTrailerList =
-                mCurrentMovie.getMovieTrailers().trailerList;
+        currentMovieTrailerList = mCurrentMovie.getMovieTrailers().trailerList;
         final MovieDetail currentMovieDetails = mCurrentMovie.getMovieDetail();
         final String currentMovieDirector = mCurrentMovie.getMovieCredit().getDirectorName();
         final List<MovieReviews.Review> currentMovieReviewList = mCurrentMovie.getMovieReviews().reviewList;
 
-
-        /**All the variables above don't create bugs to
-         * the program*/
-
-        // MovieTrailers currentMovieTrailers = mMoviesTrailers.get(mPosition);
-
-        /** Initialize all the variables that will hold the
-         *  views of the header layout from the detail activity .
-         *
-         *   All the following view are from a separated
-         *  layout included in the layout of the detail activity
+        /**
+         * Initialize all the variables that will hold the
+         * views of the detail activity layout.
          *
          *  */
         mMoviePoster = (ImageView) mBinding.movieHeader.findViewById(R.id.imageViewMoviePoster);
@@ -191,22 +161,15 @@ public class DetailActivity extends AppCompatActivity {
         mMovieFavoriteTV = (TextView) mBinding.movieHeader.findViewById(R.id.textViewFavorite);
         mMovieSynopsisTV = (TextView) mBinding.movieBody.findViewById(R.id.textViewMovieSynopsis);
 
+
         // Add content to the views
-        setImageWithUri(mMoviePoster,mCurrentMovie.getPosterPath());
-
-
-        // I don't know what to do now...
+        setImageWithUri(mMoviePoster, mCurrentMovie.getPosterPath());
         mMovieYearTV.setText(mCurrentMovie.getYear());
-
-/*
-        Log.e("Laidui ",String.valueOf(mCurrentMovie.getId()));
-*/
-
         mMovieLenghtTV.setText(currentMovieDetails.getFormattedLength());
-        mMovieRatingTV.setText(String.valueOf(mCurrentMovie.getVoteAverage())+REVIEW_AVERAGE_MAXIMUM);
+        mMovieRatingTV.setText(String.valueOf(mCurrentMovie.getVoteAverage()) + REVIEW_AVERAGE_MAXIMUM);
 
         // Set a listener onto the favorite textview,
-        // so that when clicked on, it
+        // so that when clicked, it
         // registers or removes a movie from the favorites.
         mMovieFavoriteTV.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -216,42 +179,32 @@ public class DetailActivity extends AppCompatActivity {
                 // of byte.
                 byte[] posterDrawableByte = drawableToByte(mMoviePoster.getDrawable());
 
-                // Build a new favorite with all it feature.
+                // Build a new favorite by using the movie features.
                 // Each feature/property of the favorite represent
                 // an entry in the database
                 final FavoriteEntry fav = new FavoriteEntry(mCurrentMovie.getOverview(),
                         mCurrentMovie.getId(),
                         mCurrentMovie.getVoteAverage(),
                         0,
-                         mCurrentMovie.getReleaseDate()
+                        mCurrentMovie.getReleaseDate()
                         , null);
-
-                // Check for the Kissing Booth
 
                 // If the movie is not marked as a favorite,
                 // then add it to the favorite data base.
-                 if (!mCurrentMovie.isFavorite) {
+                if (!mCurrentMovie.isFavorite) {
                     // Insert the favorite into the database.
                     insertNewFav(fav);
 
-                     // Show a Toast to notify the user
-                     // that the movie has been added to the
-                     // database.
-                     Toast.makeText(getApplicationContext(),mCurrentMovie.getTitle() +
-                             " was added to the favorites",Toast.LENGTH_LONG).show();
-
-                    // Change the mention of the favorite textView
-                  //  mMovieFavoriteTV.setTextColor(getColor(R.color.colorAccent));
-
-                    //
-                }
-
-                 /*else if (currentMovie.isFavorite) */
-                 else {
+                    // Show a Toast to notify the user
+                    // that the movie has been added to the
+                    // database.
+                    Toast.makeText(getApplicationContext(), mCurrentMovie.getTitle() +
+                            getString(R.string.added_to_fav), Toast.LENGTH_LONG).show();
+                } else {
 
                     // Remove the movie from the favorite
                     // data base
-                    removeFromFav(fav,mCurrentMovie.getTitle());
+                    removeFromFav(fav, mCurrentMovie.getTitle());
 
                     // Set its favorite boolean to
                     // false. Why can't we set it
@@ -263,64 +216,69 @@ public class DetailActivity extends AppCompatActivity {
         });
         mMovieSynopsisTV.setText(mCurrentMovie.getOverview());
 
-        // Each row in the list stores country name, currency and flag
-
         List<String> trailersTextList = new ArrayList<String>();
 
-        if(currentMovieTrailerList!= null && !currentMovieTrailerList.isEmpty()  ) {
-            for (int i =0; i < currentMovieTrailerList.size(); i++) {
-                trailersTextList.add("Trailer "+ String.valueOf(i+1));
+        // If the movie has trailer, add to each list index
+        // the text "Trailer " + "i+1" . "i+1" represent the position
+        // of a trailer. Ex: If a movies has 2 trailer, the
+        // list will contain the following texts "Trailer 1" & "Trailer 2"
+        if (currentMovieTrailerList != null && !currentMovieTrailerList.isEmpty()) {
+            for (int i = 0; i < currentMovieTrailerList.size(); i++) {
+                trailersTextList.add(getString(R.string.trailer) + String.valueOf(i + 1));
 
             }
         }
 
+        // Turn the trailer text list into an array
+        // and use it as the data source for our adapter.
         String[] trailerTextArray = trailersTextList.toArray(new String[trailersTextList.size()]);
-        // Log.e("Leu trilere",trailerTextArray[1]);
-        // android.R.layout.simple_list_item_1
+        ArrayAdapter simpleAdapter = new ArrayAdapter<>(this, R.layout.trailer_list_item, R.id.trailer_position, trailerTextArray);
 
-        ArrayAdapter simpleAdapter = new ArrayAdapter<>(this,R.layout.trailer_list_item, R.id.trailer_position,trailerTextArray);
-
-        // ArrayAdapter simpleAdapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,trailerTextArray);
-
+        // Find the listview and attach the simple adapter to it
         mTrailerListView = (ListView) findViewById(R.id.trailer_list);
         mTrailerListView.setAdapter(simpleAdapter);
 
+        // Create variables to hold informations about
+        // the review sample.
+        String numberOfReviews = getString(R.string.no_review);
+        String firstReviewContent = "";
+        String firstReviewAuthor = "";
 
-        // Trailer positions
-        //
+        // Check if the movie has reviews
+        if (currentMovieReviewList != null && !currentMovieReviewList.isEmpty()) {
+            // Set the number of reviews with the text "reviews"
+            numberOfReviews = getString(R.string.review_title,currentMovieReviewList.size());
 
-        // Keys used in Hashmap to
-        // store the " Trailer" + "position" text.
-        String[] from = {"trailer"};
+            // Get the text of the first review
+            firstReviewContent = currentMovieReviewList.get(0).getContent();
 
-        // Ids of views in listview_layout
-        int[] to = {R.id.trailer_position};
+            // Get the author of the first review
+            firstReviewAuthor = currentMovieReviewList.get(0).getAuthor();
+        } else {
 
-        /**/
+            // Make invisible the views for the body and
+            // the author of the review sample.
+            mBinding.textViewReviewSummarySampleAuthor.setVisibility(View.INVISIBLE);
+            mBinding.textViewReviewSummarySampleBody.setVisibility(View.INVISIBLE);
 
-        // Set the title of the review with the
-        // exact number of reviews made for the current movie.
-      //  mBinding.textViewReviewSummaryTitle.setText(buildReviewTitle(mMoviesReviews.get(mPosition)));
+            // Remove the "show all reviews" button by
+            // making it invisible
+            mBinding.buttonReviewSummaryShowAllReview.setVisibility(View.INVISIBLE);
+        }
 
+        mBinding.textViewReviewSummaryTitle.setText(numberOfReviews);
+        mBinding.textViewReviewSummarySampleAuthor.setText(firstReviewAuthor);
+        mBinding.textViewReviewSummarySampleBody.setText(firstReviewContent);
 
     }
-
-    // pass the 4 lists
-    // private void displayMovieInfo()
 
     private void closeOnError() {
         finish();
-        Toast.makeText(this, "Movie Data is not available", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, getString(R.string.data_not_available), Toast.LENGTH_LONG).show();
     }
 
-    private String buildReviewTitle(MovieReviews movieReviews) {
-        return getString(R.string.review_title, movieReviews.reviewList.size());
 
-        // Vote count located in "Movie" is different from review number from the "MovieReview"
-        //  The vote count is usually a bigger number
-    }
-
-    private void setImageWithUri(ImageView imageView, String imageUri){
+    private void setImageWithUri(ImageView imageView, String imageUri) {
 
         GlideHelperClass glideHelper = new GlideHelperClass(this,
                 imageUri,
@@ -332,8 +290,8 @@ public class DetailActivity extends AppCompatActivity {
         glideHelper.loadImage();
     }
 
-    /** */
-    private void setupViewModel(){
+
+    private void setupViewModel() {
 
         // Ok mister ViewModel Provider could find me the
         // View Model that as the nature "DetailViewModel.class".
@@ -345,7 +303,7 @@ public class DetailActivity extends AppCompatActivity {
         viewModel.getFavorites().observe(this, new Observer<List<FavoriteEntry>>() {
             @Override
             public void onChanged(@Nullable List<FavoriteEntry> favoriteEntries) {
-                Log.d(TAG, "Updating list of favorites from LiveData in ViewModel");
+                Log.d(TAG, getString(R.string.view_model_setup));
 
                 // Update the list of favorite movies
                 // in the MainActivity and DetailActivity.
@@ -365,8 +323,6 @@ public class DetailActivity extends AppCompatActivity {
                     mMovieFavoriteTV.setTextColor(getColor(R.color.colorAccent));
 
                 }
-                // We can setup the view model and verify the favorite
-                //
             }
         });
     }
@@ -386,7 +342,7 @@ public class DetailActivity extends AppCompatActivity {
         });
     }
 
-    public void removeFromFav(final FavoriteEntry fav,final String movieTitle) {
+    public void removeFromFav(final FavoriteEntry fav, final String movieTitle) {
 
         // If the current movie was already in the favorite
         // list, this means that it should be removed.
@@ -400,8 +356,8 @@ public class DetailActivity extends AppCompatActivity {
                 // list of the main activity.
                 MainActivity.favoriteMovies.remove(fav);
 
-                Toast.makeText(getApplicationContext(),movieTitle +
-                        " was removed from the favorites",Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), movieTitle +
+                        " was removed from the favorites", Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -409,7 +365,7 @@ public class DetailActivity extends AppCompatActivity {
     private byte[] drawableToByte(Drawable drawable) {
 
         // Turn the drawable into a bitmap
-        Bitmap bitmap = ((BitmapDrawable)drawable).getBitmap();
+        Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
 
         // Turn the bitmap into a byteArray
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
@@ -423,7 +379,7 @@ public class DetailActivity extends AppCompatActivity {
     private boolean isAFavorite(DiscoveredMovies.Movie movie) {
 
         // get the list
-        for (FavoriteEntry fav:mFavoriteMovies){
+        for (FavoriteEntry fav : mFavoriteMovies) {
 
             // In case the movie is found in the
             // favorite list, then return true.

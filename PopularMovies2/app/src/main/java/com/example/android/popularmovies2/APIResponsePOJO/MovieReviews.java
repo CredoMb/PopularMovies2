@@ -19,7 +19,7 @@ import java.util.List;
 
 public class MovieReviews {
 
-/*    @SerializedName("id")
+    /*    @SerializedName("id")
     public int movieId;*/
 
     @SerializedName("results")
