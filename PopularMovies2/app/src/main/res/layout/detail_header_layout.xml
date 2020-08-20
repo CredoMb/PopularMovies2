@@ -11,20 +11,20 @@
         android:id="@+id/imageViewMoviePoster"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintWidth_percent="0.33"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="@dimen/poster_margin_start"
+        android:layout_marginTop="@dimen/poster_margin_top"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent="0.33"
         tools:srcCompat="@tools:sample/avatars[0]" />
 
     <TextView
         android:id="@+id/textViewMovieYear"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="8dp"
-        android:text="TextView"
+        android:layout_marginStart="@dimen/movie_year_margin_start"
+        android:layout_marginTop="@dimen/movie_year_margin_top"
+        tools:text="2019"
         app:layout_constraintStart_toEndOf="@+id/imageViewMoviePoster"
         app:layout_constraintTop_toTopOf="@+id/imageViewMoviePoster" />
 
@@ -32,8 +32,8 @@
         android:id="@+id/textViewMovieLength"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="TextView"
+        android:layout_marginTop="@dimen/movie_lenght_margin"
+        tools:text="2h00"
         app:layout_constraintStart_toStartOf="@+id/textViewMovieYear"
         app:layout_constraintTop_toBottomOf="@+id/textViewMovieYear" />
 
@@ -41,8 +41,8 @@
         android:id="@+id/textViewMovieRating"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="TextView"
+        android:layout_marginTop="@dimen/movie_rating_margin"
+        tools:text="6/10"
         app:layout_constraintStart_toStartOf="@+id/textViewMovieLength"
         app:layout_constraintTop_toBottomOf="@+id/textViewMovieLength" />
 
@@ -50,8 +50,8 @@
         android:id="@+id/textViewFavorite"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="TextView"
+        android:layout_marginTop="@dimen/favorite_margin"
         app:layout_constraintStart_toStartOf="@+id/textViewMovieRating"
-        app:layout_constraintTop_toBottomOf="@+id/textViewMovieRating" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewMovieRating"
+        tools:text="Favorite" />
 </androidx.constraintlayout.widget.ConstraintLayout>

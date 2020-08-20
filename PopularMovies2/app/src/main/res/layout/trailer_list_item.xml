@@ -6,26 +6,15 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-
-<!--
-    <ImageButton
-        android:id="@+id/imageButtonPlay"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="16dp"
-        android:layout_gravity="center_vertical"
-        tools:srcCompat="@tools:sample/avatars[0]" />
--->
-
     <TextView
         android:id="@+id/trailer_position"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:drawableLeft="@drawable/outline_wifi_off_black_48"
-        android:gravity="center_vertical"
-        android:drawablePadding="48dp"
-        android:layout_marginStart="16dp"
         android:layout_gravity="center_vertical"
-        tools:text="Trailer1"/>
+        android:layout_marginStart="@dimen/trailer_item_margin_start"
+        android:drawableLeft="@drawable/outline_wifi_off_black_48"
+        android:drawablePadding="@dimen/trailer_item_drawablePadding"
+        android:gravity="center_vertical"
+        tools:text="Trailer1" />
 
 </LinearLayout>

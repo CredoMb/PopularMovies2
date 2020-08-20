@@ -27,7 +27,6 @@
             android:layout_gravity="center_horizontal"
             android:layout_centerInParent="true"/>
 
-        <!-- Content for the empty state when there is no internet connection-->
         <!-- This group View will contain the empty state
          of the application -->
 

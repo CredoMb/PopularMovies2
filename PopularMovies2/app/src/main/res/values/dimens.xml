@@ -3,4 +3,18 @@
     <dimen name="review_title_textsize">20sp</dimen>
     <dimen name="review_author_textsize">16sp</dimen>
     <dimen name="review_body_textsize">14sp</dimen>
+    <dimen name="list_view_container_margin">16dp</dimen>
+    <dimen name="detail_body_padding">8dp</dimen>
+    <dimen name="divider_height">1dp</dimen>
+    <dimen name="body_divider_margin">8dp</dimen>
+    <dimen name="trailer_header_margin">8dp</dimen>
+    <dimen name="poster_margin_start">32dp</dimen>
+    <dimen name="poster_margin_top">16dp</dimen>
+    <dimen name="movie_year_margin_top">8dp</dimen>
+    <dimen name="movie_year_margin_start">32dp</dimen>
+    <dimen name="movie_lenght_margin">8dp</dimen>
+    <dimen name="movie_rating_margin">16dp</dimen>
+    <dimen name="favorite_margin">8dp</dimen>
+    <dimen name="trailer_item_margin_start">16dp</dimen>
+    <dimen name="trailer_item_drawablePadding">48dp</dimen>
 </resources>
