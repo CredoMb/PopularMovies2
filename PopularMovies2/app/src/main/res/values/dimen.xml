@@ -1,37 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--
-        Used on the activity_main.xml layout
+    -
+    -   Dimensions used in the activity_main.xml layout
+    -
     -->
 
     <!--Spacing used around the recycler inside the MainActivity -->
     <dimen name="recycler_spacing">8dp</dimen>
-
     <!-- The padding for the bottom of the empty state group view-->
     <dimen name="empty_state_bottom_padding">172dp</dimen>
-
     <!-- The padding for the start of the empty state group view-->
     <dimen name="empty_state_start_padding">56dp</dimen>
-
     <!-- The padding for the end of the empty state group view-->
     <dimen name="empty_state_end_padding">56dp</dimen>
-
     <!-- Dimensions of the image in the Empty State GroupView-->
     <dimen name="empty_state_image_dimension">48dp</dimen>
-
-    <!-- The padding the Group View that
-         contains the text of the Empty state-->
+    <!-- The padding for the Group View of the Empty state-->
     <dimen name="EmptyStateText_GV_top_padding">16dp</dimen>
     <dimen name="EmptyStateText_GV_bottom_padding">56dp</dimen>
-
     <!-- The dimensions for the empty state title-->
     <dimen name="empty_state_title_textsize">16sp</dimen>
     <dimen name="empty_state_title_padding">8dp</dimen>
-
     <!-- The Top padding of the empty state subtitle-->
     <dimen name="empty_state_subtitle_padding">4dp</dimen>
-
     <!-- The textSize of the refresh textView-->
     <dimen name="refresh_textView_textsize">12sp</dimen>
+
+    <!--
+    -
+    -   Dimensions used in the activity_detail.xml layout
+    -
+    -->
+
+    <!-- Dimensions used in the detail_header_layout.xml
+         Layout of the Detail Activity -->
+
+    <!-- Dimensions for the margins around the poster image-->
+    <dimen name="poster_margin_start">32dp</dimen>
+    <dimen name="poster_margin_top">16dp</dimen>
+    <!-- Dimensions for the margins around the movie year TextView-->
+    <dimen name="movie_year_margin_top">8dp</dimen>
+    <dimen name="movie_year_margin_start">32dp</dimen>
+    <!-- Dimensions for the margin around the movie lenght TextView-->
+    <dimen name="movie_lenght_margin">8dp</dimen>
+    <!-- Dimensions for the margin around the movie rating TextView-->
+    <dimen name="movie_rating_margin">16dp</dimen>
+    <!-- Dimensions for the margin around the favorite TextView-->
+    <dimen name="favorite_margin">8dp</dimen>
+
+    <!-- Dimensions used in the detail_body_layout.xml of
+         the Detail Activity -->
+
+    <!-- Dimension for the text size of the review title TextView-->
+    <dimen name="review_title_textsize">20sp</dimen>
+    <!-- Dimension for the text size of the review title TextView-->
+    <dimen name="review_author_textsize">16sp</dimen>
+    <!-- Dimensions for the text size of the review body TextView-->
+    <dimen name="review_body_textsize">14sp</dimen>
+    <!-- Dimensions for the margin around the list view container -->
+    <dimen name="list_view_container_margin">16dp</dimen>
+    <!-- Dimensions for the paddings around the detail body layout-->
+    <dimen name="detail_body_padding">8dp</dimen>
+    <!-- Dimensions for the height of the detail layout divider-->
+    <dimen name="divider_height">1dp</dimen>
+    <!-- Dimensions for the margin around the detail layout divider-->
+    <dimen name="body_divider_margin">8dp</dimen>
+    <!-- Dimensions for the margins around the trailer area of the detail layout-->
+    <dimen name="trailer_header_margin">8dp</dimen>
+    <dimen name="trailer_item_margin_start">16dp</dimen>
+    <dimen name="trailer_item_drawablePadding">48dp</dimen>
 
 </resources>
