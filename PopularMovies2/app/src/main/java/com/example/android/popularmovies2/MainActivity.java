@@ -78,24 +78,6 @@ public class MainActivity extends AppCompatActivity implements
     List<DiscoveredMovies.Movie> mMovieList;
 
     /**
-     * The list of credit for all the movies fetched from
-     * the API.
-     * */
-    List<MovieCredit> mMoviesCredit;
-
-    /**
-     * The list of detail for all the movies fetched from
-     * the API.
-     * */
-    List<MovieDetail> mMoviesDetail;
-
-    /**
-     * The list of review for all the movies fetched from
-     * the API.
-     * */
-    List<MovieReviews> mMoviesReviews;
-
-    /**
      * The progress Spinner
      */
     private ProgressBar mProgressSpinner;
@@ -137,7 +119,7 @@ public class MainActivity extends AppCompatActivity implements
         // The progress spinner to use for a good
         mProgressSpinner = (ProgressBar) findViewById(R.id.main_loading_spinner);
 
-        //
+        // Make the progress spinner invisible
         mProgressSpinner.setVisibility(View.INVISIBLE);
 
         // Create a new Grid Layout Manager
@@ -151,20 +133,15 @@ public class MainActivity extends AppCompatActivity implements
         // Attach the layout manager to the Recycler View
         mRecyclerView.setLayoutManager(layoutManager);
 
-        // The MovieAdapter is responsible for linking our movie data with the Recycler that
+        // The MovieAdapter is responsible for linking our movie data with the Recycler who
         // will end up displaying the data.
-
         mMovieAdapter = new MovieAdapter(this, new ArrayList<DiscoveredMovies.Movie>(), this);
         mRecyclerView.setAdapter(mMovieAdapter);
 
-        // Set the default sorting to be by popularity
+        // Set the default sorting to be by popularity.
+        // It means that the app will fetch popular movies
+        // by default.
         mSortBy = BY_POPULARITY;
-
-        // Initialize the variable that should store the credit of
-        // the movie. This variable will be changed inside the getCredit
-        mMoviesCredit = new ArrayList<MovieCredit>();
-        mMoviesDetail =  new ArrayList<MovieDetail>();
-        mMoviesReviews = new ArrayList<MovieReviews>();
 
         // Set the movie list as the data of the adapter
         // mMovieAdapter.setMovieData(mMovieList);
@@ -179,6 +156,7 @@ public class MainActivity extends AppCompatActivity implements
          *
          * */
 
+        // Initialize the API interface
         mApiInterface = APIClient.getClient().create(APIInterface.class);
 
         /**
