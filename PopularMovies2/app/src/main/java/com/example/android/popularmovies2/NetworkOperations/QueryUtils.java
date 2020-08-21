@@ -36,7 +36,6 @@ public final class QueryUtils {
      * build the URL using "MOVIE_CREDIT"
      */
     private static final String MOVIE_CREDIT = "credits";
-    private static final String MOVIE_DETAILS = "details";
     private static final String MOVIE_REVIEWS = "reviews";
     private static final String MOVIE_TRAILER = "videos";
     private static final String DISCOVER_MOVIE = "discover";
@@ -94,24 +93,25 @@ public final class QueryUtils {
             Log.e(MainActivity.class.getSimpleName(), "API Response unsuccessful, code : " + response.code());
         }
 
+        // Add the details of each movies previously fetched
         return completeMoviesDetails(resource);
 
     }
 
 
     /**
-     * The next 3 methods will help us get extra information
-     * about all the movies we fetched from the API.
-     * Those informations are: the credit (getMoviesCredit),
-     * the detail (getMoviesDetails) and reviews (getMoviesReviews)
-     *
+     * The next 4 methods will help us get extra information
+     * about a movie we fetched from the API.
+     * Those informations are: the credit (getMovieCredit),
+     * details (getMovieDetails), reviews (getMovieReviews)
+     * and trailers (getMovieTrailer)
+     * <p>
      * Each of these 3 block of infos is located in a different endpoint.
      *
-     * @param movie hold the movie we should get more information about.
-     *
+     * @param movie        hold the movie we should get more information about.
      * @param apiInterface is an entity of @APIInterface. It will help us to perform
      *                     the API call to the proper endpoint of the API.
-     * */
+     */
 
     public static MovieCredit getMovieCredit(DiscoveredMovies.Movie movie, final APIInterface apiInterface) {
 
@@ -153,7 +153,9 @@ public final class QueryUtils {
 
     private static MovieDetail getMovieDetails(DiscoveredMovies.Movie movie, final APIInterface apiInterface) {
 
-        Call<MovieDetail> callMovieDetail = apiInterface.doGetMovieDetail(getProperUrl(MOVIE_DETAILS, movie.getId(), ""));
+        // Notice that there's no "data type" parameter for the details endpoint.
+        // That's because, no extension is need to get to the detail endpoint.
+        Call<MovieDetail> callMovieDetail = apiInterface.doGetMovieDetail(getProperUrl("", movie.getId(), ""));
         Response<MovieDetail> response = null;
 
         // Make the API call to the details endpoint
@@ -241,7 +243,7 @@ public final class QueryUtils {
         // From the trailers endpoint of the API,
         // Get the trailers info of every movie in the list.
 
-        Call<MovieTrailers> callMovieTrailers = apiInterface.doGetMovieTrailers(getProperUrl(MOVIE_TRAILER, movie.getId() , ""));
+        Call<MovieTrailers> callMovieTrailers = apiInterface.doGetMovieTrailers(getProperUrl(MOVIE_TRAILER, movie.getId(), ""));
         Response<MovieTrailers> response = null;
 
         // Make the API call to the review endpoint
@@ -365,6 +367,14 @@ public final class QueryUtils {
 
     // Fetch complementary the details for each movie and update
     // the movie list.
+
+    /**
+     * This method fetches details about a list of movies.
+     *
+     * @param discoveredMovies is a object that represent
+     *                         a collection of movies fecthed from
+     *                         the movie data base API
+     */
     private static List<DiscoveredMovies.Movie> completeMoviesDetails(DiscoveredMovies discoveredMovies) {
 
         // In case the movie list is empty,

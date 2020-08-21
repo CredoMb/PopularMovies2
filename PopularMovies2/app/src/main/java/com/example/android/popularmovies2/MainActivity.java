@@ -95,9 +95,8 @@ public class MainActivity extends AppCompatActivity implements
 
     /**
      * The group view that will contain the
-     * empty state for a bad internet connection
+     * empty state for a bad internet connection.
      */
-
     private RelativeLayout emptyStateRl;
 
     public static List<FavoriteEntry> favoriteMovies = new ArrayList<FavoriteEntry>();
@@ -249,7 +248,6 @@ public class MainActivity extends AppCompatActivity implements
      * If the connection is on, initiate the loader
      * other wise, display the empty state view
      */
-
     private void startLoaderOrEmptyState(int loaderId) {
 
         // Check the status of the network, then either launch the Loader or
@@ -284,7 +282,6 @@ public class MainActivity extends AppCompatActivity implements
         getMenuInflater().inflate(R.menu.activity_main_menu, menu);
         return true;
     }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -322,22 +319,6 @@ public class MainActivity extends AppCompatActivity implements
 
         return super.onOptionsItemSelected(item);
     }
-
-    /** This method will be used to fetch data from the "discover" endpoint.
-     *
-     * @param apiInterface is the interface used to query the different endpoints
-     *                     of the database. In this case, it will be used for the
-     *                     "discover" endpoint
-     *
-     * @param sortingKey Will determine weither the data should be queried based on the
-     *                   their popularity or their ratings.
-     * */
-
-    // Here was the fetchMoviesData
-
-
-    /** Here where the 4 getters for the movie endpoint*/
-
 
     @Override
     public void onClick(int position) {
