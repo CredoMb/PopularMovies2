@@ -1,26 +1,36 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">PopularMovies2</string>
 
-    <!-- Text for the "no internet" Empty State -->
-
-    <string name="no_internet_title">No Internet</string>
-    <string name="no_internet_text">Please check your internet connection and retry</string>
-    <string name="refresh_text">Refresh</string>
 
     <!--
-        Strings for the MainActivity
+    -
+    -   Strings for the MainActivity
+    -
     -->
 
     <string name="sort_by_menu_item">Sort By</string>
     <string name="popularity">Popularity</string>
     <string name="ratings">Ratings</string>
 
+    <!-- Text for the content description of
+     the empty state views -->
+    <string name="empty_state_image_description">Empty State Image</string>
+    <string name="empty_state_refresh_button_description">Empty State Refresh Button</string>
+
+    <!-- Text for the content description of
+     the recycler view -->
+    <string name="movie_list_description">Movie List</string>
 
     <!-- Text for the "no result" Empty State -->
-
     <string name="no_result_title">No Result</string>
     <string name="no_result_text">Please change your search term and retry</string>
     <string name="close">Close</string>
+
+
+    <!-- Text for the "no internet" Empty State -->
+    <string name="no_internet_title">No Internet</string>
+    <string name="no_internet_text">Please check your internet connection and retry</string>
+    <string name="refresh_text">Refresh</string>
 
     <!--
     -
@@ -65,7 +75,6 @@
 
     <!-- The following text will be used as content descriptions of
          the trailer listview and the movie poster image-->
-
     <string name="trailer_list_description">Trailers List</string>
     <string name="movie_poster_description">Movie Poster</string>
 
