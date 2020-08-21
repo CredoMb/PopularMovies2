@@ -25,35 +25,40 @@ public class DiscoveredMovies {
 
     public static class Movie {
 
-        public Movie() {}
+        public Movie() {
+        }
 
         // This will be used to build the complete URL for the
         // poster image
-       private final String IMAGE_BASE_URL = "https://image.tmdb.org/t/p/original";
+        private final String IMAGE_BASE_URL = "https://image.tmdb.org/t/p/original";
 
-       // The following variables represent
-       // the index limit of the year sub string
-       // inside of the release date text.
-       private final int MOVIE_YEAR_START_INDEX = 0;
-       private final int MOVIE_YEAR_END_INDEX = 4;
+        // The following variables represent
+        // the index limit of the "year" substring
+        // in the "release date" text.
+        private final int MOVIE_YEAR_START_INDEX = 0;
+        private final int MOVIE_YEAR_END_INDEX = 4;
 
         /**
-         * Except from the "Year" variable
-         * The following variables represent the property of one
+         * Except from the "Year" and "isFavorite" variables,
+         * the following variables represent the property of one
          * Json movie object fetched from the API.
-         * */
+         *
+         * P.S. We only created property
+         * that we will need during this
+         * project.
+         *
+         * The Json version could be
+         * bigger than our model
+         */
+
         @SerializedName("popularity")
         private Double popularity;
-
         @SerializedName("vote_count")
         private Integer voteCount;
-
         @SerializedName("poster_path")
         private String posterPath;
-
         @SerializedName("id")
         private Integer id;
-
         @SerializedName("title")
         private String title;
         @SerializedName("vote_average")
@@ -62,7 +67,6 @@ public class DiscoveredMovies {
         private String overview;
         @SerializedName("release_date")
         private String releaseDate;
-
         private String year;
 
         // Will be used to mark a movie as
@@ -70,24 +74,20 @@ public class DiscoveredMovies {
         public boolean isFavorite;
 
         /**
-         *  We have defined the necessary
-         *  getters bellow.
-         *  */
+         * We have defined the necessary
+         * getters bellow.
+         */
 
         public Integer getId() {
             return id;
         }
 
-        public Integer getVoteCount() {
-            return voteCount;
-        }
-
         public String getPosterPath() {
-            return  IMAGE_BASE_URL + posterPath;
+            return IMAGE_BASE_URL + posterPath;
         }
 
         public String getYear() {
-            return releaseDate.substring(MOVIE_YEAR_START_INDEX,MOVIE_YEAR_END_INDEX);
+            return releaseDate.substring(MOVIE_YEAR_START_INDEX, MOVIE_YEAR_END_INDEX);
         }
 
         public String getOverview() {
@@ -108,20 +108,21 @@ public class DiscoveredMovies {
 
 
         /**
-         *  Next, we have the variables that
-         *  represent the POJO of the Data
-         *  fetched from other endpoints of the API.
+         * Next, we have the variables that
+         * represent the POJO of the Data
+         * fetched from other endpoints of the API.
          *
-         *  All those datas are movie's
-         *  complementary information
-         *
-         * */
+         * All of them are movie's
+         * complementary information
+         */
         private MovieCredit movieCredit;
         private MovieDetail movieDetail;
         private MovieReviews movieReviews;
         private MovieTrailers movieTrailers;
 
-        /**Getters for the POJO*/
+        /**
+         * Getters for the POJOs variables
+         */
         public MovieCredit getMovieCredit() {
             return movieCredit;
         }
@@ -138,7 +139,9 @@ public class DiscoveredMovies {
             return movieTrailers;
         }
 
-        /**Setters for the POJO*/
+        /**
+         * Setters for the POJOs variables
+         */
         public void setMovieCredit(MovieCredit movieCredit) {
             this.movieCredit = movieCredit;
         }

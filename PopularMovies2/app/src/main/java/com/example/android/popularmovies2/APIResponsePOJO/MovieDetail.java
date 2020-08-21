@@ -16,6 +16,17 @@ import com.google.gson.annotations.SerializedName;
  * */
 public class MovieDetail {
 
+    /**
+     * The following variables represent the property of one
+     * Json Detail object fetched from the API.
+     *
+     * P.S. We only created property
+     * that we will need during this
+     * project.
+     *
+     * The Json version could be
+     * bigger than our model
+     */
     @SerializedName("original_title")
     public String title;
 
@@ -32,8 +43,7 @@ public class MovieDetail {
     public String getFormattedLength() {
 
         String formatedLength = "";
-        // Format the movie length (duration), based on
-        // the total length
+
         if (runtime > 60 || runtime == 60) {
             formatedLength = String.valueOf(runtime / 60) + "h"
                     + String.format("%02d", runtime % 60);

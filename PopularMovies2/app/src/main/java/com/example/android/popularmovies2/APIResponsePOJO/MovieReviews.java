@@ -14,18 +14,30 @@ import java.util.List;
  * project.
  *
  * The Json version could be
- * bigger than our model
- * */
+ * bigger than our model.
+ */
 
 public class MovieReviews {
 
-    /*    @SerializedName("id")
-    public int movieId;*/
+    @SerializedName("id")
+    public int movieId;
 
     @SerializedName("results")
     public List<Review> reviewList;
 
-    public class Review{
+    public class Review {
+
+        /**
+         * The following variables represent the property of one
+         * Json Review object fetched from the API.
+         *
+         * P.S. We only created property
+         * that we will need during this
+         * project.
+         *
+         * The Json version could be
+         * bigger than our model
+         */
         @SerializedName("author")
         private String author;
 
@@ -38,6 +50,10 @@ public class MovieReviews {
         @SerializedName("url")
         private String ReviewUrl;
 
+        /**
+         * Bellow, We have set
+         * the necessary getters
+         */
         public String getAuthor() {
             return author;
         }
