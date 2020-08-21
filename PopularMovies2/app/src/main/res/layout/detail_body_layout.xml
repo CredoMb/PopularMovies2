@@ -23,6 +23,7 @@
         android:layout_height="@dimen/divider_height"
         android:layout_marginTop="@dimen/body_divider_margin"
         android:background="@android:color/darker_gray"
+        android:contentDescription="@string/layout_divider"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewMovieSynopsis"
@@ -48,7 +49,8 @@
         <ListView
             android:id="@+id/trailer_list"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/trailer_list_description" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

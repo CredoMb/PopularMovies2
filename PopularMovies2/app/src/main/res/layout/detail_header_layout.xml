@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/poster_margin_start"
         android:layout_marginTop="@dimen/poster_margin_top"
+        android:contentDescription="@string/movie_poster_description"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintWidth_percent="0.33"

@@ -23,9 +23,9 @@
     <string name="close">Close</string>
 
     <!--
-
-    Strings for the Detail Activity
-
+    -
+    -   Strings for the Detail Activity
+    -
      -->
 
     <!-- Text for the review title textView. It preceded by the number of reviewer,
@@ -61,5 +61,12 @@
     <!-- Text to be used in the Toast message after a movie
          has been removed from the favorites -->
     <string name="removed_favorite">&#032;was removed from the favorites</string>
+    <string name="layout_divider">layout divider</string>
+
+    <!-- The following text will be used as content descriptions of
+         the trailer listview and the movie poster image-->
+
+    <string name="trailer_list_description">Trailers List</string>
+    <string name="movie_poster_description">Movie Poster</string>
 
 </resources>

@@ -70,6 +70,7 @@
                     android:id="@+id/button_reviewSummary_showAllReview"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:contentDescription="@string/show_all_review"
                     tools:text="@string/show_all_review"/>
 
             </LinearLayout>
