@@ -19,9 +19,6 @@ public interface FavoriteDao {
     @Insert
     void insertFavorite(FavoriteEntry favoriteEntry);
 
-    @Update(onConflict = OnConflictStrategy.REPLACE)
-    void updateFavorite(FavoriteEntry favoriteEntry);
-
     @Delete
     void deleteFavorite(FavoriteEntry favoriteEntry);
 

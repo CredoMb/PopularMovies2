@@ -10,29 +10,24 @@ import java.util.Date;
 @Entity(tableName = "favorite")
 public class FavoriteEntry {
 
-
-    /*    */
-
     @PrimaryKey(autoGenerate = true)
     private int id;
     private String synopsis;
 
     // The following variable will
-    // represent the id in theMovieDataBase API.
+    // represent store the movie id
+    // gotten from theMovieDataBase API.
     private int tmdbId;
 
     private float rating;
-
     private int numberOfTrailers;
 
     @ColumnInfo(name = "release_date")
     private String releaseDate;
     private byte[] posterImage;
 
-    // Do you store the favorite as a Preference ?
-
     @Ignore
-    public FavoriteEntry(String synopsis,int tmdbId,float rating,
+    public FavoriteEntry(String synopsis, int tmdbId, float rating,
                          int numberOfTrailers, String releaseDate, byte[] posterImage) {
 
         this.synopsis = synopsis;
@@ -43,7 +38,7 @@ public class FavoriteEntry {
         this.posterImage = posterImage;
     }
 
-    public FavoriteEntry(int id, String synopsis,int tmdbId, float rating,
+    public FavoriteEntry(int id, String synopsis, int tmdbId, float rating,
                          int numberOfTrailers, String releaseDate, byte[] posterImage) {
         this.id = id;
         this.tmdbId = tmdbId;
@@ -54,7 +49,9 @@ public class FavoriteEntry {
         this.posterImage = posterImage;
     }
 
-    /** Getters */
+    /**
+     * Getters
+     */
 
     public int getId() {
         return id;
@@ -68,7 +65,9 @@ public class FavoriteEntry {
         return synopsis;
     }
 
-    public int getTmdbId () { return tmdbId;}
+    public int getTmdbId() {
+        return tmdbId;
+    }
 
     public float getRating() {
         return rating;
@@ -82,11 +81,21 @@ public class FavoriteEntry {
         return releaseDate;
     }
 
-    /**Setters */
+    /**
+     * Setters
+     */
     public void setId(int id) {
         this.id = id;
     }
 
+    /**
+     * The setters bellow were commented
+     * because they are not used in the current version
+     * of the app but could be necessary in the
+     * next version.
+     *
+     * */
+    /*
     public void setPosterImage(byte[] posterImage) {
         this.posterImage = posterImage;
     }
@@ -109,5 +118,5 @@ public class FavoriteEntry {
 
     public void setReleaseDate(String releaseDate) {
         this.releaseDate = releaseDate;
-    }
+    }*/
 }
