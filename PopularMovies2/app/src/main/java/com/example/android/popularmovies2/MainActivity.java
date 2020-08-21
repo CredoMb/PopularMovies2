@@ -6,8 +6,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.LoaderManager;
 import android.content.AsyncTaskLoader;
+import android.content.Context;
 import android.content.Intent;
 import android.content.Loader;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -143,12 +146,6 @@ public class MainActivity extends AppCompatActivity implements
         // by default.
         mSortBy = BY_POPULARITY;
 
-        // Set the movie list as the data of the adapter
-        // mMovieAdapter.setMovieData(mMovieList);
-
-        // Create the thing to set fetch the movie
-        // This will query the endpoint we need to return the list of movies
-
         /**
          *
          * Create a method to manage the preferences of the user.
@@ -156,29 +153,32 @@ public class MainActivity extends AppCompatActivity implements
          *
          * */
 
-        // Initialize the API interface
+        // Initialize the API interface. This will be used to fetch
+        // data from different endpoint of the API.
         mApiInterface = APIClient.getClient().create(APIInterface.class);
 
-        /**
         // Start the Loader only if there's no element
         // inside our movie list. Otherwise,
         // remove the spinner from the screen.
-        if(mMovieList.isEmpty()) {
+        if(mMovieList != null && mMovieList.isEmpty()) {
             startLoaderOrEmptyState(MOVIE_LOADER_ID);
         }
         else {
-            // Remove the progress from the screen.
-            // As we already have data to display,
-            // we will not need it.
+            // Remove the progress spinner from the screen.
+            // We know that we have data to display,
+            // we will not need the spinner.
             mProgressSpinner.setVisibility(View.GONE);
-        } */
 
-        // Start the loader to display the movies that we fetched
-        getLoaderManager().initLoader(MOVIE_LOADER_ID, null, MainActivity.this).forceLoad();
+            // Attach the movieList to the adapter
+            mMovieAdapter.setMovieData(mMovieList);
+        }
     }
 
     @Override
     public Loader<List<DiscoveredMovies.Movie>> onCreateLoader(int i, Bundle bundle) {
+
+        // Set the visibility of the spinner.
+        mProgressSpinner.setVisibility(View.VISIBLE);
 
         return new AsyncTaskLoader<List<DiscoveredMovies.Movie>>(this) {
             @Override
@@ -209,6 +209,9 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public void onLoadFinished(Loader<List<DiscoveredMovies.Movie>> loader, List<DiscoveredMovies.Movie> movies) {
 
+        // Remove the spinner from the screen.
+        mProgressSpinner.setVisibility(View.GONE);
+
         // Clear the adapter by setting an empty ArrayList
         mMovieAdapter.setMovieData(new ArrayList<DiscoveredMovies.Movie>());
 
@@ -235,10 +238,42 @@ public class MainActivity extends AppCompatActivity implements
         mRecyclerView.setAdapter(mMovieAdapter);
 
         // If there's no internet connection display the emptystate view
-        /*if (!isNetworkConnected()) {
+        if (!isNetworkConnected()) {
             emptyStateRl.setVisibility(View.VISIBLE);
-        }*/
+        }
 
+    }
+
+    /**
+     * Execute certain task based on the internet connection status.
+     * If the connection is on, initiate the loader
+     * other wise, display the empty state view
+     */
+
+    private void startLoaderOrEmptyState(int loaderId) {
+        // Check the status of the network, then either launch the Loader or
+        // display the Empty State
+
+        if (isNetworkConnected()) {
+            getLoaderManager().initLoader(loaderId, null, MainActivity.this).forceLoad();
+        } else {
+            emptyStateRl.setVisibility(View.VISIBLE);
+        }
+    }
+
+
+    /**
+     * Method to Check the Network connection and return true or false
+     * based on the connection state. If the device is connected, the method
+     * returns true, else it returns false.
+     */
+    private boolean isNetworkConnected() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+
+        return activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting();
     }
 
     @Override
