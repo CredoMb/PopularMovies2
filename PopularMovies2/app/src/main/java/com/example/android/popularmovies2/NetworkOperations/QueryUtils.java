@@ -99,6 +99,20 @@ public final class QueryUtils {
     }
 
 
+    /**
+     * The next 3 methods will help us get extra information
+     * about all the movies we fetched from the API.
+     * Those informations are: the credit (getMoviesCredit),
+     * the detail (getMoviesDetails) and reviews (getMoviesReviews)
+     *
+     * Each of these 3 block of infos is located in a different endpoint.
+     *
+     * @param movie hold the movie we should get more information about.
+     *
+     * @param apiInterface is an entity of @APIInterface. It will help us to perform
+     *                     the API call to the proper endpoint of the API.
+     * */
+
     public static MovieCredit getMovieCredit(DiscoveredMovies.Movie movie, final APIInterface apiInterface) {
 
         // From the credit endpoint of the API,
@@ -327,9 +341,6 @@ public final class QueryUtils {
                 urlExtensionWithId += "/" + MOVIE_CREDIT;
                 break;
 
-            /*case MOVIE_DETAILS: urlExtensionWithId += "&" + "language" + "=" + "en-US";
-            break;*/
-
             // Add the extension to get the data related to the trailer of a given movie.
             case MOVIE_TRAILER:
                 urlExtensionWithId += "/" + MOVIE_TRAILER;
@@ -352,11 +363,8 @@ public final class QueryUtils {
         return urlExtensionWithId;
     }
 
-
-    // Fetch complementary information (credit, detail,
-    // trailers and reviews) for each movie and
-    // add them.
-
+    // Fetch complementary the details for each movie and update
+    // the movie list.
     private static List<DiscoveredMovies.Movie> completeMoviesDetails(DiscoveredMovies discoveredMovies) {
 
         // In case the movie list is empty,
@@ -372,36 +380,17 @@ public final class QueryUtils {
 
         mApiInterface = APIClient.getClient().create(APIInterface.class);
 
-        // Variables to store all the extra
-        // information about the movie.
-        // Those informations will be fetched from
-        // different endpoints of the API.
-      //  MovieCredit credit = new MovieCredit();
-        // MovieTrailers trailers = new MovieTrailers();
-        //MovieReviews reviews = new MovieReviews();
+        // Variables to store the detail about the movie.
         MovieDetail details = new MovieDetail();
 
         // For each movie, add its extra information.
         for (int i = 0; i < movieList.size(); i++) {
 
-            // Fetch the credit information of the current movie
-            //trailers = getMovieTrailers(movieList.get(i), mApiInterface);
-            //credit = getMovieCredit(movieList.get(i), mApiInterface);
-           // reviews = getMovieReviews(movieList.get(i), mApiInterface);
+            // Fetch the detail information of the current movie
             details = getMovieDetails(movieList.get(i), mApiInterface);
 
-            // Set the new credit information of the current movie
-            //movieList.get(i).setMovieCredit(credit);
-           // movieList.get(i).setMovieTrailers(trailers);
-          //  movieList.get(i).setMovieReviews(reviews);
+            // Set the new detail information of the current movie
             movieList.get(i).setMovieDetails(details);
-
-            //
-
-            /*
-            getMovieDetail(resource.movieList,apiInterface);
-            getMoviesReviews(resource.movieList,apiInterface);*/
-
         }
 
         return movieList;

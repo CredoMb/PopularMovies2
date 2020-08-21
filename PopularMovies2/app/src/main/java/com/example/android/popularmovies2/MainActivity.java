@@ -160,7 +160,7 @@ public class MainActivity extends AppCompatActivity implements
         // Start the Loader only if there's no element
         // inside our movie list. Otherwise,
         // remove the spinner from the screen.
-        if(mMovieList != null && mMovieList.isEmpty()) {
+        if(mMovieList == null || mMovieList.isEmpty()) {
             startLoaderOrEmptyState(MOVIE_LOADER_ID);
         }
         else {
@@ -251,6 +251,7 @@ public class MainActivity extends AppCompatActivity implements
      */
 
     private void startLoaderOrEmptyState(int loaderId) {
+
         // Check the status of the network, then either launch the Loader or
         // display the Empty State
 
@@ -334,20 +335,6 @@ public class MainActivity extends AppCompatActivity implements
 
     // Here was the fetchMoviesData
 
-    /**
-     * The next 3 methods will help us get extra information
-     * about all the movies we fetched from the API.
-     * Those informations are: the credit (getMoviesCredit),
-     * the detail (getMoviesDetail) and reviews (getMoviesReviews)
-     *
-     * Each of these 3 block of infos is located in a different endpoint.
-     *
-     * @param mMovieList holds the list of movies fetched from the API.
-     *                  Each movie possess a couple of basic information
-     *
-     * @param apiInterface is an entity of @APIInterface. It will help us to perform
-     *                     the API call to the proper endpoint of the API.
-     * */
 
     /** Here where the 4 getters for the movie endpoint*/
 
