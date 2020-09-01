@@ -19,8 +19,7 @@ public class GlideHelperClass extends AppGlideModule {
     private RequestBuilder<android.graphics.drawable.Drawable> mErrorImageId;
 
     public GlideHelperClass(Context c, String imageLink, int placeHolderId,
-                            ImageView targetIv /*,
-                            RequestBuilder<android.graphics.drawable.Drawable> errorId*/) {
+                            ImageView targetIv) {
         mContext = c;
         mImageLink = imageLink;
         mPlaceHolderId = placeHolderId;

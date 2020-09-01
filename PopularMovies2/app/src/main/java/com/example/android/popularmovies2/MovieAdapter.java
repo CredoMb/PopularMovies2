@@ -20,7 +20,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
 
     private List<DiscoveredMovies.Movie> mMovieData = new ArrayList<DiscoveredMovies.Movie>();
     private Context mContext;
-    private final int  NUMBER_OF_MOVIE = 4;
+    private final int  NUMBER_OF_MOVIE = 6;
 
     public interface MovieAdapterOnClickHandler {
         void onClick(int position);

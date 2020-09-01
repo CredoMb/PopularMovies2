@@ -12,9 +12,6 @@ import retrofit2.http.Url;
 
 public interface APIInterface {
 
-    /**The Key doesn't appear on public repo */
-    public final static String API_KEY = "cd401ba98e50ce8bf913cdce912aa430";
-
     /**
      * All the @GET method will
      * fetch data from a specific endpoint of the API.
@@ -29,20 +26,19 @@ public interface APIInterface {
     @GET
     Call<DiscoveredMovies> doGetDiscoveredMovies(@Url String url);
 
-        /* Queries the movie credit endpoint */
+    // Queries the movie credit endpoint
     @GET
     Call<MovieCredit> doGetMovieCredit(@Url String url);
 
-        /* Queries the movie detail endpoint */
+    // Queries the movie detail endpoint
     @GET
     Call<MovieDetail> doGetMovieDetail(@Url String url);
 
-        /* Queries the review endpoint */
+    // Queries the review endpoint
     @GET
     Call<MovieReviews> doGetMovieReviews(@Url String url);
 
-    /* Queries the trailer endpoint */
+    // Queries the trailer endpoint
     @GET
     Call<MovieTrailers> doGetMovieTrailers(@Url String url);
-
 }

@@ -56,10 +56,8 @@ public final class QueryUtils {
     private QueryUtils() {
     }
 
-
     /**
-     * Continu
-     */
+     * */
     public static List<DiscoveredMovies.Movie> fetchMoviesData(final APIInterface apiInterface, final String sortingKey) {
 
         // Create the variable "callPopularMovies" that will help us make
