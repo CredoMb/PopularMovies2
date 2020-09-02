@@ -50,7 +50,7 @@
     <dimen name="poster_margin_top">16dp</dimen>
 
     <!-- Dimensions for the margins around the movie year TextView-->
-    <dimen name="movie_year_margin_top">8dp</dimen>
+    <dimen name="movie_year_margin_top">4dp</dimen>
     <dimen name="movie_year_margin_start">32dp</dimen>
 
     <!-- Dimensions for the margin around the movie lenght TextView-->

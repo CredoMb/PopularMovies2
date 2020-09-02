@@ -87,6 +87,7 @@ public class DetailActivity extends AppCompatActivity implements
     // The following 5 variables will store
     // the views of the detail_header_layout.xml
 
+    private TextView mMovieTitleTV;
     private ImageView mMoviePoster;
     private TextView mMovieYearTV;
     private TextView mMovieLenghtTV;
@@ -185,6 +186,7 @@ public class DetailActivity extends AppCompatActivity implements
          * views of the detail activity layout.
          *
          * */
+        mMovieTitleTV = (TextView)  mBinding.movieHeader.findViewById(R.id.textViewMovieTitle);
         mMoviePoster = (ImageView) mBinding.movieHeader.findViewById(R.id.imageViewMoviePoster);
         mMovieYearTV = (TextView) mBinding.movieHeader.findViewById(R.id.textViewMovieYear);
         mMovieLenghtTV = (TextView) mBinding.movieHeader.findViewById(R.id.textViewMovieLength);
@@ -290,6 +292,7 @@ public class DetailActivity extends AppCompatActivity implements
         // Chercher une application ou j'ai une
 
         // Add content to the views
+        mMovieTitleTV.setText(mCurrentMovie.getTitle());
         setImageWithUri(mMoviePoster, mCurrentMovie.getPosterPath());
         mMovieYearTV.setText(mCurrentMovie.getYear());
         mMovieLenghtTV.setText(currentMovieDetails.getFormattedLength());

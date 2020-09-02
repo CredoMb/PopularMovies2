@@ -18,7 +18,7 @@
         tools:text="This movie is a very good one and all the blabla" />
 
     <ImageView
-        android:id="@+id/divider"
+        android:id="@+id/FirstDivider"
         android:layout_width="match_parent"
         android:layout_height="@dimen/divider_height"
         android:layout_marginTop="@dimen/body_divider_margin"
@@ -52,5 +52,7 @@
             android:layout_height="wrap_content"
             android:contentDescription="@string/trailer_list_description" />
     </LinearLayout>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
