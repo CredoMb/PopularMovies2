@@ -53,6 +53,16 @@
             android:contentDescription="@string/trailer_list_description" />
     </LinearLayout>
 
-
+    <ImageView
+        android:id="@+id/secondDivider"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider_height"
+        android:layout_marginTop="@dimen/body_divider_margin"
+        android:background="@android:color/darker_gray"
+        android:contentDescription="@string/layout_divider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/list_view_container"
+        tools:srcCompat="@tools:sample/avatars[0]" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
