@@ -84,10 +84,10 @@
     <dimen name="divider_height">1dp</dimen>
 
     <!-- Dimensions for the margin around the detail layout divider-->
-    <dimen name="body_divider_margin">8dp</dimen>
+    <dimen name="body_divider_margin">16dp</dimen>
 
     <!-- Dimensions for the margins around the trailer area of the detail layout-->
-    <dimen name="trailer_header_margin">8dp</dimen>
+    <dimen name="trailer_header_margin">16dp</dimen>
     <dimen name="trailer_item_margin_start">16dp</dimen>
     <dimen name="trailer_item_drawablePadding">48dp</dimen>
 

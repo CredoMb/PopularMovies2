@@ -46,7 +46,7 @@
     <string name="added_to_fav">&#032;was added to the favorites</string>
 
     <!-- Text for the list of Trailers -->
-    <string name="trailer">Trailer&#032;</string>
+    <string name="trailer">Trailers&#032;</string>
 
     <!-- Text to be used when there is no review to display -->
     <string name="no_review">No reviews</string>

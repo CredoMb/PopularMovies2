@@ -2,4 +2,6 @@
 <resources>
     <dimen name="movie_title_padding">32dp</dimen>
     <dimen name="movie_title_textsize">32sp</dimen>
+    <dimen name="review_groupview_margin">16dp</dimen>
+    <dimen name="detail_header_marginBottom">32dp</dimen>
 </resources>

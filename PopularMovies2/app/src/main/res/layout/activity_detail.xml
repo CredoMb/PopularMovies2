@@ -22,7 +22,7 @@
                 layout="@layout/detail_header_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"/>
+                android:layout_marginBottom="@dimen/detail_header_marginBottom" />
 
             <include
                 android:id="@+id/movie_body"
@@ -35,43 +35,43 @@
                 android:id="@+id/reviewSummary_groupView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/review_groupview_margin"
+                android:orientation="vertical"
                 android:paddingLeft="@dimen/recycler_spacing"
-                android:paddingRight="@dimen/recycler_spacing"
-                android:orientation="vertical">
+                android:paddingRight="@dimen/recycler_spacing">
 
                 <TextView
                     android:id="@+id/textView_reviewSummary_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textStyle="bold"
-                    android:textSize="@dimen/review_title_textsize"
-                    android:textColor="@android:color/black"
                     android:layout_marginBottom="16dp"
-                    tools:text="50 reviews"/>
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/review_title_textsize"
+                    tools:text="50 reviews" />
 
                 <TextView
                     android:id="@+id/textView_reviewSummarySample_author"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textStyle="bold"
-                    android:textSize="@dimen/review_author_textsize"
                     android:textColor="@android:color/black"
-                    tools:text="Credo"/>
+                    android:textSize="@dimen/review_author_textsize"
+                    android:textStyle="bold"
+                    tools:text="Credo" />
 
                 <TextView
                     android:id="@+id/textView_reviewSummarySample_body"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/review_body_textsize"
                     android:maxLines="1"
-                    tools:text="I want to know, every body want to know, where is my life, it's"/>
+                    android:textSize="@dimen/review_body_textsize"
+                    tools:text="I want to know, every body want to know, where is my life, it's" />
 
                 <Button
                     android:id="@+id/button_reviewSummary_showAllReview"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:contentDescription="@string/show_all_review"
-                    tools:text="@string/show_all_review"/>
+                    tools:text="@string/show_all_review" />
 
             </LinearLayout>
 
