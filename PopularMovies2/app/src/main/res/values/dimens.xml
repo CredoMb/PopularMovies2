@@ -7,4 +7,5 @@
     <dimen name="review_groupview_margin">16dp</dimen>
     <dimen name="detail_header_marginBottom">32dp</dimen>
     <dimen name="movie_year_textsize">28sp</dimen>
+    <dimen name="movie_length_textSize">26sp</dimen>
 </resources>

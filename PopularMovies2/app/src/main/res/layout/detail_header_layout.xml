@@ -12,16 +12,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/black"
-        android:backgroundTint="#FFAC41"
+        android:backgroundTint="@color/yellow_background"
         android:paddingStart="@dimen/movie_title_padding"
         android:paddingTop="@dimen/movie_title_padding"
         android:paddingBottom="@dimen/movie_title_padding"
-        android:text="Chappie"
+        tools:text="Chappie"
         android:textColor="@color/mainBackground"
         android:textSize="@dimen/movie_title_textsize"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-
         app:layout_constraintTop_toTopOf="parent" />
     <ImageView
         android:id="@+id/imageViewMoviePoster"
@@ -52,12 +51,12 @@
         android:id="@+id/textViewMovieLength"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textStyle="italic"
-        android:textSize="26sp"
         android:textColor="@android:color/white"
-        tools:text="2h00"
+        android:textSize="@dimen/movie_length_textSize"
+        android:textStyle="italic"
         app:layout_constraintStart_toStartOf="@+id/textViewMovieYear"
-        app:layout_constraintTop_toBottomOf="@+id/textViewMovieYear" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewMovieYear"
+        tools:text="2h00" />
     <!-- android:layout_marginTop="@dimen/movie_rating_margin" -->
     <TextView
         android:id="@+id/textViewMovieRating"
@@ -77,13 +76,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/favorite_margin"
-        android:backgroundTint="#FFAC41"
-        android:text="Favorite"
+        android:backgroundTint="@color/yellow_background"
+        android:text="@string/favorite_button_unmarked"
         android:textColor="@color/mainBackground"
-        android:textSize="16sp"
-        app:icon="@drawable/ic_baseline_blackstar_border_24"
+        app:icon="@drawable/ic_baseline_star_border_24"
+        app:iconTint="@color/mainBackground"
         app:layout_constraintStart_toStartOf="@+id/textViewMovieRating"
         app:layout_constraintTop_toBottomOf="@+id/textViewMovieRating"
-        tools:text="Favorite" />
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

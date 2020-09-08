@@ -18,4 +18,5 @@
 
     <!-- Color for the favorite icon when it's filled-->
     <color name="colorFavorite">#FF1E56</color>
+    <color name="yellow_background">#FFAC41</color>
 </resources>
