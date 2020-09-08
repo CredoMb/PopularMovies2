@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#030202</color>
-    <color name="colorPrimaryDark">#030202</color>
-    <color name="colorAccent">#D81B60</color>
-
+    <color name="colorPrimary">#000000</color>
+    <color name="colorPrimaryDark">#000000</color>
+    <color name="colorAccent">#FF1E56</color>
+    <color name="mainBackground">#323232</color>
     <!--
         Used on the activity_main.xml layout
     -->
@@ -17,5 +17,5 @@
     <color name="colorRefreshButtonText">@android:color/black</color>
 
     <!-- Color for the favorite icon when it's filled-->
-    <color name="colorFavorite">#E6D685</color>
+    <color name="colorFavorite">#FF1E56</color>
 </resources>

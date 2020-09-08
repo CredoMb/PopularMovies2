@@ -11,9 +11,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
+        android:textColor="@android:color/white"
         android:layout_marginStart="@dimen/trailer_item_margin_start"
         android:drawableLeft="@drawable/ic_baseline_blackplay_arrow_24"
         android:gravity="center_vertical"
         tools:text="Trailer1" />
+
+    <!-- Win now, win today ! -->
+    <!-- Win now, win today, bro -->
 
 </LinearLayout>

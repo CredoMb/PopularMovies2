@@ -78,7 +78,7 @@
     <dimen name="list_view_container_margin">16dp</dimen>
 
     <!-- Dimensions for the paddings around the detail body layout-->
-    <dimen name="detail_body_padding">8dp</dimen>
+    <dimen name="detail_body_padding">16dp</dimen>
 
     <!-- Dimensions for the height of the detail layout divider-->
     <dimen name="divider_height">1dp</dimen>
