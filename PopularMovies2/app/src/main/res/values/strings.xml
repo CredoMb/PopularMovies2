@@ -71,6 +71,7 @@
          the trailer listview and the movie poster image -->
     <string name="trailer_list_description">Trailers List</string>
     <string name="movie_poster_description">Movie Poster</string>
-    <string name="favorite_button_unmarked">mark as\nfavorite</string>
+    <string name="favorite_add">mark as\nfavorite</string>
+    <string name="favorite_remove">remove from\nfavorites</string>
 
 </resources>

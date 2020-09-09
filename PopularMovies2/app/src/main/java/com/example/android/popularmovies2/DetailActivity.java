@@ -20,6 +20,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -40,6 +41,7 @@ import com.example.android.popularmovies2.NetworkOperations.APIInterface;
 import com.example.android.popularmovies2.NetworkOperations.GlideHelperClass;
 import com.example.android.popularmovies2.NetworkOperations.QueryUtils;
 import com.example.android.popularmovies2.databinding.ActivityDetailBinding;
+import com.google.android.material.button.MaterialButton;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
@@ -92,7 +94,7 @@ public class DetailActivity extends AppCompatActivity implements
     private TextView mMovieYearTV;
     private TextView mMovieLenghtTV;
     private TextView mMovieRatingTV;
-    private TextView mMovieFavoriteTV;
+    private MaterialButton mMovieFavoriteButton;
 
     // Will be used to access each endpoint of the
     //  API
@@ -191,7 +193,7 @@ public class DetailActivity extends AppCompatActivity implements
         mMovieYearTV = (TextView) mBinding.movieHeader.findViewById(R.id.textViewMovieYear);
         mMovieLenghtTV = (TextView) mBinding.movieHeader.findViewById(R.id.textViewMovieLength);
         mMovieRatingTV = (TextView) mBinding.movieHeader.findViewById(R.id.textViewMovieRating);
-        mMovieFavoriteTV = (TextView) mBinding.movieHeader.findViewById(R.id.textViewFavorite);
+        mMovieFavoriteButton = (MaterialButton) mBinding.movieHeader.findViewById(R.id.buttonFavorite);
         mMovieSynopsisTV = (TextView) mBinding.movieBody.findViewById(R.id.textViewMovieSynopsis);
 
         // Activate the Loader to fetch the complementary informations
@@ -301,7 +303,7 @@ public class DetailActivity extends AppCompatActivity implements
         // Set a listener onto the favorite textview,
         // so that when clicked, it
         // registers or removes a movie from the favorites.
-        mMovieFavoriteTV.setOnClickListener(new View.OnClickListener() {
+        mMovieFavoriteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -330,6 +332,15 @@ public class DetailActivity extends AppCompatActivity implements
                     // database.
                     Toast.makeText(getApplicationContext(), mCurrentMovie.getTitle() +
                             getString(R.string.added_to_fav), Toast.LENGTH_LONG).show();
+
+                    // Change the icon of the favorite button
+                    // to the plain star
+                    mMovieFavoriteButton.setIcon(
+                            getDrawable(R.drawable.ic_baseline_star_24)
+                    );
+
+                    // Change the text of the favorite button.
+                    mMovieFavoriteButton.setText(getString(R.string.favorite_remove));
                 } else {
 
                     // Remove the movie from the favorite
@@ -340,6 +351,15 @@ public class DetailActivity extends AppCompatActivity implements
                     // false. Why can't we set it
                     // from the Main activity ?
                     mCurrentMovie.isFavorite = false;
+
+                    // Change the icon of the favorite button
+                    // to the star stroke
+                    mMovieFavoriteButton.setIcon(
+                            getDrawable(R.drawable.ic_baseline_star_border_24)
+                    );
+
+                    // Change the text of the favorite button.
+                    mMovieFavoriteButton.setText(getString(R.string.favorite_add));
                 }
 
             }
@@ -511,8 +531,14 @@ public class DetailActivity extends AppCompatActivity implements
                     // "isFavorite" variable to be true.
                     mCurrentMovie.isFavorite = true;
 
-                    // Change the mention of the favorite textView.
-                    mMovieFavoriteTV.setTextColor(getColor(R.color.colorAccent));
+                    // Change the icon of the favorite button
+                    // to the plain star
+                    mMovieFavoriteButton.setIcon(
+                            getDrawable(R.drawable.ic_baseline_star_24)
+                    );
+
+                    // Change the text of the favorite button.
+                    mMovieFavoriteButton.setText(getString(R.string.favorite_remove));
 
                 }
             }

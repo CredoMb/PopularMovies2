@@ -68,22 +68,20 @@
         app:layout_constraintStart_toStartOf="@+id/textViewMovieLength"
         app:layout_constraintTop_toBottomOf="@+id/textViewMovieLength" />
 
-    <!--
-        style="@style/Widget.MaterialComponents.Button.Icon"
-         app:iconSize="24dp" -->
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/textViewFavorite"
+        android:id="@+id/buttonFavorite"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/favorite_margin"
-        android:text="@string/favorite_button_unmarked"
+        android:text="@string/favorite_add"
         android:textColor="@android:color/white"
-        android:backgroundTint="@android:color/transparent"
-        style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
-        app:strokeWidth="0dp"
+        android:textSize="12sp"
         app:icon="@drawable/ic_baseline_star_border_24"
+        app:iconTint="@color/yellow_background"
+        app:strokeColor="@color/yellow_background"
         app:layout_constraintStart_toStartOf="@+id/textViewMovieRating"
         app:layout_constraintTop_toBottomOf="@+id/textViewMovieRating"
-        />
+         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
