@@ -18,6 +18,7 @@
         android:paddingBottom="@dimen/movie_title_padding"
         tools:text="Chappie"
         android:textColor="@color/mainBackground"
+        android:textStyle="bold"
         android:textSize="@dimen/movie_title_textsize"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

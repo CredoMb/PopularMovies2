@@ -1,5 +1,6 @@
 package com.example.android.popularmovies2;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -17,6 +18,9 @@ import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -319,19 +323,14 @@ public class DetailActivity extends AppCompatActivity implements
                         mCurrentMovie.getVoteAverage(),
                         0,
                         mCurrentMovie.getReleaseDate()
-                        , null);
+                        , posterDrawableByte);
 
                 // If the movie is not marked as a favorite,
                 // then add it to the favorite data base.
                 if (!mCurrentMovie.isFavorite) {
+
                     // Insert the favorite into the database.
                     insertNewFav(fav);
-
-                    // Show a Toast to notify the user
-                    // that the movie has been added to the
-                    // database.
-                    Toast.makeText(getApplicationContext(), mCurrentMovie.getTitle() +
-                            getString(R.string.added_to_fav), Toast.LENGTH_LONG).show();
 
                     // Change the icon of the favorite button
                     // to the plain star
@@ -341,6 +340,12 @@ public class DetailActivity extends AppCompatActivity implements
 
                     // Change the text of the favorite button.
                     mMovieFavoriteButton.setText(getString(R.string.favorite_remove));
+
+                    // Show a Toast to notify the user
+                    // that the movie has been added to the
+                    // database.
+                    Toast.makeText(getApplicationContext(), mCurrentMovie.getTitle() +" "+
+                            getString(R.string.added_to_fav), Toast.LENGTH_LONG).show();
                 } else {
 
                     // Remove the movie from the favorite
@@ -592,9 +597,18 @@ public class DetailActivity extends AppCompatActivity implements
                 // list of the main activity.
                 MainActivity.favoriteMovies.remove(fav);
 
-                Toast.makeText(getApplicationContext(), movieTitle +
-                        getString(R.string.removed_favorite), Toast.LENGTH_LONG).show();
+                // On the main thread, display a toast message
+                // to let the user know that the movie was removed from
+                // the favorites.
+                DetailActivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getApplicationContext(), movieTitle +" "+
+                                getString(R.string.removed_favorite), Toast.LENGTH_LONG).show();
+                    }
+                });
             }
+
         });
     }
 
