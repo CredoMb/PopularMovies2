@@ -12,6 +12,7 @@ import android.content.AsyncTaskLoader;
 import android.content.Context;
 import android.content.Intent;
 import android.content.Loader;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -394,11 +395,11 @@ public class DetailActivity extends AppCompatActivity implements
        // list will contain the following texts "Trailer 1" & "Trailer 2"
        if (movieTrailerList != null && !movieTrailerList.isEmpty()) {
            for (int i = 0; i < movieTrailerList.size(); i++) {
+
                trailersTextList.add(getString(R.string.trailer) + String.valueOf(i + 1));
 
            }
        }
-
 
        // Turn the trailer text list into an array
        // and use it as the data source for our adapter.
@@ -657,6 +658,5 @@ public class DetailActivity extends AppCompatActivity implements
         // If it is, then set its boolean
         return false;
     }
-
 
 }

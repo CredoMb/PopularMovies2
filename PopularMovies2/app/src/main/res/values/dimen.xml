@@ -8,7 +8,7 @@
     -->
 
     <!--Spacing used around the recycler inside the MainActivity -->
-    <dimen name="recycler_spacing">8dp</dimen>
+    <dimen name="recycler_spacing">16dp</dimen>
 
     <!-- The padding for the bottom of the empty state group view-->
     <dimen name="empty_state_bottom_padding">172dp</dimen>
