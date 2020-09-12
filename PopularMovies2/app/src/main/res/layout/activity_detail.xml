@@ -29,13 +29,13 @@
                 layout="@layout/detail_body_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/review_groupview_margin"
                 />
 
             <LinearLayout
                 android:id="@+id/reviewSummary_groupView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/review_groupview_margin"
                 android:orientation="vertical"
                 android:paddingLeft="@dimen/recycler_spacing"
                 android:paddingRight="@dimen/recycler_spacing">

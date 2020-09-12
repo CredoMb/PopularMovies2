@@ -16,9 +16,11 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -378,7 +380,7 @@ public class DetailActivity extends AppCompatActivity implements
      *  @param movieReviewList is the list of reviews for the current movie
      *
      *  */
-   private void addTrailerAndReviews(List<MovieTrailers.Trailer> movieTrailerList,
+   private void addTrailerAndReviews(final List<MovieTrailers.Trailer> movieTrailerList,
                                      List<MovieReviews.Review> movieReviewList) {
 
        List<String> trailersTextList = new ArrayList<String>();
@@ -390,7 +392,7 @@ public class DetailActivity extends AppCompatActivity implements
        if (movieTrailerList != null && !movieTrailerList.isEmpty()) {
            for (int i = 0; i < movieTrailerList.size(); i++) {
 
-               trailersTextList.add(getString(R.string.trailer_position,i));
+               trailersTextList.add(getString(R.string.trailer_position,i+1));
 
            }
        }
@@ -398,11 +400,28 @@ public class DetailActivity extends AppCompatActivity implements
        // Turn the trailer text list into an array
        // and use it as the data source for our adapter.
        String[] trailerTextArray = trailersTextList.toArray(new String[trailersTextList.size()]);
-       ArrayAdapter simpleAdapter = new ArrayAdapter<>(this, R.layout.trailer_list_item, R.id.trailer_position, trailerTextArray);
+       final ArrayAdapter simpleAdapter = new ArrayAdapter<>(this, R.layout.trailer_list_item, R.id.trailer_position, trailerTextArray);
 
        // Find the listview and attach the simple adapter to it
        mTrailerListView = (ListView) findViewById(R.id.trailer_list);
        mTrailerListView.setAdapter(simpleAdapter);
+
+       // Open an intent to read the trailer video once
+       // one of the trailers is clicked
+       mTrailerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+           @Override
+           public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+               // Create an Intent to open the video
+               Intent intent = new Intent(Intent.ACTION_VIEW,
+                       Uri.parse(movieTrailerList.get(i).getTrailerUrl())
+               );
+
+               if (intent.resolveActivity(getPackageManager()) != null) {
+                   // Start an Activity with the intent
+                   startActivity(intent);
+               }
+           }
+       });
 
        // Create variables to hold informations about
        // the review sample.
