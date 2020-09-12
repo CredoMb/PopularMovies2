@@ -35,7 +35,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/trailer_header_margin"
-        android:text="@string/trailer"
+        android:text="@string/trailers"
         android:textColor="@android:color/white"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="@+id/FirstDivider"
@@ -53,6 +53,7 @@
             android:id="@+id/trailer_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fillViewport="true"
             android:contentDescription="@string/trailer_list_description" />
     </LinearLayout>
 

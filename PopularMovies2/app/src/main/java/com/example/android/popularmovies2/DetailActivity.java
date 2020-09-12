@@ -1,6 +1,5 @@
 package com.example.android.popularmovies2;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -12,20 +11,15 @@ import android.content.AsyncTaskLoader;
 import android.content.Context;
 import android.content.Intent;
 import android.content.Loader;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -396,7 +390,7 @@ public class DetailActivity extends AppCompatActivity implements
        if (movieTrailerList != null && !movieTrailerList.isEmpty()) {
            for (int i = 0; i < movieTrailerList.size(); i++) {
 
-               trailersTextList.add(getString(R.string.trailer) + String.valueOf(i + 1));
+               trailersTextList.add(getString(R.string.trailer_position,i));
 
            }
        }
