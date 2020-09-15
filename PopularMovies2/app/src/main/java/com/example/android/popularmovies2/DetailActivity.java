@@ -393,7 +393,6 @@ public class DetailActivity extends AppCompatActivity implements
            for (int i = 0; i < movieTrailerList.size(); i++) {
 
                trailersTextList.add(getString(R.string.trailer_position,i+1));
-
            }
        }
 
@@ -412,6 +411,7 @@ public class DetailActivity extends AppCompatActivity implements
            @Override
            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                // Create an Intent to open the video
+               // of the trailer.
                Intent intent = new Intent(Intent.ACTION_VIEW,
                        Uri.parse(movieTrailerList.get(i).getTrailerUrl())
                );
@@ -432,6 +432,7 @@ public class DetailActivity extends AppCompatActivity implements
        // Check if the movie has reviews
        if (movieReviewList != null && !movieReviewList.isEmpty()) {
            // Set the number of reviews with the text "reviews"
+
            numberOfReviews = getString(R.string.review_title, movieReviewList.size());
 
            // Get the text of the first review

@@ -38,10 +38,11 @@
         android:text="@string/trailers"
         android:textColor="@android:color/white"
         android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/FirstDivider"
         app:layout_constraintTop_toBottomOf="@+id/FirstDivider" />
 
-    <LinearLayout
+<!--    <LinearLayout
         android:id="@+id/list_view_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -49,13 +50,17 @@
         app:layout_constraintStart_toStartOf="@+id/trailer_header_tv"
         app:layout_constraintTop_toBottomOf="@id/trailer_header_tv">
 
-        <ListView
-            android:id="@+id/trailer_list"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fillViewport="true"
-            android:contentDescription="@string/trailer_list_description" />
     </LinearLayout>
+    -->
+
+    <ListView
+        android:id="@+id/trailer_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/list_view_margin"
+        android:contentDescription="@string/trailer_list_description"
+        app:layout_constraintStart_toStartOf="@+id/trailer_header_tv"
+        app:layout_constraintTop_toBottomOf="@id/trailer_header_tv" />
 
     <ImageView
         android:id="@+id/secondDivider"
@@ -66,7 +71,7 @@
         android:contentDescription="@string/layout_divider"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/list_view_container"
+        app:layout_constraintTop_toBottomOf="@+id/trailer_list"
         tools:srcCompat="@tools:sample/avatars[0]" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

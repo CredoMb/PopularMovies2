@@ -75,7 +75,7 @@
     <dimen name="review_body_textsize">14sp</dimen>
 
     <!-- Dimensions for the margin around the list view container -->
-    <dimen name="list_view_container_margin">16dp</dimen>
+    <dimen name="list_view_margin">16dp</dimen>
 
     <!-- Dimensions for the paddings around the detail body layout-->
     <dimen name="detail_body_padding">16dp</dimen>

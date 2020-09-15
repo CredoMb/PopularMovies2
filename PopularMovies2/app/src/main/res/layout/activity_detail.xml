@@ -7,10 +7,11 @@
     xmlns:bind="http://schemas.android.com/apk/res-auto"
     >
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true">
+        android:layout_height="wrap_content"
+        android:fillViewport="true"
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -45,15 +46,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="16dp"
-                    android:textColor="@android:color/black"
+                    android:textColor="@android:color/white"
                     android:textSize="@dimen/review_title_textsize"
+                    android:textStyle="bold"
                     tools:text="50 reviews" />
 
                 <TextView
                     android:id="@+id/textView_reviewSummarySample_author"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@android:color/black"
+                    android:textColor="@android:color/white"
                     android:textSize="@dimen/review_author_textsize"
                     android:textStyle="bold"
                     tools:text="Credo" />
@@ -62,21 +64,25 @@
                     android:id="@+id/textView_reviewSummarySample_body"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/review_groupview_margin"
                     android:maxLines="1"
+                    android:textColor="@android:color/white"
                     android:textSize="@dimen/review_body_textsize"
                     tools:text="I want to know, every body want to know, where is my life, it's" />
 
-                <Button
+                   <com.google.android.material.button.MaterialButton
                     android:id="@+id/button_reviewSummary_showAllReview"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    app:strokeColor="@android:color/white"
                     android:contentDescription="@string/show_all_review"
+                    android:textColor="@android:color/white"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
                     tools:text="@string/show_all_review" />
 
             </LinearLayout>
-
         </LinearLayout>
 
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
 </layout>
