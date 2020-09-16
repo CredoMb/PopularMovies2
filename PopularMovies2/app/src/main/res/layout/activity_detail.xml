@@ -77,7 +77,8 @@
                     app:strokeColor="@android:color/white"
                     android:contentDescription="@string/show_all_review"
                     android:textColor="@android:color/white"
-                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:textAllCaps="false"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     tools:text="@string/show_all_review" />
 
             </LinearLayout>
