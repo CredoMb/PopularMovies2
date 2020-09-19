@@ -1,22 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="@dimen/review_list_item_padding">
+
     <TextView
         android:id="@+id/textView_reviewer_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/review_list_item_margin"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/review_author_textsize"
         android:textStyle="bold"
-        android:textColor="@android:color/black"
-        android:textSize="16sp"/>
+        tools:text="Credo Mbikayi" />
 
     <TextView
         android:id="@+id/textView_reviewer_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@android:color/black"
-        android:textSize="14sp"/>
+        android:maxLines="5"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/review_body_textsize"
+        tools:text="I think this movie sucks but at least, we see the actress breast" />
 
-    <!-- How to add to the list item onto the bigger picture ? I mean, the... -->
 
 </LinearLayout>
