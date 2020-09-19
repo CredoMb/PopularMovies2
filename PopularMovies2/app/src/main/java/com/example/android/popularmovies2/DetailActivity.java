@@ -440,6 +440,24 @@ public class DetailActivity extends AppCompatActivity implements
 
            // Get the author of the first review
            firstReviewAuthor = movieReviewList.get(0).getAuthor();
+
+           mBinding.buttonReviewSummaryShowAllReview.setOnClickListener(new View.OnClickListener() {
+               @Override
+               public void onClick(View view) {
+
+                   Intent intent = new Intent(DetailActivity.this, ReviewActivity.class);
+                   intent.putExtra(DetailActivity.EXTRA_POSITION, -1);
+
+                   Bundle reviewData = new Bundle();
+
+
+                   // reviewData
+                   //
+
+                   startActivity(intent);
+               }
+           });
+
        } else {
 
            // Make invisible the views for the body and

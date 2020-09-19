@@ -13,7 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApp">
 
-        <activity android:name=".ReviewActivity"></activity>
+        <activity android:name=".ReviewActivity"
+            android:parentActivityName=".DetailActivity"></activity>
 
         <activity
             android:name=".DetailActivity"

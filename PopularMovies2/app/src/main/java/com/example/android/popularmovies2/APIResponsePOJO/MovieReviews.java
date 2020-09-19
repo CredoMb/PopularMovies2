@@ -1,5 +1,8 @@
 package com.example.android.popularmovies2.APIResponsePOJO;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
@@ -25,7 +28,7 @@ public class MovieReviews {
     @SerializedName("results")
     public List<Review> reviewList;
 
-    public class Review {
+    public class Review implements Parcelable {
 
         /**
          * The following variables represent the property of one
@@ -50,6 +53,55 @@ public class MovieReviews {
         @SerializedName("url")
         private String ReviewUrl;
 
+
+        public Review (String author, String content,String id,
+                       String reviewUrl){
+            this.author = author;
+            this.content = content;
+            this.ReviewId = id;
+            this.ReviewUrl = reviewUrl;
+
+        }
+
+        // The constructor to build back the
+        // object from a parcel.
+        public Review(Parcel in) {
+
+            author = in.readString();
+            content = in.readString();
+            ReviewId = in.readString();
+            ReviewUrl = in.readString();
+        }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel parcel, int i) {
+
+            parcel.writeString(author); // author
+            parcel.writeString(content); // content
+            parcel.writeString(ReviewId); // ReviewId
+            parcel.writeString(ReviewUrl); // ReviewUrl
+        }
+
+        // The creator will be used to create the object from
+        // a parcel. It will use one of the constructor
+        // defined in this class.
+        public final Parcelable.Creator<Review> CREATOR =
+                new Parcelable.Creator<Review>(){
+                    @Override
+                    public Review createFromParcel(Parcel parcel) {
+                        return new Review(parcel);
+                    }
+
+                    @Override
+                    public Review[] newArray(int i) {
+                        return new Review[i];
+                    }
+                };
         /**
          * Bellow, We have set
          * the necessary getters
