@@ -72,6 +72,7 @@ public class DetailActivity extends AppCompatActivity implements
     // Will be used to store the credit
     // in the Map of the Loader result.
     private static final String MOVIE_CREDIT ="credit" ;
+    private static final String REVIEW_LIST = "list_of_reviews";
 
 
     ActivityDetailBinding mBinding;
@@ -381,7 +382,7 @@ public class DetailActivity extends AppCompatActivity implements
      *
      *  */
    private void addTrailerAndReviews(final List<MovieTrailers.Trailer> movieTrailerList,
-                                     List<MovieReviews.Review> movieReviewList) {
+                                     final List<MovieReviews.Review> movieReviewList) {
 
        List<String> trailersTextList = new ArrayList<String>();
 
@@ -441,19 +442,24 @@ public class DetailActivity extends AppCompatActivity implements
            // Get the author of the first review
            firstReviewAuthor = movieReviewList.get(0).getAuthor();
 
+           // Set a click list to the "show all review" button on the bottom of the Detail
+           // Activity. Once clicked, it will open the Review Activity
            mBinding.buttonReviewSummaryShowAllReview.setOnClickListener(new View.OnClickListener() {
                @Override
                public void onClick(View view) {
 
+                   // Create an intent to open the
+                   // Review Activity.
                    Intent intent = new Intent(DetailActivity.this, ReviewActivity.class);
-                   intent.putExtra(DetailActivity.EXTRA_POSITION, -1);
 
+                   // Create a bundle.
+                   // Put in the list of all the reviews
                    Bundle reviewData = new Bundle();
+                   reviewData.putParcelableArrayList(MOVIE_REVIEWS,(ArrayList<MovieReviews.Review>) movieReviewList);
 
-
-                   // reviewData
-                   //
-
+                   // Add the bundle to the
+                   // intent, then start the intent.
+                   intent.putExtra(MOVIE_REVIEWS,reviewData);
                    startActivity(intent);
                }
            });
