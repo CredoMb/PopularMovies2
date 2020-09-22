@@ -459,7 +459,9 @@ public class DetailActivity extends AppCompatActivity implements
 
                    // Add the bundle to the
                    // intent, then start the intent.
-                    intent.putExtra(MOVIE_REVIEWS,reviewData);
+                   // intent.putExtra(MOVIE_REVIEWS,reviewData);
+
+                   intent.putParcelableArrayListExtra(MOVIE_REVIEWS,(ArrayList<MovieReviews.Review>) movieReviewList);
 
                    startActivity(intent);
                }

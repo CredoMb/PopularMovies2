@@ -21,26 +21,20 @@ public class ReviewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_review);
 
-        //
+        // Store the review's listview in a variable
         reviewListView = (ListView) findViewById(R.id.review_list_view);
 
         // Get the intent from the Detail Activity.
+        // The intent contains an arrayList of reviews
+        // for the current movie.
         Intent intent = getIntent();
 
         // Extract the review data contained in the intent.
-        Bundle reviewDataBundle =
-        intent.getBundleExtra(MOVIE_REVIEWS);
+        // The data is store in an arrayList.
+         ArrayList<MovieReviews.Review> reviewArrayList =
+                 intent.getParcelableArrayListExtra(MOVIE_REVIEWS);
 
-        // ArrayList<MovieReviews.Review> r = (ArrayList<MovieReviews.Review>) intent.getParcelableExtra(MOVIE_REVIEWS);
-
-        //
-       // Toast.makeText(this,r.get(0).getAuthor(),Toast.LENGTH_LONG).show();
-
-
-        // Display the reviews using the listview
-        // of the ReviewActivity Layout.
-
-
+        Toast.makeText(this,reviewArrayList.get(0).getAuthor(),Toast.LENGTH_LONG).show();
 
     }
 

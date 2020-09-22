@@ -28,7 +28,7 @@ public class MovieReviews {
     @SerializedName("results")
     public List<Review> reviewList;
 
-    public class Review implements Parcelable {
+    public static class Review implements Parcelable {
 
         /**
          * The following variables represent the property of one
@@ -90,7 +90,7 @@ public class MovieReviews {
         // The creator will be used to create the object from
         // a parcel. It will use one of the constructor
         // defined in this class.
-        public final Parcelable.Creator<Review> CREATOR =
+        public static final Parcelable.Creator<Review> CREATOR =
                 new Parcelable.Creator<Review>(){
                     @Override
                     public Review createFromParcel(Parcel parcel) {
