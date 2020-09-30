@@ -17,7 +17,4 @@
         android:gravity="center_vertical"
         tools:text="Trailer1" />
 
-    <!-- Win now, win today ! -->
-    <!-- Win now, win today, bro -->
-
 </LinearLayout>

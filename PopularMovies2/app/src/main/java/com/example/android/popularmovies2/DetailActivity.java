@@ -134,6 +134,11 @@ public class DetailActivity extends AppCompatActivity implements
     // Will hold the list of favorite movies
     private static List<FavoriteEntry> mFavoriteMovies = new ArrayList<FavoriteEntry>();
 
+    /**
+     * Comment a function :
+     * Purpose, Parameter, return and Side Effect (opens a file)
+     * */
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -237,6 +242,9 @@ public class DetailActivity extends AppCompatActivity implements
         };
 
     }
+
+    /**Comment a function :
+     * Purpose, Parameter, return and Side Effect (opens a file)*/
 
     @Override
     public void onLoadFinished(Loader<Map<String,Object>> loader, Map<String,Object> movieInfosHashMap) {
@@ -381,6 +389,9 @@ public class DetailActivity extends AppCompatActivity implements
      *  @param movieReviewList is the list of reviews for the current movie
      *
      *  */
+
+    /**Comment a function :
+     * Purpose, Parameter, return and Side Effect (opens a file)*/
    private void addTrailerAndReviews(final List<MovieTrailers.Trailer> movieTrailerList,
                                      final List<MovieReviews.Review> movieReviewList) {
 
@@ -460,7 +471,6 @@ public class DetailActivity extends AppCompatActivity implements
                    // Add the bundle to the
                    // intent, then start the intent.
                    // intent.putExtra(MOVIE_REVIEWS,reviewData);
-
                    intent.putParcelableArrayListExtra(MOVIE_REVIEWS,(ArrayList<MovieReviews.Review>) movieReviewList);
 
                    startActivity(intent);
